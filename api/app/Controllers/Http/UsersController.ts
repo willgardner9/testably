@@ -1,18 +1,30 @@
-// import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import User from 'App/Models/User'
 import { newUserSchema } from 'App/Schema/newUserSchema'
 import { updateUserSchema } from 'App/Schema/updateUserSchema'
 
 export default class UsersController {
   //  all users
-  async index() {
-    return await User.all()
+  async index({ response }) {
+    const users = await User.all()
+    if (!users) {
+      return response.status(404).send({
+        error: true,
+        message: `Users not found`,
+      })
+    }
+    return users
   }
 
   //  user by id
-  async show({ params }) {
-    return await User.find(params.id)
+  async show({ params, response }) {
+    const user = await User.find(params.id)
+    if (!user) {
+      return response.status(404).send({
+        error: true,
+        message: `User ${params.id} not found`,
+      })
+    }
+    return user
   }
 
   //  create user
@@ -25,11 +37,18 @@ export default class UsersController {
   }
 
   //  update user
-  async update({ request, params }) {
+  async update({ request, response, params }) {
     const payload = await request.validate({ schema: updateUserSchema })
     const { email, password, currentPlan } = payload
 
-    const user = await User.findOrFail(params.id)
+    const user = await User.find(params.id)
+
+    if (!user) {
+      return response.status(404).send({
+        error: true,
+        message: `User ${params.id} not found`,
+      })
+    }
 
     user.password = password ? password : user.password
     user.email = email ? email : user.email
@@ -39,8 +58,14 @@ export default class UsersController {
   }
 
   //  delete user
-  async destroy({ params }) {
-    const user = await User.findOrFail(params.id)
+  async destroy({ params, response }) {
+    const user = await User.find(params.id)
+    if (!user) {
+      return response.status(404).send({
+        error: true,
+        message: `User ${params.id} not found`,
+      })
+    }
     return await user.delete()
   }
 }

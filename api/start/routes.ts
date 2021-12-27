@@ -34,5 +34,13 @@ Route.group(() => {
     Route.delete('/:id', 'UsersController.destroy')
   }).prefix('/users')
 
+  Route.group(() => {
+    Route.get('/', 'TestsController.index')
+    Route.get('/:id', 'TestsController.show')
+    Route.post('/', 'TestsController.store')
+    Route.put('/:id', 'TestsController.update')
+    Route.delete('/:id', 'TestsController.destroy')
+  }).prefix('/tests')
+
   //  **  OTHER ROUTES  **  //
 }).prefix('/api/v1/')

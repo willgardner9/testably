@@ -1,5 +1,5 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
-import { Plans } from 'App/Enums/Plan'
+import { Plans } from 'App/Enums/StripePlans'
 
 export const updateUserSchema = schema.create({
   email: schema.string.optional({ trim: true }, [
