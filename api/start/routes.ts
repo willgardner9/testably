@@ -34,6 +34,7 @@ Route.group(() => {
     Route.delete('/:id', 'UsersController.destroy')
   }).prefix('/users')
 
+  //  **  TESTS  **  //
   Route.group(() => {
     Route.get('/', 'TestsController.index')
     Route.get('/:id', 'TestsController.show')
@@ -41,6 +42,15 @@ Route.group(() => {
     Route.put('/:id', 'TestsController.update')
     Route.delete('/:id', 'TestsController.destroy')
   }).prefix('/tests')
+
+  //  **  VARIATIONS  **  //
+  Route.group(() => {
+    Route.get('/', 'VariationsController.index')
+    Route.get('/:id', 'VariationsController.show')
+    Route.post('/', 'VariationsController.store')
+    Route.put('/:id', 'VariationsController.update')
+    Route.delete('/:id', 'VariationsController.destroy')
+  }).prefix('/variations')
 
   //  **  OTHER ROUTES  **  //
 }).prefix('/api/v1/')
