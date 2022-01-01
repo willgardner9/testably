@@ -52,5 +52,12 @@ Route.group(() => {
     Route.delete('/:id', 'VariationsController.destroy')
   }).prefix('/variations')
 
+  //  **  SESSIONS  **  //
+  Route.group(() => {
+    Route.get('/', 'SessionsController.index')
+    Route.get('/:id', 'SessionsController.show')
+    Route.post('/', 'SessionsController.store')
+  }).prefix('/sessions')
+
   //  **  OTHER ROUTES  **  //
 }).prefix('/api/v1/')
