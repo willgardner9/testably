@@ -6,8 +6,10 @@ export default class VariationsController {
   //  all variations and variation by query string
   async index({ request, response }) {
     const { user_id } = request.qs()
-    const variations = user_id ? await Variation.query().where('user_id', user_id) : Variation.all()
-    if (!variations) {
+    const variations = user_id
+      ? await Variation.query().where('user_id', user_id)
+      : await Variation.all()
+    if (!variations || variations.length === 0) {
       return response.status(404).send({
         error: true,
         message: `Variations not found`,

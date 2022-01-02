@@ -20,18 +20,14 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
-
 Route.group(() => {
   //  **  USERS  **  //
   Route.group(() => {
-    Route.get('/', 'UsersController.index')
-    Route.get('/:id', 'UsersController.show')
+    Route.get('/', 'UsersController.index').middleware('auth')
+    Route.get('/:id', 'UsersController.show').middleware('auth')
     Route.post('/', 'UsersController.store')
-    Route.put('/:id', 'UsersController.update')
-    Route.delete('/:id', 'UsersController.destroy')
+    Route.put('/:id', 'UsersController.update').middleware('auth')
+    Route.delete('/:id', 'UsersController.destroy').middleware('auth')
   }).prefix('/users')
 
   //  **  TESTS  **  //
@@ -41,7 +37,9 @@ Route.group(() => {
     Route.post('/', 'TestsController.store')
     Route.put('/:id', 'TestsController.update')
     Route.delete('/:id', 'TestsController.destroy')
-  }).prefix('/tests')
+  })
+    .prefix('/tests')
+    .middleware('auth')
 
   //  **  VARIATIONS  **  //
   Route.group(() => {
@@ -50,14 +48,20 @@ Route.group(() => {
     Route.post('/', 'VariationsController.store')
     Route.put('/:id', 'VariationsController.update')
     Route.delete('/:id', 'VariationsController.destroy')
-  }).prefix('/variations')
+  })
+    .prefix('/variations')
+    .middleware('auth')
 
   //  **  SESSIONS  **  //
   Route.group(() => {
-    Route.get('/', 'SessionsController.index')
-    Route.get('/:id', 'SessionsController.show')
+    Route.get('/', 'SessionsController.index').middleware('auth')
+    Route.get('/:id', 'SessionsController.show').middleware('auth')
     Route.post('/', 'SessionsController.store')
   }).prefix('/sessions')
 
-  //  **  OTHER ROUTES  **  //
+  //  **  AUTH  **  //
+  Route.group(() => {
+    Route.post('/login', 'AuthController.login')
+    Route.get('/logout', 'AuthController.logout').middleware('auth')
+  }).prefix('/auth')
 }).prefix('/api/v1/')
