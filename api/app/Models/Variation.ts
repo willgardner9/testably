@@ -1,11 +1,19 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Test from './Test'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class Variation extends BaseModel {
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  public id: number
+  public id: string
+
+  @beforeCreate()
+  public static assignUuid(user: User) {
+    user.id = uuidv4()
+  }
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -14,13 +22,13 @@ export default class Variation extends BaseModel {
   public updatedAt: DateTime
 
   @column()
-  public userId: number
+  public userId: string
 
   @belongsTo(() => User)
   public user_id: BelongsTo<typeof User>
 
   @column()
-  public testId: number
+  public testId: string
 
   @belongsTo(() => Test)
   public test_id: BelongsTo<typeof Test>
