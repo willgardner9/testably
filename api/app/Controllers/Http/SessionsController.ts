@@ -2,10 +2,13 @@ import Session from 'App/Models/Session'
 import { newSessionSchema } from 'App/Schema/newSessionSchema'
 
 export default class SessionsController {
-  //  all sessions and sessions by query string
+  //  sessions by test id and variation id
   async index({ request, response }) {
-    const { user_id } = request.qs()
-    const sessions = user_id ? await Session.query().where('user_id', user_id) : await Session.all()
+    const { test_id, variation_id } = request.qs()
+    let sessions
+    test_id && (sessions = await Session.query().where('test_id', test_id))
+    variation_id && (sessions = await Session.query().where('variation_id', variation_id))
+
     if (!sessions || sessions.length === 0) {
       return response.status(404).send({
         error: true,

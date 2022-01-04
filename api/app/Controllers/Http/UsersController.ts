@@ -4,16 +4,16 @@ import { updateUserSchema } from 'App/Schema/updateUserSchema'
 
 export default class UsersController {
   //  all users
-  async index({ response }) {
-    const users = await User.all()
-    if (!users) {
-      return response.status(404).send({
-        error: true,
-        message: `Users not found`,
-      })
-    }
-    return users
-  }
+  // async index({ response }) {
+  //   const users = await User.all()
+  //   if (!users) {
+  //     return response.status(404).send({
+  //       error: true,
+  //       message: `Users not found`,
+  //     })
+  //   }
+  //   return users
+  // }
 
   //  user by id
   async show({ params, response }) {

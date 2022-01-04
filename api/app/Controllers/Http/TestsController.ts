@@ -3,10 +3,10 @@ import { newTestSchema } from 'App/Schema/newTestSchema'
 import { updateTestSchema } from 'App/Schema/updateTestSchema'
 
 export default class TestsController {
-  //  all tests and test by query string
+  //  all tests by user id
   async index({ request, response }) {
     const { user_id } = request.qs()
-    const tests = user_id ? await Test.query().where('user_id', user_id) : await Test.all()
+    const tests = await Test.query().where('user_id', user_id)
     if (!tests || tests.length === 0) {
       return response.status(404).send({
         error: true,
