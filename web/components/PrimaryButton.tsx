@@ -5,7 +5,7 @@ const PrimaryButton: React.FC<{
 }> = ({text, styles, loading}) => {
   return (
     <button
-      className={`bg-stone-700 p-2 rounded shadow-sm text-white border border-stone-800 hover:bg-stone-600 hover:border-stone-700 focus:outline-orange-400 transition-all text-sm flex items-center justify-center ${styles}`}
+      className={`bg-stone-700 p-2 rounded shadow-sm text-white border border-stone-800 hover:bg-stone-600 hover:border-stone-700 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
     >
       {loading ? (
         <>

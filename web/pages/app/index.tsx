@@ -1,6 +1,5 @@
 import type {NextPage} from "next";
 import {useUser} from "../../context/auth";
-import useAuth from "../../hooks/useAuth";
 
 const Home: NextPage = () => {
   const {user} = useUser();

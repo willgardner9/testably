@@ -30,9 +30,14 @@ export function AuthWrapper({children}: any) {
         );
         const user = await response.json();
         setUser(user);
-        Router.route === "/auth/sign-in" && Router.push("/app");
+        if (
+          Router.route === "/auth/sign-in" ||
+          Router.route === "/auth/sign-up"
+        ) {
+          Router.push("/app");
+        }
       } else {
-        Router.push("/auth/sign-in");
+        Router.route.indexOf("app") !== -1 && Router.push("/auth/sign-in");
       }
     };
     attemptAuth();

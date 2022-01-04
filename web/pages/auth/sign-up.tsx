@@ -12,7 +12,7 @@ import {useUser} from "../../context/auth";
 import Router from "next/router";
 import Link from "next/link";
 
-const SignIn: NextPage = () => {
+const SignUp: NextPage = () => {
   const [email, setEmail] = useState("");
   const [emailErrorText, setEmailErrorText] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -24,7 +24,14 @@ const SignIn: NextPage = () => {
   const [loading, setLoading] = useState(false);
 
   const {user, setUser} = useUser();
-  const [loginError, setLoginError] = useState(false);
+  const [signupError, setSignupError] = useState(false);
+
+  const [passwordFieldType, setPasswordFieldType] = useState("password");
+  const togglePasswordVisibility = () => {
+    passwordFieldType === "password"
+      ? setPasswordFieldType("text")
+      : setPasswordFieldType("password");
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,23 +60,20 @@ const SignIn: NextPage = () => {
       return;
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URI}/auth/login`,
-      {
-        method: "post",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({email, password}),
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/users`, {
+      method: "post",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email, password}),
+    });
 
     if (response.status !== 200) {
-      setLoginError(true);
+      setSignupError(true);
       setLoading(false);
     } else {
-      setLoginError(false);
+      setSignupError(false);
       setLoading(false);
       const responseJSON = await response.json();
       const {token, user} = responseJSON;
@@ -82,11 +86,11 @@ const SignIn: NextPage = () => {
   return (
     <>
       <Head>
-        <title>TESTA/BLY. | Sign in</title>
-        <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
+        <title>TESTA/BLY. | Sign up</title>
+        <meta property="og:title" content="TESTA/BLY. | Sign up" key="title" />
       </Head>
       <AuthContainer>
-        <H1 text="Sign in" styles="text-center" />
+        <H1 text="Sign up" styles="text-center" />
         <Spacer />
         <form onSubmit={(e) => handleSubmit(e)}>
           <label
@@ -112,11 +116,11 @@ const SignIn: NextPage = () => {
             htmlFor="password"
             className={`${labelClasses} ${
               passwordError ? "text-red-500" : "text-stone-500"
-            }`}
+            } relative`}
           >
             Password {passwordError && passwordErrorText}
             <input
-              type="password"
+              type={passwordFieldType}
               name="password"
               id="password"
               className={`${inputClasses} ${
@@ -127,29 +131,30 @@ const SignIn: NextPage = () => {
               autoComplete="true"
               placeholder="•••••••"
             />
+            <span
+              className="absolute right-0 underline cursor-pointer hover:text-stone-600"
+              onClick={togglePasswordVisibility}
+            >
+              show/hide
+            </span>
           </label>
-          {loginError && (
+          {signupError && (
             <ErrorMessage
-              text="We couldn't sign in with those credentials."
+              text="Oops, looks like that email is already registered."
               styles="mt-4"
             />
           )}
           <PrimaryButton
             loading={loading}
-            text="Sign in"
+            text="Sign up"
             styles="w-full mt-4"
           />
         </form>
         <div className="flex w-full justify-center mt-4 text-xs text-stone-500">
-          <Link href="/auth/reset-password" passHref>
+          Already have an account?&#160;
+          <Link href="/auth/sign-in" passHref>
             <a className="underline hover:text-stone-600 transition-all focus:outline-yellow-400">
-              Rest password
-            </a>
-          </Link>
-          <div className="mx-2 select-none">-</div>
-          <Link href="/auth/sign-up" passHref>
-            <a className="underline hover:text-stone-600 transition-all focus:outline-yellow-400">
-              Sign up
+              Sign in
             </a>
           </Link>
         </div>
@@ -158,4 +163,4 @@ const SignIn: NextPage = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
