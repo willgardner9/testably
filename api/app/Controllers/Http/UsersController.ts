@@ -28,12 +28,16 @@ export default class UsersController {
   }
 
   //  create user
-  async store({ request }) {
+  async store({ auth, request }) {
     const payload = await request.validate({ schema: newUserSchema })
     const { email, password, currentPlan } = payload
 
     const user = new User()
-    return await user.fill({ email, password, currentPlan }).save()
+    await user.fill({ email, password, currentPlan }).save()
+
+    const token = await auth.use('api').attempt(email, password)
+
+    return { user, token }
   }
 
   //  update user
