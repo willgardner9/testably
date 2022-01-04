@@ -72,8 +72,8 @@ const Login: NextPage = () => {
       setLoading(false);
       const responseJSON = await response.json();
       const {token, user} = responseJSON;
-      document.cookie = `token=${token.token}`;
-      document.cookie = `id=${user.id}`;
+      document.cookie = `token=${token.token};path=/`;
+      document.cookie = `id=${user.id};path=/`;
       setUser(user);
       return Router.push("/app");
     }
