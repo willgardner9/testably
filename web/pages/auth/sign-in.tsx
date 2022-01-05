@@ -142,13 +142,13 @@ const SignIn: NextPage = () => {
         </form>
         <div className="flex w-full justify-center mt-4 text-xs text-stone-500">
           <Link href="/auth/reset-password" passHref>
-            <a className="underline hover:text-stone-600 transition-all focus:outline-yellow-400">
+            <a className="underline hover:text-stone-600 transition-all">
               Rest password
             </a>
           </Link>
           <div className="mx-2 select-none">-</div>
           <Link href="/auth/sign-up" passHref>
-            <a className="underline hover:text-stone-600 transition-all focus:outline-yellow-400">
+            <a className="underline hover:text-stone-600 transition-all">
               Sign up
             </a>
           </Link>

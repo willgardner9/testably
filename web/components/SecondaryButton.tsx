@@ -1,11 +1,11 @@
-const PrimaryButton: React.FC<{
+const SecondaryButton: React.FC<{
   text: string;
   styles?: string;
   loading: boolean;
 }> = ({text, styles, loading}) => {
   return (
     <button
-      className={`bg-stone-700 p-2 rounded shadow-sm text-white border border-stone-800 hover:bg-stone-600 hover:border-stone-700 transition-all text-sm flex items-center justify-center ${styles}`}
+      className={`bg-white p-2 rounded shadow-sm text-stone-400 border border-stone-200 hover:border-stone-300 hover:text-stone-500 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
     >
       {loading ? (
         <>
@@ -38,4 +38,4 @@ const PrimaryButton: React.FC<{
   );
 };
 
-export default PrimaryButton;
+export default SecondaryButton;

@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*:focus-visible {
+  outline-color: #facc15;
+}
+
+.header-body-split-bg::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  height: 12rem;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #44403c;
+  z-index: 0;
+}

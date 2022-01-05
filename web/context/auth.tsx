@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
-import cookieCutter from "cookie-cutter";
+const cookieCutter = require("cookie-cutter");
 import Router from "next/router";
 import {IUser} from "../types/IUser";
 

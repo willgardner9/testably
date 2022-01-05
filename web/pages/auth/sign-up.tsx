@@ -153,7 +153,7 @@ const SignUp: NextPage = () => {
         <div className="flex w-full justify-center mt-4 text-xs text-stone-500">
           Already have an account?&#160;
           <Link href="/auth/sign-in" passHref>
-            <a className="underline hover:text-stone-600 transition-all focus:outline-yellow-400">
+            <a className="underline hover:text-stone-600 transition-all">
               Sign in
             </a>
           </Link>
