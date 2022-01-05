@@ -10,7 +10,7 @@ const Home: NextPage = () => {
     <Container>
       <Menu />
       <Content>
-        <div>index</div>
+        <div>settings</div>
       </Content>
     </Container>
   );

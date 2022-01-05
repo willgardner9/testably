@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/solid";
 import deleteToken from "../../utils/deleteToken";
 import Router from "next/router";
-import cookieCutter from "cookie-cutter";
+const cookieCutter = require("cookie-cutter");
 
 export default function MenuDropdown() {
   const handleLogout = async () => {
@@ -18,6 +18,10 @@ export default function MenuDropdown() {
     await deleteToken(token);
     setLogoutCookies();
     Router.push("/auth/sign-in");
+  };
+
+  const handleNavigation = (href: string) => {
+    Router.push(href);
   };
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -39,12 +43,13 @@ export default function MenuDropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 w-36 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 w-44 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1 ">
             <h2 className="p-2 text-xxs uppercase text-stone-500">testa/bly</h2>
             <Menu.Item>
               {({active}) => (
                 <button
+                  onClick={() => handleNavigation("/dashboard")}
                   className={`${
                     active ? "bg-stone-200 text-stone" : "text-stone-700"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -70,6 +75,7 @@ export default function MenuDropdown() {
             <Menu.Item>
               {({active}) => (
                 <button
+                  onClick={() => handleNavigation("/dashboard/settings")}
                   className={`${
                     active ? "bg-stone-200 text-stone" : "text-stone-700"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -92,6 +98,7 @@ export default function MenuDropdown() {
             <Menu.Item>
               {({active}) => (
                 <button
+                  onClick={() => handleNavigation("/dashboard/billing")}
                   className={`${
                     active ? "bg-stone-200 text-stone" : "text-stone-700"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
