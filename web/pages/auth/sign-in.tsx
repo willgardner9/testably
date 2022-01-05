@@ -76,7 +76,7 @@ const SignIn: NextPage = () => {
       document.cookie = `token=${token.token};path=/`;
       document.cookie = `id=${user.id};path=/`;
       setUser(user);
-      return Router.push("/app");
+      return Router.push("/dashboard");
     }
   };
   return (

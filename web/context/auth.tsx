@@ -34,10 +34,11 @@ export function AuthWrapper({children}: any) {
           Router.route === "/auth/sign-in" ||
           Router.route === "/auth/sign-up"
         ) {
-          Router.push("/app");
+          Router.push("/dashboard");
         }
       } else {
-        Router.route.indexOf("app") !== -1 && Router.push("/auth/sign-in");
+        Router.route.indexOf("dashboard") !== -1 &&
+          Router.push("/auth/sign-in");
       }
     };
     attemptAuth();
