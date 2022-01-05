@@ -1,5 +1,6 @@
 import {Menu, Transition} from "@headlessui/react";
-import {Fragment, useEffect, useRef, useState} from "react";
+import {Fragment} from "react";
+import setLogoutCookies from "../../utils/setLogoutCookies";
 import {
   ChevronDownIcon,
   LogoutIcon,
@@ -7,8 +8,17 @@ import {
   CreditCardIcon,
   ChartBarIcon,
 } from "@heroicons/react/solid";
+import deleteToken from "../../utils/deleteToken";
+import Router from "next/router";
+import cookieCutter from "cookie-cutter";
 
-export default function AccountDropdown() {
+export default function MenuDropdown() {
+  const handleLogout = async () => {
+    const token = cookieCutter.get("token");
+    await deleteToken(token);
+    setLogoutCookies();
+    Router.push("/auth/sign-in");
+  };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -106,6 +116,7 @@ export default function AccountDropdown() {
             <Menu.Item>
               {({active}) => (
                 <button
+                  onClick={handleLogout}
                   className={`${
                     active ? "bg-stone-200 text-stone" : "text-stone-700"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -121,7 +132,7 @@ export default function AccountDropdown() {
                       aria-hidden="true"
                     />
                   )}
-                  Logout
+                  Sign out
                 </button>
               )}
             </Menu.Item>

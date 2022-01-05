@@ -11,6 +11,7 @@ import ErrorMessage from "../../components/ErrorMessage";
 import {useUser} from "../../context/auth";
 import Router from "next/router";
 import Link from "next/link";
+import setLoginCookies from "../../utils/setLoginCookies";
 
 const SignUp: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -77,8 +78,7 @@ const SignUp: NextPage = () => {
       setLoading(false);
       const responseJSON = await response.json();
       const {token, user} = responseJSON;
-      document.cookie = `token=${token.token};path=/`;
-      document.cookie = `id=${user.id};path=/`;
+      setLoginCookies(token, user);
       setUser(user);
       return Router.push("/dashboard");
     }

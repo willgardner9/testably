@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Logo from "../Logo";
-import Script from "next/script";
-import AccountDropdown from "../Menu/AccountDropdown";
+import MenuDropdown from "../Menu/MenuDropdown";
 
 const Menu: React.FC<{}> = ({}) => {
   return (
@@ -13,7 +12,7 @@ const Menu: React.FC<{}> = ({}) => {
           </a>
         </Link>
         <div>
-          <AccountDropdown />
+          <MenuDropdown />
         </div>
       </div>
     </div>

@@ -11,6 +11,8 @@ import ErrorMessage from "../../components/ErrorMessage";
 import {useUser} from "../../context/auth";
 import Router from "next/router";
 import Link from "next/link";
+import setLoginCookies from "../../utils/setLoginCookies";
+const cookieCutter = require("cookie-cutter");
 
 const SignIn: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -73,8 +75,7 @@ const SignIn: NextPage = () => {
       setLoading(false);
       const responseJSON = await response.json();
       const {token, user} = responseJSON;
-      document.cookie = `token=${token.token};path=/`;
-      document.cookie = `id=${user.id};path=/`;
+      setLoginCookies(token, user);
       setUser(user);
       return Router.push("/dashboard");
     }
