@@ -35,6 +35,13 @@ const Home: NextPage = () => {
 
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
 
+  const [passwordFieldType, setPasswordFieldType] = useState("password");
+  const togglePasswordVisibility = () => {
+    passwordFieldType === "password"
+      ? setPasswordFieldType("text")
+      : setPasswordFieldType("password");
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -150,11 +157,11 @@ const Home: NextPage = () => {
               </label>
               <label
                 htmlFor="password"
-                className={`${labelClasses} text-slate-500`}
+                className={`${labelClasses} text-slate-500 relative`}
               >
                 Update password
                 <input
-                  type="password"
+                  type={passwordFieldType}
                   name="password"
                   id="password"
                   className={`${inputClasses} border-slate-200`}
@@ -162,6 +169,12 @@ const Home: NextPage = () => {
                   autoComplete="true"
                   placeholder="•••••••"
                 />
+                <span
+                  className="absolute right-0 underline cursor-pointer hover:text-slate-600"
+                  onClick={togglePasswordVisibility}
+                >
+                  show/hide
+                </span>
               </label>
               {updateError && (
                 <ErrorMessage
