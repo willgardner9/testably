@@ -11,9 +11,7 @@ const Menu: React.FC<{width?: string}> = ({width = "max-w-7xl"}) => {
             <Logo fontSize="text-2xl" light />
           </a>
         </Link>
-        <div>
-          <MenuDropdown />
-        </div>
+        <MenuDropdown />
       </div>
     </div>
   );
