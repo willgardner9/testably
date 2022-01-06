@@ -1,13 +1,16 @@
+import React from "react";
+
 const SecondaryButton: React.FC<{
   text: string;
   styles?: string;
   loading: boolean;
   handleOnClick?: () => void;
-}> = ({text, styles, loading, handleOnClick}) => {
+  icon?: React.ReactNode;
+}> = ({text, styles, loading, handleOnClick, icon}) => {
   return (
     <button
       onClick={handleOnClick}
-      className={`bg-white p-2 rounded shadow-sm text-slate-500 border border-slate-300 hover:border-slate-400 hover:text-slate-600 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
+      className={`bg-white p-2 rounded shadow-sm text-slate-400 border border-slate-300 hover:border-slate-400 hover:text-slate-500 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
     >
       {loading ? (
         <>
@@ -34,7 +37,10 @@ const SecondaryButton: React.FC<{
           <div className="hidden">{text}</div>
         </>
       ) : (
-        text
+        <>
+          {icon}
+          <span className="text-slate-500 hover:text-slate-600">{text}</span>
+        </>
       )}
     </button>
   );

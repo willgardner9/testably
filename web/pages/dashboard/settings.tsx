@@ -18,7 +18,7 @@ import SecondaryButton from "../../components/SecondaryButton";
 import setLogoutCookies from "../../utils/setLogoutCookies";
 import Router from "next/router";
 
-const Home: NextPage = () => {
+const Settings: NextPage = () => {
   const {user, setUser} = useUser();
   useEffect(() => {
     setEmail(user.email);
@@ -226,4 +226,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Settings;

@@ -1,4 +1,3 @@
-import {EyeOffIcon} from "@heroicons/react/solid";
 import ActivePill from "./ActivePill";
 import CopyPill from "./CopyPill";
 import DisabledPill from "./DisabledPill";
@@ -27,7 +26,7 @@ const DashboardABTestTable: React.FC<{
             </th>
             <th
               scope="col"
-              className="py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+              className="py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
             >
               Active
             </th>
@@ -45,7 +44,7 @@ const DashboardABTestTable: React.FC<{
                   {test.type == "visiblity" && <VisibilityPill />}
                   {test.type == "src" && <SrcPill />}
                 </td>
-                <td className="py-4 pr-4 text-sm text-slate-700 whitespace-nowrap">
+                <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end">
                   {test.active ? <ActivePill /> : <DisabledPill />}
                 </td>
               </tr>
