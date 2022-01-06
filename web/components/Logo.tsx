@@ -5,7 +5,7 @@ const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
   return (
     <h1
       className={`font-oswald uppercase font-semibold select-none ${fontSize} ${
-        light ? "text-stone-50" : "text-stone-700"
+        light ? "text-slate-50" : "text-slate-700"
       } `}
     >
       testa/bly<span className="text-yellow-500">.</span>

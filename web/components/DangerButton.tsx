@@ -1,11 +1,13 @@
-const PrimaryButton: React.FC<{
+const DangerButton: React.FC<{
   text: string;
   styles?: string;
   loading: boolean;
-}> = ({text, styles, loading}) => {
+  handleOnClick?: () => void;
+}> = ({text, styles, loading, handleOnClick}) => {
   return (
     <button
-      className={`bg-slate-700 p-2 rounded shadow-sm text-white border border-slate-800 hover:bg-slate-600 hover:border-slate-700 transition-all text-sm flex items-center justify-center ${styles}`}
+      onClick={handleOnClick}
+      className={`bg-white p-2 rounded shadow-sm text-red-500 bg-red-50 hover:bg-red-100 border border-red-300 hover:border-red-400 hover:text-red-600 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
     >
       {loading ? (
         <>
@@ -38,4 +40,4 @@ const PrimaryButton: React.FC<{
   );
 };
 
-export default PrimaryButton;
+export default DangerButton;

@@ -96,7 +96,7 @@ const SignUp: NextPage = () => {
           <label
             htmlFor="email"
             className={`${labelClasses} ${
-              emailError ? "text-red-500" : "text-stone-500"
+              emailError ? "text-red-500" : "text-slate-500"
             }`}
           >
             Email {emailError && emailErrorText}
@@ -105,7 +105,7 @@ const SignUp: NextPage = () => {
               name="email"
               id="email"
               className={`${inputClasses} ${
-                emailError ? "border-red-500" : "border-stone-200"
+                emailError ? "border-red-500" : "border-slate-200"
               }`}
               onChange={(e) => setEmail(e.currentTarget.value)}
               onFocus={() => setEmailError(false)}
@@ -115,7 +115,7 @@ const SignUp: NextPage = () => {
           <label
             htmlFor="password"
             className={`${labelClasses} ${
-              passwordError ? "text-red-500" : "text-stone-500"
+              passwordError ? "text-red-500" : "text-slate-500"
             } relative`}
           >
             Password {passwordError && passwordErrorText}
@@ -124,7 +124,7 @@ const SignUp: NextPage = () => {
               name="password"
               id="password"
               className={`${inputClasses} ${
-                passwordError ? "border-red-500" : "border-stone-200"
+                passwordError ? "border-red-500" : "border-slate-200"
               }`}
               onChange={(e) => setPassword(e.currentTarget.value)}
               onFocus={() => setPasswordError(false)}
@@ -132,7 +132,7 @@ const SignUp: NextPage = () => {
               placeholder="•••••••"
             />
             <span
-              className="absolute right-0 underline cursor-pointer hover:text-stone-600"
+              className="absolute right-0 underline cursor-pointer hover:text-slate-600"
               onClick={togglePasswordVisibility}
             >
               show/hide
@@ -150,10 +150,10 @@ const SignUp: NextPage = () => {
             styles="w-full mt-4"
           />
         </form>
-        <div className="flex w-full justify-center mt-4 text-xs text-stone-500">
+        <div className="flex w-full justify-center mt-4 text-xs text-slate-500">
           Already have an account?&#160;
           <Link href="/auth/sign-in" passHref>
-            <a className="underline hover:text-stone-600 transition-all">
+            <a className="underline hover:text-slate-600 transition-all">
               Sign in
             </a>
           </Link>

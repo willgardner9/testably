@@ -12,7 +12,6 @@ import {useUser} from "../../context/auth";
 import Router from "next/router";
 import Link from "next/link";
 import setLoginCookies from "../../utils/setLoginCookies";
-const cookieCutter = require("cookie-cutter");
 
 const SignIn: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -93,7 +92,7 @@ const SignIn: NextPage = () => {
           <label
             htmlFor="email"
             className={`${labelClasses} ${
-              emailError ? "text-red-500" : "text-stone-500"
+              emailError ? "text-red-500" : "text-slate-500"
             }`}
           >
             Email {emailError && emailErrorText}
@@ -102,7 +101,7 @@ const SignIn: NextPage = () => {
               name="email"
               id="email"
               className={`${inputClasses} ${
-                emailError ? "border-red-500" : "border-stone-200"
+                emailError ? "border-red-500" : "border-slate-200"
               }`}
               onChange={(e) => setEmail(e.currentTarget.value)}
               onFocus={() => setEmailError(false)}
@@ -112,7 +111,7 @@ const SignIn: NextPage = () => {
           <label
             htmlFor="password"
             className={`${labelClasses} ${
-              passwordError ? "text-red-500" : "text-stone-500"
+              passwordError ? "text-red-500" : "text-slate-500"
             }`}
           >
             Password {passwordError && passwordErrorText}
@@ -121,7 +120,7 @@ const SignIn: NextPage = () => {
               name="password"
               id="password"
               className={`${inputClasses} ${
-                passwordError ? "border-red-500" : "border-stone-200"
+                passwordError ? "border-red-500" : "border-slate-200"
               }`}
               onChange={(e) => setPassword(e.currentTarget.value)}
               onFocus={() => setPasswordError(false)}
@@ -141,15 +140,15 @@ const SignIn: NextPage = () => {
             styles="w-full mt-4"
           />
         </form>
-        <div className="flex w-full justify-center mt-4 text-xs text-stone-500">
+        <div className="flex w-full justify-center mt-4 text-xs text-slate-500">
           <Link href="/auth/reset-password" passHref>
-            <a className="underline hover:text-stone-600 transition-all">
+            <a className="underline hover:text-slate-600 transition-all">
               Rest password
             </a>
           </Link>
           <div className="mx-2 select-none">-</div>
           <Link href="/auth/sign-up" passHref>
-            <a className="underline hover:text-stone-600 transition-all">
+            <a className="underline hover:text-slate-600 transition-all">
               Sign up
             </a>
           </Link>

@@ -2,10 +2,12 @@ const SecondaryButton: React.FC<{
   text: string;
   styles?: string;
   loading: boolean;
-}> = ({text, styles, loading}) => {
+  handleOnClick?: () => void;
+}> = ({text, styles, loading, handleOnClick}) => {
   return (
     <button
-      className={`bg-white p-2 rounded shadow-sm text-stone-400 border border-stone-200 hover:border-stone-300 hover:text-stone-500 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
+      onClick={handleOnClick}
+      className={`bg-white p-2 rounded shadow-sm text-slate-500 border border-slate-300 hover:border-slate-400 hover:text-slate-600 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
     >
       {loading ? (
         <>

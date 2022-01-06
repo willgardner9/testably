@@ -10,10 +10,10 @@
   content: " ";
   display: block;
   position: absolute;
-  height: 12rem;
+  height: 10.75rem;
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #44403c;
+  background-color: #334155;
   z-index: 0;
 }
