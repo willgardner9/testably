@@ -9,6 +9,7 @@ module.exports = {
     },
     fontFamily: {
       oswald: ["Oswald"],
+      mono: ["monospace"],
     },
     fontSize: {
       xxs: "0.6rem",
