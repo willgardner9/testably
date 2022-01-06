@@ -35,4 +35,7 @@ export default class Test extends BaseModel {
 
   @column()
   public active: boolean
+
+  @column()
+  public conversionUrl: string
 }

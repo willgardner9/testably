@@ -6,4 +6,5 @@ export const newTestSchema = schema.create({
   name: schema.string(),
   type: schema.enum(Object.values(TestType)),
   active: schema.boolean(),
+  conversionUrl: schema.string(),
 })

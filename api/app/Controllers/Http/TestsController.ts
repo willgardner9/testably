@@ -31,16 +31,16 @@ export default class TestsController {
   //  create test
   async store({ request }) {
     const payload = await request.validate({ schema: newTestSchema })
-    const { userId, name, type, active } = payload
+    const { userId, name, type, active, conversionUrl } = payload
 
     const test = new Test()
-    return await test.fill({ userId, name, type, active }).save()
+    return await test.fill({ userId, name, type, active, conversionUrl }).save()
   }
 
   //  update test
   async update({ request, response, params }) {
     const payload = await request.validate({ schema: updateTestSchema })
-    const { name, active } = payload
+    const { name, active, conversionUrl } = payload
 
     const test = await Test.find(params.id)
 
@@ -53,6 +53,7 @@ export default class TestsController {
 
     test.name = name
     test.active = active
+    test.conversionUrl = conversionUrl
 
     return await test.save()
   }
