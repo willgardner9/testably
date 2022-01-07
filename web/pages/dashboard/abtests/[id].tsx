@@ -140,6 +140,20 @@ const ABTest: NextPage = () => {
               />
             )}
           </div>
+          <div className="flex flex-col md:flex-row text-xxs gap-2 md:gap-4 text-slate-500 my-2">
+            <p className="font-light">
+              Created at:{" "}
+              <span className="font-normal">
+                {new Date(testData.created_at).toDateString()}
+              </span>
+            </p>
+            <p className="font-light">
+              Updated at:{" "}
+              <span className="font-normal">
+                {new Date(testData.updated_at).toDateString()}
+              </span>
+            </p>
+          </div>
           <Spacer />
           <div className="flex flex-col md:flex-row max-w-100 gap-4 flex-wrap md:divide-x divide-slate-300">
             <div className="flex items-center gap-2 max-w-100">
@@ -180,7 +194,7 @@ const ABTest: NextPage = () => {
               </div>
             </div>
           </div>
-          <pre className="overflow-scroll">
+          <pre className="overflow-scroll mt-4">
             {JSON.stringify(testData, null, 2)}
           </pre>
         </Content>
