@@ -144,13 +144,13 @@ const ABTest: NextPage = () => {
             <p className="font-light">
               Created at:{" "}
               <span className="font-normal">
-                {new Date(testData.created_at).toDateString()}
+                {new Date(testData.created_at).toLocaleDateString()}
               </span>
             </p>
             <p className="font-light">
               Updated at:{" "}
               <span className="font-normal">
-                {new Date(testData.updated_at).toDateString()}
+                {new Date(testData.updated_at).toLocaleDateString()}
               </span>
             </p>
           </div>
