@@ -11,6 +11,8 @@ module.exports = {
     maxWidth: {
       100: "100%",
       min: "min-content",
+      sm: "24rem",
+      "7xl": "60rem",
     },
     fontFamily: {
       oswald: ["Oswald"],

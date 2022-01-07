@@ -3,11 +3,16 @@ const DangerButton: React.FC<{
   styles?: string;
   loading: boolean;
   handleOnClick?: () => void;
-}> = ({text, styles, loading, handleOnClick}) => {
+  isPrimary?: boolean;
+}> = ({text, styles, loading, handleOnClick, isPrimary}) => {
   return (
     <button
       onClick={handleOnClick}
-      className={`bg-white p-2 rounded shadow-sm text-red-500 bg-red-50 hover:bg-red-100 border border-red-300 hover:border-red-400 hover:text-red-600 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
+      className={`p-2 rounded shadow-sm border focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles} ${
+        isPrimary
+          ? "bg-red-500 hover:bg-red-600 border-red-700 hover:border-red-8x00 text-white"
+          : "text-red-500 bg-red-50 hover:bg-red-100 border-red-300 hover:border-red-400 hover:text-red-600"
+      }`}
     >
       {loading ? (
         <>

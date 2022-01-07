@@ -205,12 +205,9 @@ const Settings: NextPage = () => {
               <DangerButton
                 text="Delete account forever"
                 loading={false}
-                styles={`w-full mt-4 ${
-                  showDeleteButtons
-                    ? "hidden"
-                    : "bg-red-500 border-red-600 text-white hover:bg-red-600 hover:text-white hover:border-red-700"
-                }`}
+                styles={`w-full mt-4 ${showDeleteButtons ? "hidden" : ""}`}
                 handleOnClick={() => deleteAccount()}
+                isPrimary={!showDeleteButtons}
               />
               <SecondaryButton
                 text="Cancel"

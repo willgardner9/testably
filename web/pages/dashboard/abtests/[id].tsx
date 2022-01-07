@@ -17,6 +17,7 @@ import {useUser} from "../../../context/auth";
 import {ITest} from "../../../types/ITest";
 import toast, {Toaster} from "react-hot-toast";
 import SecondaryButton from "../../../components/SecondaryButton";
+import DangerButton from "../../../components/DangerButton";
 
 const cookieCutter = require("cookie-cutter");
 
@@ -26,6 +27,7 @@ const ABTest: NextPage = () => {
   const [testData, setTestData] = useState<ITest>({} as ITest);
   const [conversionUrl, setConversionUrl] = useState<string>("");
   const [abTestName, setAbTestName] = useState<string>("");
+  const [showDeleteButtons, setShowDeleteButtons] = useState(true);
   const {id} = router.query;
 
   useEffect(() => {
@@ -116,6 +118,24 @@ const ABTest: NextPage = () => {
     setTestData(await response.json());
   };
 
+  const deleteAbTest = async () => {
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
+      {
+        method: "delete",
+        mode: "cors",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    response.status == 200 && toast.success(`Deleted A/B test ${abTestName}`);
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 2000);
+  };
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -193,6 +213,35 @@ const ABTest: NextPage = () => {
                 {testData.type == "src" && <SrcPill />}
               </div>
             </div>
+          </div>
+          <H1 text="Variations" styles="mt-8" />
+          <Spacer />
+          <H1 text="Danger zone" styles="mt-8" />
+          <Spacer />
+          <p className="text-sm text-slate-500">
+            Deleting your A/B test deletes all A/B test data, variations data,
+            and conversions data. This action cannot be reversed or recovered.
+          </p>
+          <DangerButton
+            text="Delete A/B test"
+            loading={false}
+            styles={`mt-4 ${!showDeleteButtons ? "hidden" : ""}`}
+            handleOnClick={() => setShowDeleteButtons(!showDeleteButtons)}
+          />
+          <div className="flex gap-4">
+            <DangerButton
+              text="Delete A/B test forever"
+              loading={false}
+              styles={`mt-4 ${showDeleteButtons ? "hidden" : ""}`}
+              handleOnClick={() => deleteAbTest()}
+              isPrimary={!showDeleteButtons}
+            />
+            <SecondaryButton
+              text="Cancel"
+              loading={false}
+              styles={`mt-4 ${showDeleteButtons ? "hidden" : ""}`}
+              handleOnClick={() => setShowDeleteButtons(!showDeleteButtons)}
+            />
           </div>
         </Content>
       </Container>
