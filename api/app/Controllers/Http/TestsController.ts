@@ -6,7 +6,7 @@ export default class TestsController {
   //  all tests by user id
   async index({ request, response }) {
     const { user_id } = request.qs()
-    const tests = await Test.query().where('user_id', user_id)
+    const tests = await Test.query().where('user_id', user_id).orderBy('created_at')
     if (!tests || tests.length === 0) {
       return response.status(404).send({
         error: true,
@@ -40,7 +40,6 @@ export default class TestsController {
   //  update test
   async update({ request, response, params }) {
     const payload = await request.validate({ schema: updateTestSchema })
-    console.log('payload', payload)
     const test = await Test.find(params.id)
 
     if (!test) {
