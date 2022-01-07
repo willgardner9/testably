@@ -40,8 +40,7 @@ export default class TestsController {
   //  update test
   async update({ request, response, params }) {
     const payload = await request.validate({ schema: updateTestSchema })
-    const { name, active, conversionUrl } = payload
-
+    console.log('payload', payload)
     const test = await Test.find(params.id)
 
     if (!test) {
@@ -51,9 +50,9 @@ export default class TestsController {
       })
     }
 
-    test.name = name
-    test.active = active
-    test.conversionUrl = conversionUrl
+    test.name = payload.name ? payload.name : test.name
+    test.active = payload.hasOwnProperty('active') ? payload.active : test.active
+    test.conversionUrl = payload.conversionUrl ? payload.conversionUrl : test.conversionUrl
 
     return await test.save()
   }

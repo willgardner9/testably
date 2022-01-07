@@ -1,7 +1,7 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
 export const updateTestSchema = schema.create({
-  name: schema.string(),
-  active: schema.boolean(),
-  conversionUrl: schema.string(),
+  name: schema.string.optional(),
+  active: schema.boolean.optional(),
+  conversionUrl: schema.string.optional(),
 })
