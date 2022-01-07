@@ -63,5 +63,7 @@ Route.group(() => {
   Route.group(() => {
     Route.post('/login', 'AuthController.login')
     Route.get('/logout', 'AuthController.logout').middleware('auth')
+    Route.post('/forgotten-password', 'AuthController.forgotten')
+    Route.post('/reset-password', 'AuthController.reset').middleware('auth')
   }).prefix('/auth')
 }).prefix('/api/v1/')
