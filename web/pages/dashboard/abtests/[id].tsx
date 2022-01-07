@@ -155,7 +155,7 @@ const ABTest: NextPage = () => {
             </p>
           </div>
           <Spacer />
-          <div className="flex flex-col md:flex-row max-w-100 gap-4 flex-wrap md:divide-x divide-slate-300">
+          <div className="flex flex-col md:flex-row max-w-100 gap-4 flex-wrap md:divide-x divide-slate-200">
             <div className="flex items-center gap-2 max-w-100">
               <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                 Conversion URL:
@@ -194,9 +194,6 @@ const ABTest: NextPage = () => {
               </div>
             </div>
           </div>
-          <pre className="overflow-scroll mt-4">
-            {JSON.stringify(testData, null, 2)}
-          </pre>
         </Content>
       </Container>
     </>
