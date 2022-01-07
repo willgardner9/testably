@@ -1,3 +1,4 @@
+import sendForgottenPasswordEmail from 'App/Mailer/ForgottenPassword'
 import User from 'App/Models/User'
 
 export default class AuthController {
@@ -23,7 +24,8 @@ export default class AuthController {
     const { email } = request.body()
     const user = await User.findByOrFail('email', email)
     const token = await auth.use('api').generate(user, { expiresIn: '30mins' })
-    return { token: token.token, id: user.id }
+    const url = `?token=${token.token}&id=${user.id}`
+    return await sendForgottenPasswordEmail(email, url)
   }
 
   async reset({ auth, request, response }) {
