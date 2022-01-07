@@ -1,4 +1,4 @@
-import {PlusCircleIcon} from "@heroicons/react/solid";
+import {PlusIcon} from "@heroicons/react/solid";
 import type {NextPage} from "next";
 import Head from "next/head";
 import Router from "next/router";
@@ -62,10 +62,8 @@ const Home: NextPage = () => {
             <SecondaryButton
               text="New A/B test"
               loading={false}
-              icon={
-                <PlusCircleIcon className="w-4 h-4 mr-1" fill="currentColor" />
-              }
-              handleOnClick={() => Router.push("/dashboard/new")}
+              icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
+              handleOnClick={() => Router.push("/dashboard/abtests/new")}
             />
           </div>
           <Spacer />

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {ITest} from "../../types/ITest";
 import ActivePill from "./ActivePill";
 import CopyPill from "./CopyPill";
@@ -44,23 +45,25 @@ const DashboardABTestTable: React.FC<{
           {data.length &&
             data.map((test: ITest) => {
               return (
-                <tr key={test.id} className="hover:bg-slate-50 cursor-pointer">
-                  <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap">
-                    {test.name}
-                  </td>
-                  <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
-                    {test.conversion_url}
-                  </td>
-                  <td className="py-4 pr-4 text-sm text-slate-700 whitespace-nowrap">
-                    {test.type == "copy" && <CopyPill />}
-                    {test.type == "visibility" && <VisibilityPill />}
-                    {test.type == "src" && <SrcPill />}
-                  </td>
+                <Link key={test.id} href={`dashboard/abtests/${test.id}`}>
+                  <tr className="hover:bg-slate-50 cursor-pointer">
+                    <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap">
+                      {test.name}
+                    </td>
+                    <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
+                      {test.conversion_url}
+                    </td>
+                    <td className="py-4 pr-4 text-sm text-slate-700 whitespace-nowrap">
+                      {test.type == "copy" && <CopyPill />}
+                      {test.type == "visibility" && <VisibilityPill />}
+                      {test.type == "src" && <SrcPill />}
+                    </td>
 
-                  <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end">
-                    {test.active ? <ActivePill /> : <DisabledPill />}
-                  </td>
-                </tr>
+                    <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end">
+                      {test.active ? <ActivePill /> : <DisabledPill />}
+                    </td>
+                  </tr>
+                </Link>
               );
             })}
         </tbody>
