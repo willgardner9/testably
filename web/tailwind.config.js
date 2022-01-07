@@ -6,6 +6,11 @@ module.exports = {
   theme: {
     minWidth: {
       screen: "100vw",
+      max: "max-content",
+    },
+    maxWidth: {
+      100: "100%",
+      min: "min-content",
     },
     fontFamily: {
       oswald: ["Oswald"],

@@ -1,4 +1,4 @@
-import {LockClosedIcon, PlusIcon} from "@heroicons/react/solid";
+import {LockClosedIcon} from "@heroicons/react/solid";
 import type {NextPage} from "next";
 import Head from "next/head";
 import {useRouter} from "next/router";
@@ -25,8 +25,9 @@ const ABTest: NextPage = () => {
   const {user} = useUser();
   const [testData, setTestData] = useState<ITest>({} as ITest);
   const [conversionUrl, setConversionUrl] = useState<string>("");
-  useState<boolean>(false);
+  const [abTestName, setAbTestName] = useState<string>("");
   const {id} = router.query;
+
   useEffect(() => {
     const token = cookieCutter.get("token");
     const fetchData = async () => {
@@ -41,12 +42,16 @@ const ABTest: NextPage = () => {
           },
         }
       );
-      return setTestData(await response.json());
+      const responseJSON = await response.json();
+      setConversionUrl(responseJSON.conversion_url);
+      setAbTestName(responseJSON.name);
+      setTestData(responseJSON);
     };
     fetchData();
   }, [router.query]);
 
   const toggleTestActive = async (state: boolean) => {
+    if (state == testData.active) return;
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -68,6 +73,7 @@ const ABTest: NextPage = () => {
   };
 
   const updateTestConversionUrl = async () => {
+    if (testData.conversion_url == conversionUrl) return;
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -88,10 +94,31 @@ const ABTest: NextPage = () => {
     setTestData(await response.json());
   };
 
+  const updateAbTestName = async () => {
+    if (testData.name == abTestName) return;
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
+      {
+        method: "put",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: abTestName,
+        }),
+      }
+    );
+    response.status == 200 &&
+      toast.success(`Set A/B test name to ${abTestName}`);
+    setTestData(await response.json());
+  };
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-
       <Head>
         <title>TESTA/BLY. | Dashboard</title>
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
@@ -99,33 +126,50 @@ const ABTest: NextPage = () => {
       <Container>
         <Menu />
         <Content>
-          <H1 text={testData.name} />
+          <div className="flex items-center gap-4">
+            {abTestName && (
+              <input
+                type="text"
+                className="font-medium text-2xl leading-10 text-slate-700 max-w-100"
+                onChange={(e) =>
+                  setAbTestName(e.target.value ? e.target.value : " ")
+                }
+                onBlur={() => updateAbTestName()}
+                size={abTestName.length}
+                defaultValue={testData.name}
+              />
+            )}
+          </div>
           <Spacer />
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
-              <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <div className="flex flex-col md:flex-row max-w-100 gap-4 flex-wrap md:divide-x divide-slate-300">
+            <div className="flex items-center gap-2 max-w-100">
+              <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                 Conversion URL:
               </div>
               <input
-                className="text-sm font-mono text-slate-700 whitespace-nowrap"
+                className="text-sm font-mono text-slate-700 whitespace-nowrap max-w-100 overflow-x-scroll"
                 type="text"
-                placeholder={testData.conversion_url}
-                onChange={(e) => setConversionUrl(e.target.value)}
+                onChange={(e) =>
+                  setConversionUrl(e.target.value ? e.target.value : " ")
+                }
                 onBlur={() => updateTestConversionUrl()}
+                size={conversionUrl.length}
+                defaultValue={testData.conversion_url}
               />
             </div>
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
+            <div className="flex items-center gap-2 md:pl-4">
               <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
                 Active:
               </div>
-              <div
+              <button
                 onClick={() => toggleTestActive(!testData.active)}
                 className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer"
               >
                 {testData.active ? <ActivePill /> : <DisabledPill />}
-              </div>
+              </button>
             </div>
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
+            <div className="flex items-center gap-2 md:pl-4">
+              <LockClosedIcon className="w-3 h-3 text-slate-400" />
               <div className="flex items-center text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
                 Type:
               </div>
@@ -134,10 +178,11 @@ const ABTest: NextPage = () => {
                 {testData.type == "visibility" && <VisibilityPill />}
                 {testData.type == "src" && <SrcPill />}
               </div>
-              <LockClosedIcon className="w-3 h-3 text-slate-400" />
             </div>
           </div>
-          <pre>{JSON.stringify(testData, null, 2)}</pre>
+          <pre className="overflow-scroll">
+            {JSON.stringify(testData, null, 2)}
+          </pre>
         </Content>
       </Container>
     </>
