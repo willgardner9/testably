@@ -32,7 +32,9 @@ export function AuthWrapper({children}: any) {
         setUser(user);
         if (
           Router.route === "/auth/sign-in" ||
-          Router.route === "/auth/sign-up"
+          Router.route === "/auth/sign-up" ||
+          Router.route === "/auth/forgotten-password" ||
+          Router.route === "/auth/reset-password"
         ) {
           Router.push("/dashboard");
         }

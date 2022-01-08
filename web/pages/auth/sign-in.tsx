@@ -141,9 +141,9 @@ const SignIn: NextPage = () => {
           />
         </form>
         <div className="flex w-full justify-center mt-4 text-xs text-slate-500">
-          <Link href="/auth/reset-password" passHref>
+          <Link href="/auth/forgotten-password" passHref>
             <a className="underline hover:text-slate-600 transition-all">
-              Rest password
+              Forgotten password
             </a>
           </Link>
           <div className="mx-2 select-none">-</div>
