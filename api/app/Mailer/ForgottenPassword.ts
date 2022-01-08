@@ -7,14 +7,17 @@ const mailersend = new MailerSend({
 })
 
 export default async function sendForgottenPasswordEmail(email: string, url: string) {
-  console.log(email, url)
+  const reset_password_url = `${
+    process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/auth/reset-password' : ''
+  }${url}`
+
   const recipients = [new Recipient(email, email)]
 
   const personalization = [
     {
       email,
       data: {
-        reset_password_url: url,
+        reset_password_url,
       },
     },
   ]
@@ -28,6 +31,5 @@ export default async function sendForgottenPasswordEmail(email: string, url: str
     .setPersonalization(personalization)
 
   const response = await mailersend.send(emailParams)
-  console.log(response)
   return response
 }
