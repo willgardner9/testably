@@ -1,4 +1,4 @@
-import {LockClosedIcon} from "@heroicons/react/solid";
+import {LockClosedIcon, PlusIcon} from "@heroicons/react/solid";
 import type {NextPage} from "next";
 import Head from "next/head";
 import {useRouter} from "next/router";
@@ -18,6 +18,7 @@ import {ITest} from "../../../types/ITest";
 import toast, {Toaster} from "react-hot-toast";
 import SecondaryButton from "../../../components/SecondaryButton";
 import DangerButton from "../../../components/DangerButton";
+import ABTestVariationTable from "../../../components/Dashboard/ABTestVariationTable";
 
 const cookieCutter = require("cookie-cutter");
 
@@ -29,6 +30,20 @@ const ABTest: NextPage = () => {
   const [abTestName, setAbTestName] = useState<string>("");
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
   const {id} = router.query;
+  const data = [
+    {
+      value: "Simple A/B testing for your landing page",
+      sessions: 5023,
+      conversions: 64,
+      active: true,
+    },
+    {
+      value: "Improve your conversion rate with A/B testing",
+      sessions: 4965,
+      conversions: 104,
+      active: true,
+    },
+  ];
 
   useEffect(() => {
     const token = cookieCutter.get("token");
@@ -214,8 +229,16 @@ const ABTest: NextPage = () => {
               </div>
             </div>
           </div>
-          <H1 text="Variations" styles="mt-8" />
+          <div className="flex justify-between items-end">
+            <H1 text="A/B tests" styles="mt-8" />
+            <SecondaryButton
+              text="New variation"
+              loading={false}
+              icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
+            />
+          </div>
           <Spacer />
+          <ABTestVariationTable data={data} />
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
           <p className="text-sm text-slate-500">
