@@ -1,7 +1,7 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 import { SessionDevices } from 'App/Enums/SessionDevices'
 
-export const newSessionSchema = schema.create({
+export const newConversionSchema = schema.create({
   userId: schema.string(),
   testId: schema.string(),
   variationId: schema.string(),

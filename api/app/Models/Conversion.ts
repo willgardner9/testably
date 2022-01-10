@@ -6,7 +6,7 @@ import User from './User'
 import { SessionDevices } from 'App/Enums/SessionDevices'
 import { v4 as uuidv4 } from 'uuid'
 
-export default class Session extends BaseModel {
+export default class Conversion extends BaseModel {
   public static selfAssignPrimaryKey = true
 
   @column({ isPrimary: true })

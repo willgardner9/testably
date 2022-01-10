@@ -2,12 +2,13 @@ import Session from 'App/Models/Session'
 import { newSessionSchema } from 'App/Schema/newSessionSchema'
 
 export default class SessionsController {
-  //  sessions by test id and variation id
+  //  sessions by test id or variation id
   async index({ request, response }) {
     const { test_id, variation_id } = request.qs()
     let sessions
-    test_id && (sessions = await Session.query().where('test_id', test_id))
-    variation_id && (sessions = await Session.query().where('variation_id', variation_id))
+    test_id
+      ? (sessions = await Session.query().where('test_id', test_id))
+      : (sessions = await Session.query().where('variation_id', variation_id))
 
     if (!sessions || sessions.length === 0) {
       return response.status(404).send({
@@ -33,9 +34,9 @@ export default class SessionsController {
   //  create sessions
   async store({ request }) {
     const payload = await request.validate({ schema: newSessionSchema })
-    const { userId, testId, variationId, conversion, device, country } = payload
+    const { userId, testId, variationId, device, country } = payload
 
     const sessions = new Session()
-    return await sessions.fill({ userId, testId, variationId, conversion, device, country }).save()
+    return await sessions.fill({ userId, testId, variationId, device, country }).save()
   }
 }

@@ -59,6 +59,13 @@ Route.group(() => {
     Route.post('/', 'SessionsController.store')
   }).prefix('/sessions')
 
+  //  **  CONVERSIONS  **  //
+  Route.group(() => {
+    Route.get('/', 'SessionsController.index').middleware('auth')
+    Route.get('/:id', 'SessionsController.show').middleware('auth')
+    Route.post('/', 'SessionsController.store')
+  }).prefix('/conversions')
+
   //  **  AUTH  **  //
   Route.group(() => {
     Route.post('/login', 'AuthController.login')
