@@ -6,12 +6,20 @@ const SecondaryButton: React.FC<{
   loading: boolean;
   handleOnClick?: () => void;
   icon?: React.ReactNode;
-}> = ({text, styles, loading, handleOnClick, icon}) => {
+  ping?: boolean;
+}> = ({text, styles, loading, handleOnClick, icon, ping}) => {
   return (
     <button
       onClick={handleOnClick}
-      className={`bg-white p-2 rounded shadow-sm text-slate-400 border border-slate-300 hover:border-slate-400 hover:text-slate-500 focus:outline-yellow-400 transition-all text-sm flex items-center justify-center ${styles}`}
+      className={`bg-white p-2 rounded shadow-sm text-slate-400 border border-slate-300 hover:border-slate-400 hover:text-slate-500 focus:outline-pink-400 transition-all text-sm flex items-center justify-center ${styles} ${
+        ping ? "relative" : ""
+      }`}
     >
+      {ping && (
+        <div className="flex absolute -top-1 -right-1 h-3 w-3 bg-pink-400 border border-pink-500 rounded-full">
+          <span className="-top-2 -right-2 w-full bg-pink-300 rounded-full animate-ping"></span>
+        </div>
+      )}
       {loading ? (
         <>
           <svg

@@ -17,9 +17,9 @@ const cookieCutter = require("cookie-cutter");
 
 const Home: NextPage = () => {
   const {user} = useUser();
-  const [testData, setTestData] = useState<ITest[]>({} as ITest[]);
+  const [abTests, setAbTests] = useState<ITest[]>([]);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAbTests = async () => {
       if (!user.id) return;
       const token = cookieCutter.get("token");
       const response = await fetch(
@@ -32,9 +32,9 @@ const Home: NextPage = () => {
           },
         }
       );
-      return setTestData(await response.json());
+      return setAbTests(await response.json());
     };
-    fetchData();
+    fetchAbTests();
   }, [user]);
 
   return (
@@ -64,10 +64,11 @@ const Home: NextPage = () => {
               loading={false}
               icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
               handleOnClick={() => Router.push("/dashboard/abtests/new")}
+              ping={!abTests.length}
             />
           </div>
           <Spacer />
-          <DashboardABTestTable data={testData} />
+          <DashboardABTestTable data={abTests} />
         </Content>
       </Container>
     </>
