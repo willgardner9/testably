@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 *:focus-visible {
-  outline-color: #facc15;
+  outline-color: #f472b6;
 }
 
 .header-body-split-bg::before {

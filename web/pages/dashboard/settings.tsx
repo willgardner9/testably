@@ -169,12 +169,12 @@ const Settings: NextPage = () => {
                   autoComplete="true"
                   placeholder="•••••••"
                 />
-                <span
+                <button
                   className="absolute right-0 underline cursor-pointer hover:text-slate-600"
                   onClick={togglePasswordVisibility}
                 >
                   show/hide
-                </span>
+                </button>
               </label>
               {updateError && (
                 <ErrorMessage
