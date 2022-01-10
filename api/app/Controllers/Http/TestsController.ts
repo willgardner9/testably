@@ -7,12 +7,6 @@ export default class TestsController {
   async index({ request, response }) {
     const { user_id } = request.qs()
     const tests = await Test.query().where('user_id', user_id).orderBy('created_at')
-    if (!tests || tests.length === 0) {
-      return response.status(404).send({
-        error: true,
-        message: `Tests not found`,
-      })
-    }
     return tests
   }
 
