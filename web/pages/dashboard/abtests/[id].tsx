@@ -25,47 +25,53 @@ const cookieCutter = require("cookie-cutter");
 const ABTest: NextPage = () => {
   const router = useRouter();
   const {user} = useUser();
+  const [token, setToken] = useState("");
   const [testData, setTestData] = useState<ITest>({} as ITest);
+  const [variationsData, setVariationsData] = useState<any>();
   const [conversionUrl, setConversionUrl] = useState<string>("");
   const [abTestName, setAbTestName] = useState<string>("");
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
+  const [variationsLoading, setVariationsLoading] = useState(true);
+  const [abTestLoading, setAbTestLoading] = useState(true);
   const {id} = router.query;
-  const data = [
-    {
-      value: "Simple A/B testing for your landing page",
-      sessions: 5023,
-      conversions: 64,
-      active: true,
-    },
-    {
-      value: "Improve your conversion rate with A/B testing",
-      sessions: 4965,
-      conversions: 104,
-      active: true,
-    },
-  ];
 
-  useEffect(() => {
+  const fetchVariationsData = async () => {
     const token = cookieCutter.get("token");
-    const fetchData = async () => {
-      if (!id) return;
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
-        {
-          method: "get",
-          mode: "cors",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const responseJSON = await response.json();
-      setConversionUrl(responseJSON.conversion_url);
-      setAbTestName(responseJSON.name);
-      setTestData(responseJSON);
-    };
-    fetchData();
-  }, [router.query]);
+    if (!id) return;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/variations/?test_id=${id}`,
+      {
+        method: "get",
+        mode: "cors",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const responseJSON = await response.json();
+    setVariationsData(responseJSON);
+    setVariationsLoading(false);
+  };
+
+  const fetchAbTestData = async () => {
+    const token = cookieCutter.get("token");
+    if (!id) return;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
+      {
+        method: "get",
+        mode: "cors",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const responseJSON = await response.json();
+    setConversionUrl(responseJSON.conversion_url);
+    setAbTestName(responseJSON.name);
+    setTestData(responseJSON);
+    setAbTestLoading(false);
+  };
 
   const toggleTestActive = async (state: boolean) => {
     if (state == testData.active) return;
@@ -148,8 +154,35 @@ const ABTest: NextPage = () => {
     response.status == 200 && toast.success(`Deleted A/B test ${abTestName}`);
     setTimeout(() => {
       router.push("/dashboard");
-    }, 2000);
+    }, 1500);
   };
+
+  const toggleVariationActive = async (id: string, state: boolean) => {
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/variations/${id}`,
+      {
+        method: "put",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          active: state,
+        }),
+      }
+    );
+    response.status == 200 &&
+      toast.success(`Set variation to ${state ? "active" : "disabled"}`);
+
+    await fetchVariationsData();
+  };
+
+  useEffect(() => {
+    fetchAbTestData();
+    fetchVariationsData();
+  }, [router.query]);
 
   return (
     <>
@@ -230,7 +263,7 @@ const ABTest: NextPage = () => {
             </div>
           </div>
           <div className="flex justify-between items-end">
-            <H1 text="A/B tests" styles="mt-8" />
+            <H1 text="Variations" styles="mt-8" />
             <SecondaryButton
               text="New variation"
               loading={false}
@@ -238,7 +271,11 @@ const ABTest: NextPage = () => {
             />
           </div>
           <Spacer />
-          <ABTestVariationTable data={data} />
+          <ABTestVariationTable
+            data={variationsData}
+            loading={variationsLoading}
+            handleToggleVariationActive={toggleVariationActive}
+          />
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
           <p className="text-sm text-slate-500">
