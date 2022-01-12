@@ -46,19 +46,8 @@ const Home: NextPage = () => {
       <Container>
         <Menu />
         <Content>
-          <H1 text="Dashboard" />
-          <Spacer />
-          <div className="flex flex-col md:flex-row gap-4 mt-4">
-            <DashboardDataBox
-              label="Sessions"
-              value="100"
-              outOfValue="/ 10,000"
-            />
-            <DashboardDataBox label="Conversions" value="10" />
-            <DashboardDataBox label="CVR" value="10%" />
-          </div>
           <div className="flex justify-between items-end">
-            <H1 text="A/B tests" styles="mt-8" />
+            <H1 text="Your A/B tests" />
             <SecondaryButton
               text="New A/B test"
               loading={false}
@@ -69,6 +58,17 @@ const Home: NextPage = () => {
           </div>
           <Spacer />
           <DashboardABTestTable data={abTests} />
+          <H1 text="Quick stats" styles="mt-8" />
+          <Spacer />
+          <div className="flex flex-col md:flex-row gap-4 mt-4">
+            <DashboardDataBox
+              label="Unique visitors"
+              value="100"
+              outOfValue="/ 10,000"
+            />
+            <DashboardDataBox label="Conversions" value="10" />
+            <DashboardDataBox label="CVR" value="10%" />
+          </div>
         </Content>
       </Container>
     </>
