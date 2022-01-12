@@ -38,4 +38,10 @@ export default class Variation extends BaseModel {
 
   @column()
   public active: boolean
+
+  @column()
+  public sessions?: number
+
+  @column()
+  public conversions?: number
 }
