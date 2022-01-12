@@ -118,9 +118,16 @@ const New: NextPage = () => {
             <H1 text="New A/B test" />
             <Spacer />
             <p className="text-sm text-slate-500">
-              Deleting your account deletes all user data, A/B test data,
-              variations data, and conversions data. This action cannot be
-              reversed or recovered.
+              Add a name and conversion URL and select a type for your new A/B
+              test. If you get stuck, refer to our{" "}
+              <a
+                href="TODO"
+                target="_blank"
+                className="underline hover:text-slate-600"
+              >
+                guide to setting A/B tests
+              </a>{" "}
+              with TESTA/BLY.
             </p>
             <form onSubmit={(e) => handleSubmit(e)}>
               <label
