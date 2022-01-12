@@ -83,7 +83,7 @@ const ABTestVariationTable: React.FC<{
               scope="col"
               className="py-3 pr-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
             >
-              Sessions
+              Unique&#160;Sessions
             </th>
             <th
               scope="col"

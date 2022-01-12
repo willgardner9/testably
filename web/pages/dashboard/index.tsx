@@ -62,7 +62,7 @@ const Home: NextPage = () => {
           <Spacer />
           <div className="flex flex-col md:flex-row gap-4 mt-4">
             <DashboardDataBox
-              label="Unique visitors"
+              label="Unique sessions"
               value="100"
               outOfValue="/ 10,000"
             />
