@@ -9,7 +9,7 @@ const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
       } `}
     >
       testa/bly
-      <span className={`${light ? "text-pink-300" : "text-pink-500"}`}>.</span>
+      <span className={`${light ? "text-pink-400" : "text-pink-500"}`}>.</span>
     </h1>
   );
 };
