@@ -16,7 +16,7 @@ const SecondaryButton: React.FC<{
       }`}
     >
       {ping && (
-        <div className="flex absolute -top-1 -right-1 h-3 w-3 bg-pink-400 border border-pink-500 rounded-full">
+        <div className="flex absolute -top-2 -right-2 h-4 w-4 bg-pink-400 border border-pink-600 rounded-full">
           <span className="-top-2 -right-2 w-full bg-pink-300 rounded-full animate-ping"></span>
         </div>
       )}
