@@ -57,7 +57,7 @@ const ResetPassword: NextPage = () => {
       toast.success(`Password reset, redirecting you soon...`);
       setTimeout(() => {
         router.push("/auth/sign-in");
-      }, 2000);
+      }, 1500);
     } else {
       setLoading(false);
       toast.error(`Failed to reset password`);
