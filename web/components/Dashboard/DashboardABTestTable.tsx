@@ -13,31 +13,31 @@ const DashboardABTestTable: React.FC<{
     <>
       {data.length ? (
         <div className="overflow-x-scroll">
-          <table className="w-full divide-y divide-slate-100 rounded">
+          <table className="w-full divide-y divide-slate-100 rounded table-auto">
             <thead>
               <tr>
                 <th
                   scope="col"
-                  className="py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  className="py-3 pr-3 md:pr-0 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  className="py-3 pr-3 md:pr-0 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
                 >
-                  Conversion URL
+                  Conversion&#160;URL
                 </th>
                 <th
                   scope="col"
-                  className="py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  className="py-3 pr-3 md:pr-0 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
                 >
                   Type
                 </th>
 
                 <th
                   scope="col"
-                  className="py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  className="py-3 pr-3 md:pr-0 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
                 >
                   Active
                 </th>
