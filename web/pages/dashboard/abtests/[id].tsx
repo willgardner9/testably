@@ -286,6 +286,8 @@ const ABTest: NextPage = () => {
             loading={variationsLoading}
             handleToggleVariationActive={toggleVariationActive}
           />
+          <H1 text="Embed code" styles="mt-8" />
+          <Spacer />
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
           <p className="text-sm text-slate-500">

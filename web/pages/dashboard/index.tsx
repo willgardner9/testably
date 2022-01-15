@@ -19,8 +19,8 @@ const Home: NextPage = () => {
   const {user} = useUser();
   const [abTests, setAbTests] = useState<ITest[]>([]);
   const [testModalOpen, setTestModalOpen] = useState(false);
-  const [uniqueSessions, setUniqueSessions] = useState(0);
-  const [conversions, setConversions] = useState(0);
+  const [uniqueSessions, setUniqueSessions] = useState();
+  const [conversions, setConversions] = useState();
 
   useEffect(() => {
     const fetchAbTests = async () => {
@@ -101,13 +101,17 @@ const Home: NextPage = () => {
           <div className="flex flex-col md:flex-row gap-4 mt-4">
             <DashboardDataBox
               label="Unique sessions"
-              value={uniqueSessions}
+              value={uniqueSessions || 0}
               outOfValue="/ 10,000"
             />
-            <DashboardDataBox label="Conversions" value={conversions} />
+            <DashboardDataBox label="Conversions" value={conversions || 0} />
             <DashboardDataBox
               label="CVR"
-              value={`${((conversions / uniqueSessions) * 100).toFixed(2)}%`}
+              value={`${
+                conversions && uniqueSessions
+                  ? ((conversions / uniqueSessions) * 100).toFixed(2)
+                  : 0
+              }%`}
             />
           </div>
           <AddTestModal

@@ -8,7 +8,7 @@ const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
         id="emoji"
         viewBox="0 0 72 72"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-12 h-12 rotate-45"
+        className="w-12 h-12 rotate-45 -ml-2"
       >
         <g id="color">
           <path
