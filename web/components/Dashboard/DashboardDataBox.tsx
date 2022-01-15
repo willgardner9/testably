@@ -1,6 +1,6 @@
 const DashboardDataBox: React.FC<{
   label: string;
-  value: string;
+  value: number | string;
   outOfValue?: string;
   styles?: string;
 }> = ({label, value, outOfValue, styles}) => {
