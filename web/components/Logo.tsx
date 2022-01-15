@@ -60,7 +60,7 @@ const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
 
       <h1
         className={`font-oswald uppercase font-semibold select-none ${fontSize} ${
-          light ? "text-slate-50" : "text-black"
+          light ? "text-slate-50" : "text-slate-900"
         } `}
       >
         testa/bly
