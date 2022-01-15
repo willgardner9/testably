@@ -43,7 +43,7 @@ const DashboardABTestTable: React.FC<{
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-slate-200">
               {data.length &&
                 data.map((test: ITest) => {
                   return (

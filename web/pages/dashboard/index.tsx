@@ -1,8 +1,8 @@
 import {PlusIcon} from "@heroicons/react/solid";
 import type {NextPage} from "next";
 import Head from "next/head";
-import Router from "next/router";
 import {useEffect, useState} from "react";
+import AddTestModal from "../../components/Dashboard/AddTestModal";
 import DashboardABTestTable from "../../components/Dashboard/DashboardABTestTable";
 import DashboardDataBox from "../../components/Dashboard/DashboardDataBox";
 import H1 from "../../components/H1";
@@ -18,6 +18,8 @@ const cookieCutter = require("cookie-cutter");
 const Home: NextPage = () => {
   const {user} = useUser();
   const [abTests, setAbTests] = useState<ITest[]>([]);
+  const [testModalOpen, setTestModalOpen] = useState(false);
+
   useEffect(() => {
     const fetchAbTests = async () => {
       if (!user.id) return;
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
       return setAbTests(await response.json());
     };
     fetchAbTests();
-  }, [user]);
+  }, [user, testModalOpen]);
 
   return (
     <>
@@ -52,7 +54,7 @@ const Home: NextPage = () => {
               text="New A/B test"
               loading={false}
               icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
-              handleOnClick={() => Router.push("/dashboard/abtests/new")}
+              handleOnClick={() => setTestModalOpen(true)}
               ping={!abTests.length}
             />
           </div>
@@ -69,6 +71,11 @@ const Home: NextPage = () => {
             <DashboardDataBox label="Conversions" value="10" />
             <DashboardDataBox label="CVR" value="10%" />
           </div>
+          <AddTestModal
+            isOpen={testModalOpen}
+            setIsOpen={setTestModalOpen}
+            user={user}
+          />
         </Content>
       </Container>
     </>

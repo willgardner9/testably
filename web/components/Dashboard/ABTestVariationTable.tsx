@@ -43,7 +43,7 @@ const ABTestVariationTable: React.FC<{
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white divide-y divide-slate-200">
           <tr className="hover:bg-slate-50 cursor-pointer h-12 bg-slate-100 animate-pulse">
             <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
@@ -105,7 +105,7 @@ const ABTestVariationTable: React.FC<{
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white divide-y divide-slate-200">
           {data?.length &&
             data.map((variation: any) => {
               return (

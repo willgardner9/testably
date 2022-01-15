@@ -19,13 +19,13 @@ import toast, {Toaster} from "react-hot-toast";
 import SecondaryButton from "../../../components/SecondaryButton";
 import DangerButton from "../../../components/DangerButton";
 import ABTestVariationTable from "../../../components/Dashboard/ABTestVariationTable";
+import AddVariationModal from "../../../components/Dashboard/AddVariationModal";
 
 const cookieCutter = require("cookie-cutter");
 
 const ABTest: NextPage = () => {
   const router = useRouter();
   const {user} = useUser();
-  const [token, setToken] = useState("");
   const [testData, setTestData] = useState<ITest>({} as ITest);
   const [variationsData, setVariationsData] = useState<any>();
   const [conversionUrl, setConversionUrl] = useState<string>("");
@@ -33,6 +33,7 @@ const ABTest: NextPage = () => {
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
   const [variationsLoading, setVariationsLoading] = useState(true);
   const [abTestLoading, setAbTestLoading] = useState(true);
+  const [variationsModalOpen, setVariationsModalOpen] = useState(false);
   const {id} = router.query;
 
   const fetchVariationsData = async () => {
@@ -151,10 +152,10 @@ const ABTest: NextPage = () => {
         },
       }
     );
-    response.status == 200 && toast.success(`Deleted A/B test ${abTestName}`);
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1500);
+    if (response.status == 200) {
+      toast.success(`Deleted A/B test ${abTestName}`);
+      return router.push("/dashboard");
+    }
   };
 
   const toggleVariationActive = async (id: string, state: boolean) => {
@@ -182,7 +183,7 @@ const ABTest: NextPage = () => {
   useEffect(() => {
     fetchAbTestData();
     fetchVariationsData();
-  }, [router.query]);
+  }, [router.query, variationsModalOpen]);
 
   return (
     <>
@@ -264,13 +265,22 @@ const ABTest: NextPage = () => {
           </div>
           <div className="flex justify-between items-end">
             <H1 text="Variations" styles="mt-8" />
-            <SecondaryButton
-              text="New variation"
-              loading={false}
-              icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
-            />
+            {testData.type !== "visibility" && (
+              <SecondaryButton
+                text="New variation"
+                loading={false}
+                icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
+                handleOnClick={() => setVariationsModalOpen(true)}
+              />
+            )}
           </div>
           <Spacer />
+          <AddVariationModal
+            isOpen={variationsModalOpen}
+            setIsOpen={setVariationsModalOpen}
+            userId={user.id}
+            testId={testData.id}
+          />
           <ABTestVariationTable
             data={variationsData}
             loading={variationsLoading}

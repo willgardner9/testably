@@ -2,10 +2,12 @@ const PrimaryButton: React.FC<{
   text: string;
   styles?: string;
   loading: boolean;
-}> = ({text, styles, loading}) => {
+  handleOnClick?: Function;
+}> = ({text, styles, loading, handleOnClick}) => {
   return (
     <button
       className={`bg-slate-700 p-2 rounded shadow-sm text-white border border-slate-800 hover:bg-slate-600 hover:border-slate-700 transition-all text-sm flex items-center justify-center ${styles}`}
+      onClick={handleOnClick ? handleOnClick() : undefined}
     >
       {loading ? (
         <>
