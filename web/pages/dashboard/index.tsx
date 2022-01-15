@@ -19,6 +19,8 @@ const Home: NextPage = () => {
   const {user} = useUser();
   const [abTests, setAbTests] = useState<ITest[]>([]);
   const [testModalOpen, setTestModalOpen] = useState(false);
+  const [uniqueSessions, setUniqueSessions] = useState(0);
+  const [conversions, setConversions] = useState(0);
 
   useEffect(() => {
     const fetchAbTests = async () => {
@@ -36,7 +38,41 @@ const Home: NextPage = () => {
       );
       return setAbTests(await response.json());
     };
+    const fetchSessions = async () => {
+      if (!user.id) return;
+      const token = cookieCutter.get("token");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URI}/sessions/?user_id=${user.id}`,
+        {
+          method: "get",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseJSON = await response.json();
+      return setUniqueSessions(responseJSON.length);
+    };
+    const fetchConversions = async () => {
+      if (!user.id) return;
+      const token = cookieCutter.get("token");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URI}/conversions/?user_id=${user.id}`,
+        {
+          method: "get",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseJSON = await response.json();
+      return setConversions(responseJSON.length);
+    };
     fetchAbTests();
+    fetchSessions();
+    fetchConversions();
   }, [user, testModalOpen]);
 
   return (
@@ -60,16 +96,19 @@ const Home: NextPage = () => {
           </div>
           <Spacer />
           <DashboardABTestTable data={abTests} />
-          <H1 text="Quick stats" styles="mt-8" />
+          <H1 text="Monthly performance" styles="mt-8" />
           <Spacer />
           <div className="flex flex-col md:flex-row gap-4 mt-4">
             <DashboardDataBox
               label="Unique sessions"
-              value="100"
+              value={uniqueSessions}
               outOfValue="/ 10,000"
             />
-            <DashboardDataBox label="Conversions" value="10" />
-            <DashboardDataBox label="CVR" value="10%" />
+            <DashboardDataBox label="Conversions" value={conversions} />
+            <DashboardDataBox
+              label="CVR"
+              value={`${((conversions / uniqueSessions) * 100).toFixed(2)}%`}
+            />
           </div>
           <AddTestModal
             isOpen={testModalOpen}
