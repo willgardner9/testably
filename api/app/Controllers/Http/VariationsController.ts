@@ -25,8 +25,8 @@ export default class VariationsController {
         variationsWithSessionsAndConversionsData.push({
           value: variation.value,
           id: variation.id,
-          createdAt: variation.createdAt.toISODate(),
-          updatedAt: variation.updatedAt.toISODate(),
+          createdAt: variation.createdAt.toSeconds(),
+          updatedAt: variation.updatedAt.toSeconds(),
           testId: variation.testId,
           userId: variation.userId,
           active: variation.active,
@@ -36,16 +36,14 @@ export default class VariationsController {
       })
     )
 
-    variationsWithSessionsAndConversionsData.sort((a: Variation, b: Variation) => {
-      return a.id > b.id ? 1 : -1
-    })
-
     if (!variations || variations.length === 0) {
       return response.status(404).send({
         error: true,
         message: `Variations not found`,
       })
     }
+    variationsWithSessionsAndConversionsData.sort((a: any, b: any) => a.createdAt - b.createdAt)
+
     return variationsWithSessionsAndConversionsData
   }
 
