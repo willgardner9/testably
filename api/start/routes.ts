@@ -61,9 +61,9 @@ Route.group(() => {
 
   //  **  CONVERSIONS  **  //
   Route.group(() => {
-    Route.get('/', 'SessionsController.index').middleware('auth')
-    Route.get('/:id', 'SessionsController.show').middleware('auth')
-    Route.post('/', 'SessionsController.store')
+    Route.get('/', 'ConversionsController.index').middleware('auth')
+    Route.get('/:id', 'ConversionsController.show').middleware('auth')
+    Route.post('/', 'ConversionsController.store')
   }).prefix('/conversions')
 
   //  **  AUTH  **  //
