@@ -26,7 +26,7 @@ export default function MenuDropdown() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-800 bg-white border border-slate-300 hover:border-slate-400 rounded-md transition-all">
+        <Menu.Button className="inline-flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-800 bg-white border border-slate-300 hover:border-slate-400 rounded transition-all">
           Menu
           <ChevronDownIcon
             className="w-4 h-4 ml-2 -mr-1 text-slate-500 hover:text-slate-600"
