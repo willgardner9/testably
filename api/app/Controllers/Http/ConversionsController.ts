@@ -2,13 +2,20 @@ import Conversion from 'App/Models/Conversion'
 import { newConversionSchema } from 'App/Schema/newConversionSchema'
 
 export default class ConversionsController {
-  //  conversions by test id or variation id
+  //  conversions by test id or variation id or user id
   async index({ request, response }) {
-    const { test_id, variation_id } = request.qs()
+    const { test_id, variation_id, user_id } = request.qs()
     let conversions
-    test_id
-      ? (conversions = await Conversion.query().where('test_id', test_id))
-      : (conversions = await Conversion.query().where('variation_id', variation_id))
+
+    if (test_id) {
+      conversions = await Conversion.query().where('test_id', test_id)
+    }
+    if (variation_id) {
+      conversions = await Conversion.query().where('variation_id', variation_id)
+    }
+    if (user_id) {
+      conversions = await Conversion.query().where('user_id', user_id)
+    }
 
     if (!conversions || conversions.length === 0) {
       return response.status(404).send({
