@@ -1,5 +1,6 @@
 export enum Plans {
-  LITE = 'lite',
-  PRO = 'pro',
-  CUSTOM = 'custom',
+  TRIAL = 'trial',
+  LAUNCH = 'launch',
+  OPTIMISE = 'optimise',
+  GROW = 'grow',
 }

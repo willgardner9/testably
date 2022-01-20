@@ -1,6 +1,8 @@
 import User from 'App/Models/User'
 import { newUserSchema } from 'App/Schema/newUserSchema'
 import { updateUserSchema } from 'App/Schema/updateUserSchema'
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_SK)
 
 export default class UsersController {
   //  all users
@@ -33,7 +35,12 @@ export default class UsersController {
     const { email, password, currentPlan } = payload
 
     const user = new User()
-    await user.fill({ email, password, currentPlan }).save()
+
+    const { id } = await stripe.customers.create({
+      email,
+    })
+
+    await user.fill({ email, password, currentPlan, stripeId: id }).save()
 
     const token = await auth.use('api').attempt(email, password)
 

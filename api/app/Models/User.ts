@@ -44,6 +44,9 @@ export default class User extends BaseModel {
   @hasMany(() => Test)
   public tests: HasMany<typeof Test>
 
+  @column()
+  public stripeId: string
+
   @beforeSave()
   public static async hashPassword(user: User) {
     if (user.$dirty.password) {
