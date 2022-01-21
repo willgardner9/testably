@@ -185,7 +185,7 @@ const New: NextPage = () => {
                       className={({active, checked}) =>
                         `${
                           active
-                            ? "ring-2 ring-offset-2 ring-offset-green-500 ring-white ring-opacity-60"
+                            ? "ring-2 ring-offset-2 ring-offset-pink-400 ring-white ring-opacity-60"
                             : ""
                         } ${
                           checked

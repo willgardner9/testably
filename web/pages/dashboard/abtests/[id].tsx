@@ -271,6 +271,7 @@ const ABTest: NextPage = () => {
                 loading={false}
                 icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
                 handleOnClick={() => setVariationsModalOpen(true)}
+                ping={variationsData?.length >= 1 ? false : true}
               />
             )}
           </div>
@@ -281,11 +282,30 @@ const ABTest: NextPage = () => {
             userId={user.id}
             testId={testData.id}
           />
-          <ABTestVariationTable
-            data={variationsData}
-            loading={variationsLoading}
-            handleToggleVariationActive={toggleVariationActive}
-          />
+          {variationsData?.length >= 1 ? (
+            <ABTestVariationTable
+              data={variationsData}
+              loading={variationsLoading}
+              handleToggleVariationActive={toggleVariationActive}
+            />
+          ) : (
+            <div className="border border-slate-200 shadow-sm mb-4 px-2 py-8 rounded-md text-center text-slate-500 text-sm">
+              Start A/B testing by adding some variations. Click{" "}
+              <span className="inline-flex mx-2">
+                {" "}
+                <SecondaryButton
+                  text="New variation"
+                  loading={false}
+                  icon={
+                    <PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />
+                  }
+                  handleOnClick={() => setVariationsModalOpen(true)}
+                />
+              </span>{" "}
+              above to begin.
+            </div>
+          )}
+
           <H1 text="Embed code" styles="mt-8" />
           <Spacer />
           <H1 text="Danger zone" styles="mt-8" />

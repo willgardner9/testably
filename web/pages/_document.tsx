@@ -1,4 +1,5 @@
 import Document, {Html, Head, Main, NextScript} from "next/document";
+import {Toaster} from "react-hot-toast";
 
 class MyDocument extends Document {
   render() {
@@ -13,6 +14,8 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          <Toaster position="top-center" reverseOrder={false} />
+
           <Main />
           <NextScript />
         </body>
