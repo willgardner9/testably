@@ -11,12 +11,12 @@ const SecondaryButton: React.FC<{
   return (
     <button
       onClick={handleOnClick}
-      className={`bg-white p-2 rounded shadow-sm text-slate-400 border border-slate-300 hover:border-slate-400 hover:text-slate-500 focus:outline-pink-400 transition-all text-sm flex items-center justify-center ${styles} ${
+      className={`bg-white p-2 rounded shadow-sm text-slate-400 border border-slate-300 hover:border-slate-400 hover:text-slate-500 focus:outline-green-500 transition-all text-sm flex items-center justify-center ${styles} ${
         ping ? "relative" : ""
       }`}
     >
       {ping && (
-        <div className="flex absolute -top-2 -right-2 h-4 w-4 bg-pink-400 border border-pink-600 rounded-full">
+        <div className="flex absolute -top-2 -right-2 h-4 w-4 bg-green-500 border border-pink-600 rounded-full">
           <span className="-top-2 -right-2 w-full bg-pink-300 rounded-full animate-ping"></span>
         </div>
       )}
