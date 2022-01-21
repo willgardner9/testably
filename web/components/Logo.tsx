@@ -1,23 +1,17 @@
 import Image from "next/image";
 
-const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
-  fontSize,
-  light,
-}) => {
+const Logo: React.FC<{
+  fontSize?: string;
+  logoSize?: number;
+  gap?: string;
+}> = ({fontSize = "text-2xl", logoSize = 50, gap = "gap-0"}) => {
   return (
-    <div className="flex items-center py-1">
-      <Image
-        src="/test-tube-1.png"
-        width={40}
-        height={40}
-        alt="Testably logo"
-      />
+    <div className={`flex items-center ${gap}`}>
+      <Image src="/logo.png" height={logoSize} width={logoSize} />
       <h1
-        className={`font-oswald uppercase font-semibold select-none ${fontSize} -mb-2 ml-1 ${
-          light ? "text-slate-50" : "text-slate-900"
-        } `}
+        className={`font-oswald uppercase font-semibold select-none text-slate-900 ${fontSize}`}
       >
-        testa/bly
+        TESTA/BLY
       </h1>
     </div>
   );

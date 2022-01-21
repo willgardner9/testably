@@ -8,7 +8,7 @@ const Menu: React.FC<{width?: string}> = ({width = "max-w-7xl"}) => {
       <div className={`flex w-full items-center justify-between ${width}`}>
         <Link href="/dashboard" passHref>
           <a>
-            <Logo fontSize="text-2xl" />
+            <Logo />
           </a>
         </Link>
         <MenuDropdown />
