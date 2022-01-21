@@ -10,6 +10,7 @@ export default class VariationsController {
       .withCount('sessions')
       .withCount('conversions')
       .where('test_id', test_id)
+      .orderBy('created_at', 'asc')
 
     return variations
   }
