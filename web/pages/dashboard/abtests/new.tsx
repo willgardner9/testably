@@ -20,6 +20,7 @@ import {
   TranslateIcon,
 } from "@heroicons/react/solid";
 import router from "next/router";
+import FreeTrialBadge from "../../../components/Dashboard/FreeTrialBadge";
 
 const New: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -112,6 +113,8 @@ const New: NextPage = () => {
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
       </Head>
       <Container>
+        <FreeTrialBadge user={user} />
+
         <Menu width="max-w-sm" />
         <Content width="max-w-sm">
           <div>

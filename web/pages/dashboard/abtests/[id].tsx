@@ -20,6 +20,7 @@ import SecondaryButton from "../../../components/SecondaryButton";
 import DangerButton from "../../../components/DangerButton";
 import ABTestVariationTable from "../../../components/Dashboard/ABTestVariationTable";
 import AddVariationModal from "../../../components/Dashboard/AddVariationModal";
+import FreeTrialBadge from "../../../components/Dashboard/FreeTrialBadge";
 
 const cookieCutter = require("cookie-cutter");
 
@@ -193,6 +194,7 @@ const ABTest: NextPage = () => {
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
       </Head>
       <Container>
+        <FreeTrialBadge user={user} />
         <Menu />
         <Content>
           <div className="flex items-center gap-4">

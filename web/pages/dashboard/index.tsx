@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import AddTestModal from "../../components/Dashboard/AddTestModal";
 import DashboardABTestTable from "../../components/Dashboard/DashboardABTestTable";
 import DashboardDataBox from "../../components/Dashboard/DashboardDataBox";
+import FreeTrialBadge from "../../components/Dashboard/FreeTrialBadge";
 import H1 from "../../components/H1";
 import Container from "../../components/Layout/Container";
 import Content from "../../components/Layout/Content";
@@ -82,6 +83,7 @@ const Home: NextPage = () => {
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
       </Head>
       <Container>
+        <FreeTrialBadge user={user} />
         <Menu />
         <Content>
           <div className="flex justify-between items-end">
@@ -95,7 +97,25 @@ const Home: NextPage = () => {
             />
           </div>
           <Spacer />
-          <DashboardABTestTable data={abTests} />
+          {abTests?.length >= 1 ? (
+            <DashboardABTestTable data={abTests} />
+          ) : (
+            <div className="border border-slate-200 shadow-sm mb-4 px-2 py-8 rounded-md text-center text-slate-500 text-sm">
+              Start A/B testing in 5 minutes. Click{" "}
+              <span className="inline-flex mx-2">
+                {" "}
+                <SecondaryButton
+                  text="New A/B test"
+                  loading={false}
+                  icon={
+                    <PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />
+                  }
+                  handleOnClick={() => setTestModalOpen(true)}
+                />
+              </span>{" "}
+              above to begin.
+            </div>
+          )}
           <H1 text="Monthly performance" styles="mt-8" />
           <Spacer />
           <div className="flex flex-col md:flex-row gap-4 mt-4">

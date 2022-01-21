@@ -5,4 +5,5 @@ export interface IUser {
   email: string;
   password: string;
   current_plan: string;
+  stripe_id: string;
 }

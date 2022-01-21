@@ -60,7 +60,6 @@ const DashboardABTestTable: React.FC<{
                           {test.type == "visibility" && <VisibilityPill />}
                           {test.type == "src" && <SrcPill />}
                         </td>
-
                         <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end">
                           {test.active ? <ActivePill /> : <DisabledPill />}
                         </td>
