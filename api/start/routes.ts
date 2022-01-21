@@ -73,4 +73,9 @@ Route.group(() => {
     Route.post('/forgotten-password', 'AuthController.forgotten')
     Route.post('/reset-password', 'AuthController.reset').middleware('auth')
   }).prefix('/auth')
+
+  //  **  STRIPE  **  //
+  Route.group(() => {
+    Route.post('/checkout', 'StripeController.checkout').middleware('auth')
+  }).prefix('/stripe')
 }).prefix('/api/v1/')

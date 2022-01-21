@@ -1,3 +1,4 @@
+import { Plans } from 'App/Enums/StripePlans'
 import User from 'App/Models/User'
 import { newUserSchema } from 'App/Schema/newUserSchema'
 import { updateUserSchema } from 'App/Schema/updateUserSchema'
@@ -32,7 +33,7 @@ export default class UsersController {
   //  create user
   async store({ auth, request }) {
     const payload = await request.validate({ schema: newUserSchema })
-    const { email, password, currentPlan } = payload
+    const { email, password } = payload
 
     const user = new User()
 
@@ -40,7 +41,17 @@ export default class UsersController {
       email,
     })
 
-    await user.fill({ email, password, currentPlan, stripeId: id }).save()
+    await stripe.subscriptions.create({
+      customer: id,
+      items: [
+        {
+          price: process.env.FREE_TRIAL_PRICE_ID,
+        },
+      ],
+      payment_behavior: 'allow_incomplete',
+    })
+
+    await user.fill({ email, password, currentPlan: Plans.TRIAL, stripeId: id }).save()
 
     const token = await auth.use('api').attempt(email, password)
 
