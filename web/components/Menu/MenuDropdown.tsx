@@ -7,6 +7,7 @@ import {
   CogIcon,
   CreditCardIcon,
   ChartBarIcon,
+  MenuIcon,
 } from "@heroicons/react/solid";
 import deleteToken from "../../utils/deleteToken";
 import Router from "next/router";
@@ -27,11 +28,11 @@ export default function MenuDropdown() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-800 bg-white border border-slate-300 hover:border-slate-400 rounded transition-all">
-          Menu
-          <ChevronDownIcon
-            className="w-4 h-4 ml-2 -mr-1 text-slate-500 hover:text-slate-600"
+          <MenuIcon
+            className="w-4 h-4 mr-2 -ml-1 text-slate-500 hover:text-slate-600"
             aria-hidden="true"
           />
+          Menu
         </Menu.Button>
       </div>
       <Transition
