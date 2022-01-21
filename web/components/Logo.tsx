@@ -36,23 +36,23 @@ const Logo: React.FC<{fontSize: string; light?: boolean}> = ({
             ry="3.137"
             fill="none"
             stroke="#000"
-            stroke-miterlimit="10"
-            stroke-width="2"
+            strokeMiterlimit="10"
+            strokeWidth="2"
           />
           <path
             fill="none"
             stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M42.06,29.84V52.92a6.506,6.506,0,0,1-6.51,6.51,6.3082,6.3082,0,0,1-1.7754-.2486A6.5,6.5,0,0,1,29.04,52.92V29.84"
           />
           <path
             fill="none"
             stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M29.277,30.8938A14.0534,14.0534,0,0,0,35.55,32.2075a15.9069,15.9069,0,0,0,2.9589-.26c.071-.0119.1539-.0236.2249-.0355a11.5513,11.5513,0,0,0,3.0891-1.0178"
           />
         </g>

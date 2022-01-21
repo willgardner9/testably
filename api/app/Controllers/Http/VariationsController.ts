@@ -1,50 +1,17 @@
-import Database from '@ioc:Adonis/Lucid/Database'
 import Variation from 'App/Models/Variation'
 import { newVariationSchema } from 'App/Schema/newVariationSchema.ts'
 import { updateVariationSchema } from 'App/Schema/updateVariationSchema'
 
 export default class VariationsController {
   //  variations by test id
-  async index({ request, response }) {
+  async index({ request }) {
     const { test_id } = request.qs()
-    const variations = await Variation.query().where('test_id', test_id)
-    const variationsWithSessionsAndConversionsData: any[] = []
-    await Promise.all(
-      variations.map(async (variation: Variation) => {
-        const sessions = await Database.from('sessions')
-          .count('* as sessionsCount')
-          .where('variation_id', variation.id)
+    const variations = await Variation.query()
+      .withCount('sessions')
+      .withCount('conversions')
+      .where('test_id', test_id)
 
-        const conversions = await Database.from('conversions')
-          .count('* as conversionsCount')
-          .where('variation_id', variation.id)
-
-        const { sessionsCount } = sessions[0]
-        const { conversionsCount } = conversions[0]
-
-        variationsWithSessionsAndConversionsData.push({
-          value: variation.value,
-          id: variation.id,
-          createdAt: variation.createdAt.toSeconds(),
-          updatedAt: variation.updatedAt.toSeconds(),
-          testId: variation.testId,
-          userId: variation.userId,
-          active: variation.active,
-          sessions: sessionsCount as number,
-          conversions: conversionsCount as number,
-        })
-      })
-    )
-
-    if (!variations || variations.length === 0) {
-      return response.status(404).send({
-        error: true,
-        message: `Variations not found`,
-      })
-    }
-    variationsWithSessionsAndConversionsData.sort((a: any, b: any) => a.createdAt - b.createdAt)
-
-    return variationsWithSessionsAndConversionsData
+    return variations
   }
 
   //  variation by id

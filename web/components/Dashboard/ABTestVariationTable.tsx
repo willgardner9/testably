@@ -117,16 +117,18 @@ const ABTestVariationTable: React.FC<{
                     {variation.value}
                   </td>
                   <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
-                    {variation.sessions}
+                    {variation.sessions_count}
                   </td>
                   <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
-                    {variation.conversions}
+                    {variation.conversions_count}
                   </td>
                   <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
-                    {variation.conversions == 0 || variation.sessions == 0
+                    {variation.conversions_count == 0 ||
+                    variation.sessions_count == 0
                       ? "0%"
                       : (
-                          (variation.conversions / variation.sessions) *
+                          (variation.conversions_count /
+                            variation.sessions_count) *
                           100
                         ).toFixed(2) + `%`}
                   </td>

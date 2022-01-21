@@ -1,8 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasMany,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Test from './Test'
 import { v4 as uuidv4 } from 'uuid'
+import Conversion from './Conversion'
+import Session from './Session'
 
 export default class Variation extends BaseModel {
   public static selfAssignPrimaryKey = true
@@ -39,9 +49,15 @@ export default class Variation extends BaseModel {
   @column()
   public active: boolean
 
-  @column()
-  public sessions?: number
+  @hasMany(() => Session)
+  public sessions: HasMany<typeof Session>
+
+  @hasMany(() => Conversion)
+  public conversions: HasMany<typeof Conversion>
 
   @column()
-  public conversions?: number
+  public sessions_count: number
+
+  @column()
+  public conversions_count: number
 }
