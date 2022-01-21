@@ -195,7 +195,7 @@ const ABTest: NextPage = () => {
       </Head>
       <Container>
         <FreeTrialBadge user={user} />
-        <Menu />
+        <Menu user={user} />
         <Content>
           <div className="flex items-center gap-4">
             {abTestName && (

@@ -17,6 +17,7 @@ import DangerButton from "../../components/DangerButton";
 import SecondaryButton from "../../components/SecondaryButton";
 import setLogoutCookies from "../../utils/setLogoutCookies";
 import Router from "next/router";
+import FreeTrialBadge from "../../components/Dashboard/FreeTrialBadge";
 
 const Settings: NextPage = () => {
   const {user, setUser} = useUser();
@@ -130,7 +131,8 @@ const Settings: NextPage = () => {
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
       </Head>
       <Container>
-        <Menu width="max-w-sm" />
+        <FreeTrialBadge user={user} />
+        <Menu width="max-w-sm" user={user} />
         <Content width="max-w-sm">
           <div>
             <H1 text="Account settings" />

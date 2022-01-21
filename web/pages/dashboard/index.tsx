@@ -84,7 +84,7 @@ const Home: NextPage = () => {
       </Head>
       <Container>
         <FreeTrialBadge user={user} />
-        <Menu />
+        <Menu user={user} />
         <Content>
           <div className="flex justify-between items-end">
             <H1 text="Your A/B tests" />

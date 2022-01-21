@@ -54,7 +54,7 @@ const Settings: NextPage = () => {
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
       </Head>
       <Container>
-        <Menu width="max-w-sm" />
+        <Menu user={user} width="max-w-sm" />
         <Content width="max-w-sm">
           <div>
             <H1 text="Upgrade account" />

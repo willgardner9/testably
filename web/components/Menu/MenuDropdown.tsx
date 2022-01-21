@@ -1,5 +1,5 @@
 import {Menu, Transition} from "@headlessui/react";
-import {Fragment} from "react";
+import {Fragment, useEffect, useState} from "react";
 import setLogoutCookies from "../../utils/setLogoutCookies";
 import {
   ChevronDownIcon,
@@ -11,9 +11,13 @@ import {
 } from "@heroicons/react/solid";
 import deleteToken from "../../utils/deleteToken";
 import Router from "next/router";
+import {IUser} from "../../types/IUser";
 const cookieCutter = require("cookie-cutter");
+import {useRouter} from "next/router";
 
-export default function MenuDropdown() {
+const MenuDropdown: React.FC<{user: IUser}> = ({user}) => {
+  const router = useRouter();
+
   const handleLogout = async () => {
     const token = cookieCutter.get("token");
     await deleteToken(token);
@@ -24,6 +28,32 @@ export default function MenuDropdown() {
   const handleNavigation = (href: string) => {
     Router.push(href);
   };
+
+  const [stripeId, setStripeId] = useState<string>();
+
+  useEffect(() => {
+    setStripeId(user.stripe_id);
+  }, [user]);
+
+  const goToCheckout = async () => {
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/stripe/checkout`,
+      {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          stripeId,
+        }),
+      }
+    );
+    router.push(await response.text());
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -99,7 +129,7 @@ export default function MenuDropdown() {
             <Menu.Item>
               {({active}) => (
                 <button
-                  onClick={() => handleNavigation("/dashboard/billing")}
+                  onClick={() => goToCheckout()}
                   className={`${
                     active ? "bg-slate-100 text-slate" : "text-slate-700"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -149,4 +179,6 @@ export default function MenuDropdown() {
       </Transition>
     </Menu>
   );
-}
+};
+
+export default MenuDropdown;
