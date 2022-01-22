@@ -77,5 +77,6 @@ Route.group(() => {
   //  **  STRIPE  **  //
   Route.group(() => {
     Route.post('/checkout', 'StripeController.checkout').middleware('auth')
+    Route.post('/webhook', 'StripeController.webhook')
   }).prefix('/stripe')
 }).prefix('/api/v1/')

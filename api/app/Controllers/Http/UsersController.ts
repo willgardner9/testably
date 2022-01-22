@@ -45,7 +45,7 @@ export default class UsersController {
       customer: id,
       items: [
         {
-          price: process.env.FREE_TRIAL_PRICE_ID,
+          price: process.env.STRIPE_FREE_TRIAL_PRICE_ID,
         },
       ],
       payment_behavior: 'allow_incomplete',
