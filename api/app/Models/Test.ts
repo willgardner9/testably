@@ -38,4 +38,7 @@ export default class Test extends BaseModel {
 
   @column()
   public conversionUrl: string
+
+  @column()
+  public selector: string
 }

@@ -49,7 +49,6 @@ export default class VariationsController {
         message: `Variation ${params.id} not found`,
       })
     }
-
     value ? (variation.value = value) : ''
     variation.active = active
 

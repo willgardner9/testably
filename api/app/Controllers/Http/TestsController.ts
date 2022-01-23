@@ -68,6 +68,7 @@ export default class TestsController {
     test.name = payload.name ? payload.name : test.name
     test.active = payload.hasOwnProperty('active') ? payload.active : test.active
     test.conversionUrl = payload.conversionUrl ? payload.conversionUrl : test.conversionUrl
+    test.selector = payload.selector ? payload.selector : test.selector
 
     return await test.save()
   }
