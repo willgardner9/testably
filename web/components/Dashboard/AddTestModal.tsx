@@ -15,12 +15,15 @@ import {
 } from "@heroicons/react/solid";
 const cookieCutter = require("cookie-cutter");
 import toast, {Toaster} from "react-hot-toast";
+import {useRouter} from "next/router";
 
 const AddTestModal: React.FC<{
   isOpen: boolean;
   setIsOpen: Function;
   user: any;
 }> = ({isOpen, setIsOpen, user}) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState("");
@@ -97,6 +100,7 @@ const AddTestModal: React.FC<{
     if (response.status == 200) {
       toast.success(`Created A/B test ${responseJSON.name}`);
       setLoading(false);
+      router.push(`dashboard/abtests/${responseJSON.id}`);
       setIsOpen(false);
     }
   };

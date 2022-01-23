@@ -1,4 +1,15 @@
-import {LockClosedIcon, PlusIcon} from "@heroicons/react/solid";
+import {
+  CursorClickIcon,
+  LinkIcon,
+  LockClosedIcon,
+  PencilAltIcon,
+  PencilIcon,
+  PlusIcon,
+  RefreshIcon,
+  StatusOfflineIcon,
+  StatusOnlineIcon,
+  TrashIcon,
+} from "@heroicons/react/solid";
 import type {NextPage} from "next";
 import Head from "next/head";
 import {useRouter} from "next/router";
@@ -21,6 +32,9 @@ import DangerButton from "../../../components/DangerButton";
 import ABTestVariationTable from "../../../components/Dashboard/ABTestVariationTable";
 import AddVariationModal from "../../../components/Dashboard/AddVariationModal";
 import FreeTrialBadge from "../../../components/Dashboard/FreeTrialBadge";
+import Placeholder from "../../../components/Dashboard/Placeholder";
+import SelectorStepByStep from "../../../components/Dashboard/SelectorStepByStep";
+import SelectorModal from "../../../components/Dashboard/SelectorModal";
 
 const cookieCutter = require("cookie-cutter");
 
@@ -35,6 +49,7 @@ const ABTest: NextPage = () => {
   const [variationsLoading, setVariationsLoading] = useState(true);
   const [abTestLoading, setAbTestLoading] = useState(true);
   const [variationsModalOpen, setVariationsModalOpen] = useState(false);
+  const [selectorModalOpen, setSelectorModalOpen] = useState(false);
   const {id} = router.query;
 
   const fetchVariationsData = async () => {
@@ -184,7 +199,7 @@ const ABTest: NextPage = () => {
   useEffect(() => {
     fetchAbTestData();
     fetchVariationsData();
-  }, [router.query, variationsModalOpen]);
+  }, [router.query, variationsModalOpen, selectorModalOpen]);
 
   return (
     <>
@@ -226,13 +241,22 @@ const ABTest: NextPage = () => {
             </p>
           </div>
           <Spacer />
-          <div className="flex flex-col md:flex-row max-w-100 gap-4 flex-wrap md:divide-x divide-slate-200">
-            <div className="flex items-center gap-2 max-w-100">
-              <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
-                Conversion URL:
+          <div className="w-full flex flex-wrap gap-2">
+            {/* CONVERSION URL */}
+            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+              <div className="flex gap-2 items-center">
+                <LinkIcon className="w-3 h-3 text-slate-400" />
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                  Conversion URL
+                </div>
               </div>
-              <input
-                className="text-sm font-mono text-slate-700 whitespace-nowrap max-w-100 overflow-x-scroll"
+              {testData.conversion_url && (
+                <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2">
+                  {testData.conversion_url}
+                </span>
+              )}
+              {/* <input
+                className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded p-1 mt-2 min-w-100"
                 type="text"
                 onChange={(e) =>
                   setConversionUrl(e.target.value ? e.target.value : " ")
@@ -240,31 +264,87 @@ const ABTest: NextPage = () => {
                 onBlur={() => updateTestConversionUrl()}
                 size={conversionUrl.length}
                 defaultValue={testData.conversion_url}
-              />
+              /> */}
             </div>
-            <div className="flex items-center gap-2 md:pl-4">
-              <div className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
-                Active:
+            {/* STATUS */}
+            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+              <div className="flex gap-2 items-center">
+                {testData.active ? (
+                  <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
+                ) : (
+                  <StatusOfflineIcon className="w-3 h-3 text-slate-400" />
+                )}
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                  Status
+                </div>
               </div>
               <button
                 onClick={() => toggleTestActive(!testData.active)}
-                className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer"
+                className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer mt-2"
               >
                 {testData.active ? <ActivePill /> : <DisabledPill />}
               </button>
             </div>
-            <div className="flex items-center gap-2 md:pl-4">
-              <LockClosedIcon className="w-3 h-3 text-slate-400" />
-              <div className="flex items-center text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
-                Type:
+            {/* TARGET ELEMENT */}
+            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+              <div className="flex gap-2 items-center">
+                <CursorClickIcon className="w-3 h-3 text-slate-400" />
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                  Target element
+                </div>
               </div>
-              <div className="text-sm font-mono text-slate-700 whitespace-nowrap">
+
+              {testData.selector && (
+                <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2">
+                  {testData.selector}
+                </span>
+              )}
+            </div>
+            {/* TYPE */}
+            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+              <div className="flex gap-2 items-center">
+                <LockClosedIcon className="w-3 h-3 text-slate-400" />
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                  Type
+                </div>
+              </div>
+              <div className="text-sm font-mono text-slate-700 whitespace-nowrap mt-2">
                 {testData.type == "copy" && <CopyPill />}
                 {testData.type == "visibility" && <VisibilityPill />}
                 {testData.type == "src" && <SrcPill />}
               </div>
             </div>
           </div>
+
+          {/* SELECTOR */}
+          {!testData.selector && (
+            <div className="mt-8">
+              <Placeholder>
+                Select which element on your wesbite to A/B test by following
+                the instructions below, then click
+                <span className="inline-flex m-2">
+                  <SecondaryButton
+                    text="Add A/B test target element"
+                    handleOnClick={() => setSelectorModalOpen(true)}
+                    loading={false}
+                    ping={true}
+                    icon={
+                      <PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />
+                    }
+                  />
+                </span>{" "}
+                to get started.
+              </Placeholder>
+              <SelectorStepByStep />
+            </div>
+          )}
+          <SelectorModal
+            isOpen={selectorModalOpen}
+            setIsOpen={setSelectorModalOpen}
+            testId={testData.id}
+          />
+
+          {/* VARIATIONS */}
           <div className="flex justify-between items-end">
             <H1 text="Variations" styles="mt-8" />
             {testData.type !== "visibility" && (
@@ -273,7 +353,6 @@ const ABTest: NextPage = () => {
                 loading={false}
                 icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
                 handleOnClick={() => setVariationsModalOpen(true)}
-                ping={variationsData?.length >= 1 ? false : true}
               />
             )}
           </div>
@@ -291,9 +370,9 @@ const ABTest: NextPage = () => {
               handleToggleVariationActive={toggleVariationActive}
             />
           ) : (
-            <div className="border border-slate-200 shadow-sm mb-4 px-2 py-8 rounded-md text-center text-slate-500 text-sm">
+            <Placeholder>
               Start A/B testing by adding some variations. Click{" "}
-              <span className="inline-flex mx-2">
+              <span className="inline-flex m-2">
                 {" "}
                 <SecondaryButton
                   text="New variation"
@@ -302,14 +381,26 @@ const ABTest: NextPage = () => {
                     <PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />
                   }
                   handleOnClick={() => setVariationsModalOpen(true)}
+                  ping
                 />
               </span>{" "}
-              above to begin.
-            </div>
+              to begin.
+            </Placeholder>
           )}
 
-          <H1 text="Embed code" styles="mt-8" />
+          {/* EMBED CODE */}
+          <H1 text="2) Copy and paste the embed code" styles="mt-8" />
           <Spacer />
+          {variationsData?.length >= 1 && testData.selector ? (
+            <>show embed code</>
+          ) : (
+            <Placeholder>
+              The embed code for your A/B test will appear here once you have
+              added some variations and an element to test.
+            </Placeholder>
+          )}
+
+          {/* DANGER ZONE */}
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
           <p className="text-sm text-slate-500">

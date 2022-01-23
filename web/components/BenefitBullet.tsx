@@ -7,7 +7,7 @@ const BenefitBullet: React.FC<{
   return (
     <div className="flex items-center gap-2 pb-4 mb-4 border-b border-slate-200">
       <div
-        className={`p-2 bg-${colour}-50 flex items-center justify-center rounded-full`}
+        className={`p-2 bg-${colour}-100 flex items-center justify-center rounded-full`}
       >
         <CheckCircleIcon className={`w-4 h-4 text-${colour}-500`} />
       </div>
