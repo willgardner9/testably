@@ -8,4 +8,5 @@ export interface ITest {
   name: string;
   active: boolean;
   conversion_url: string;
+  selector: string;
 }
