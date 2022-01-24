@@ -51,6 +51,8 @@ const ABTest: NextPage = () => {
   const [abTestLoading, setAbTestLoading] = useState(true);
   const [variationsModalOpen, setVariationsModalOpen] = useState(false);
   const [selectorModalOpen, setSelectorModalOpen] = useState(false);
+  const [showSelectorInstructions, setShowSelectorInstructions] =
+    useState(false);
   const {id} = router.query;
   const [editMode, setEditMode] = useState(false);
 
@@ -286,7 +288,7 @@ const ABTest: NextPage = () => {
               )}
               {testData.conversion_url && editMode && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 min-w-100 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
                   type="text"
                   onChange={(e) =>
                     setConversionUrl(e.target.value ? e.target.value : " ")
@@ -318,11 +320,24 @@ const ABTest: NextPage = () => {
             </div>
             {/* TARGET ELEMENT */}
             <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
-              <div className="flex gap-2 items-center">
-                <CursorClickIcon className="w-3 h-3 text-slate-400" />
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
-                  Target element
+              <div className="flex justify-between">
+                <div className="flex gap-2 items-center">
+                  <CursorClickIcon className="w-3 h-3 text-slate-400" />
+                  <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                    Target element
+                  </div>
                 </div>
+
+                {editMode && (
+                  <button
+                    className="text-xs text-slate-400 underline hover:text-slate-500 transition-all"
+                    onClick={() =>
+                      setShowSelectorInstructions(!showSelectorInstructions)
+                    }
+                  >
+                    {showSelectorInstructions ? "hide" : "show"} instructions
+                  </button>
+                )}
               </div>
 
               {testData.selector && !editMode && (
@@ -335,7 +350,7 @@ const ABTest: NextPage = () => {
               )}
               {testData.selector && editMode && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 min-w-100 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
                   type="text"
                   onChange={(e) =>
                     setTestSelector(e.target.value ? e.target.value : " ")
@@ -389,6 +404,7 @@ const ABTest: NextPage = () => {
             setIsOpen={setSelectorModalOpen}
             testId={testData.id}
           />
+          {showSelectorInstructions && <SelectorStepByStep />}
 
           {/* VARIATIONS */}
           <div className="flex justify-between items-end">
