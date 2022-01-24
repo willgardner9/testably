@@ -44,6 +44,7 @@ const ABTest: NextPage = () => {
   const [testData, setTestData] = useState<ITest>({} as ITest);
   const [variationsData, setVariationsData] = useState<any>();
   const [conversionUrl, setConversionUrl] = useState<string>("");
+  const [testSelector, setTestSelector] = useState<string>("");
   const [abTestName, setAbTestName] = useState<string>("");
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
   const [variationsLoading, setVariationsLoading] = useState(true);
@@ -51,6 +52,7 @@ const ABTest: NextPage = () => {
   const [variationsModalOpen, setVariationsModalOpen] = useState(false);
   const [selectorModalOpen, setSelectorModalOpen] = useState(false);
   const {id} = router.query;
+  const [editMode, setEditMode] = useState(false);
 
   const fetchVariationsData = async () => {
     const token = cookieCutter.get("token");
@@ -86,6 +88,7 @@ const ABTest: NextPage = () => {
     const responseJSON = await response.json();
     setConversionUrl(responseJSON.conversion_url);
     setAbTestName(responseJSON.name);
+    setTestSelector(responseJSON.selector);
     setTestData(responseJSON);
     setAbTestLoading(false);
   };
@@ -112,7 +115,30 @@ const ABTest: NextPage = () => {
     setTestData(await response.json());
   };
 
+  const updateTestSelector = async () => {
+    setEditMode(false);
+    if (testData.selector == testSelector) return;
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
+      {
+        method: "put",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          selector: testSelector,
+        }),
+      }
+    );
+    response.status == 200 &&
+      toast.success(`Set A/B test selector to ${testSelector}`);
+    setTestData(await response.json());
+  };
   const updateTestConversionUrl = async () => {
+    setEditMode(false);
     if (testData.conversion_url == conversionUrl) return;
     const token = cookieCutter.get("token");
     const response = await fetch(
@@ -226,7 +252,7 @@ const ABTest: NextPage = () => {
               />
             )}
           </div>
-          <div className="flex flex-col md:flex-row text-xxs gap-2 md:gap-4 text-slate-500 my-2">
+          <div className="flex flex-col md:flex-row text-sm gap-2 md:gap-4 text-slate-500 my-2">
             <p className="font-light">
               Created at:{" "}
               <span className="font-normal">
@@ -250,21 +276,26 @@ const ABTest: NextPage = () => {
                   Conversion URL
                 </div>
               </div>
-              {testData.conversion_url && (
-                <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2">
+              {testData.conversion_url && !editMode && (
+                <button
+                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  onClick={() => setEditMode(true)}
+                >
                   {testData.conversion_url}
-                </span>
+                </button>
               )}
-              {/* <input
-                className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded p-1 mt-2 min-w-100"
-                type="text"
-                onChange={(e) =>
-                  setConversionUrl(e.target.value ? e.target.value : " ")
-                }
-                onBlur={() => updateTestConversionUrl()}
-                size={conversionUrl.length}
-                defaultValue={testData.conversion_url}
-              /> */}
+              {testData.conversion_url && editMode && (
+                <input
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 min-w-100 border border-slate-200 hover:border-slate-300 transition-all"
+                  type="text"
+                  onChange={(e) =>
+                    setConversionUrl(e.target.value ? e.target.value : " ")
+                  }
+                  onBlur={() => updateTestConversionUrl()}
+                  size={conversionUrl.length}
+                  defaultValue={testData.conversion_url}
+                />
+              )}
             </div>
             {/* STATUS */}
             <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
@@ -294,10 +325,25 @@ const ABTest: NextPage = () => {
                 </div>
               </div>
 
-              {testData.selector && (
-                <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2">
+              {testData.selector && !editMode && (
+                <button
+                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  onClick={() => setEditMode(true)}
+                >
                   {testData.selector}
-                </span>
+                </button>
+              )}
+              {testData.selector && editMode && (
+                <input
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 min-w-100 border border-slate-200 hover:border-slate-300 transition-all"
+                  type="text"
+                  onChange={(e) =>
+                    setTestSelector(e.target.value ? e.target.value : " ")
+                  }
+                  onBlur={() => updateTestSelector()}
+                  size={testSelector.length}
+                  defaultValue={testData.selector}
+                />
               )}
             </div>
             {/* TYPE */}
