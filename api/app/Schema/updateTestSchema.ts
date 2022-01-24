@@ -5,4 +5,5 @@ export const updateTestSchema = schema.create({
   active: schema.boolean.optional(),
   conversionUrl: schema.string.optional(),
   selector: schema.string.optional(),
+  testPage: schema.string.optional(),
 })

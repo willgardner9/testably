@@ -26,10 +26,10 @@ export default class TestsController {
   //  create test
   async store({ request }) {
     const payload = await request.validate({ schema: newTestSchema })
-    const { userId, name, type, active, conversionUrl } = payload
+    const { userId, name, type, active, conversionUrl, testPage } = payload
 
     const test = new Test()
-    await test.fill({ userId, name, type, active, conversionUrl }).save()
+    await test.fill({ userId, name, type, active, conversionUrl, testPage }).save()
 
     //  if type of test is 'visibility', create hidden / not hidden variations
     //  otherwise return
@@ -69,6 +69,7 @@ export default class TestsController {
     test.active = payload.hasOwnProperty('active') ? payload.active : test.active
     test.conversionUrl = payload.conversionUrl ? payload.conversionUrl : test.conversionUrl
     test.selector = payload.selector ? payload.selector : test.selector
+    test.testPage = payload.testPage ? payload.testPage : test.testPage
 
     return await test.save()
   }

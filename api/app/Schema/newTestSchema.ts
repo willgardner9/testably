@@ -7,4 +7,5 @@ export const newTestSchema = schema.create({
   type: schema.enum(Object.values(TestType)),
   active: schema.boolean(),
   conversionUrl: schema.string(),
+  testPage: schema.string(),
 })

@@ -41,4 +41,7 @@ export default class Test extends BaseModel {
 
   @column()
   public selector: string
+
+  @column()
+  public testPage: string
 }
