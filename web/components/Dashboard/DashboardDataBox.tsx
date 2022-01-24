@@ -6,7 +6,7 @@ const DashboardDataBox: React.FC<{
 }> = ({label, value, outOfValue, styles}) => {
   return (
     <div
-      className={`flex flex-col w-full md:w-1/3 border border-slate-200 rounded-md p-4 ${styles}`}
+      className={`flex flex-col w-full md:w-1/3 border border-slate-200 shadow-sm rounded-md p-4 ${styles}`}
     >
       <h3 className="uppercase text-xs text-slate-500 font-medium">{label}</h3>
       <h2 className="text-4xl font-semibold text-slate-700 text-center md:my-2">

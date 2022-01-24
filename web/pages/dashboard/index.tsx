@@ -87,7 +87,25 @@ const Home: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <div className="flex justify-between items-end">
+          <H1 text="Monthly performance" />
+          <Spacer />
+          <div className="flex flex-col md:flex-row gap-4 mt-4">
+            <DashboardDataBox
+              label="Unique sessions"
+              value={uniqueSessions || 0}
+              outOfValue="/ 10,000"
+            />
+            <DashboardDataBox label="Conversions" value={conversions || 0} />
+            <DashboardDataBox
+              label="CVR"
+              value={`${
+                conversions && uniqueSessions
+                  ? ((conversions / uniqueSessions) * 100).toFixed(2)
+                  : 0
+              }%`}
+            />
+          </div>
+          <div className="flex justify-between items-end mt-8">
             <H1 text="Your A/B tests" />
             <SecondaryButton
               text="New A/B test"
@@ -117,24 +135,7 @@ const Home: NextPage = () => {
               to begin.
             </Placeholder>
           )}
-          <H1 text="Monthly performance" styles="mt-8" />
-          <Spacer />
-          <div className="flex flex-col md:flex-row gap-4 mt-4">
-            <DashboardDataBox
-              label="Unique sessions"
-              value={uniqueSessions || 0}
-              outOfValue="/ 10,000"
-            />
-            <DashboardDataBox label="Conversions" value={conversions || 0} />
-            <DashboardDataBox
-              label="CVR"
-              value={`${
-                conversions && uniqueSessions
-                  ? ((conversions / uniqueSessions) * 100).toFixed(2)
-                  : 0
-              }%`}
-            />
-          </div>
+
           <AddTestModal
             isOpen={testModalOpen}
             setIsOpen={setTestModalOpen}

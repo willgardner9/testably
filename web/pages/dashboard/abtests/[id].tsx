@@ -266,47 +266,85 @@ const ABTest: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <div className="flex items-center gap-4">
-            {abTestName && (
-              <input
-                type="text"
-                className="font-medium text-2xl leading-10 text-slate-700 max-w-100"
-                onChange={(e) =>
-                  setAbTestName(e.target.value ? e.target.value : " ")
-                }
-                onBlur={() => updateAbTestName()}
-                size={abTestName.length}
-                defaultValue={testData.name}
-              />
-            )}
-          </div>
-          <div className="flex flex-col md:flex-row text-sm gap-2 md:gap-4 text-slate-500 my-2">
-            <p className="font-light">
-              Created at:{" "}
-              <span className="font-normal">
-                {new Date(testData.created_at).toLocaleDateString()}
-              </span>
-            </p>
-            <p className="font-light">
-              Updated at:{" "}
-              <span className="font-normal">
-                {new Date(testData.updated_at).toLocaleDateString()}
-              </span>
-            </p>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col">
+              {abTestName && (
+                <input
+                  type="text"
+                  className="font-medium text-2xl leading-10 text-slate-700 w-fit"
+                  onChange={(e) =>
+                    setAbTestName(e.target.value ? e.target.value : " ")
+                  }
+                  onBlur={() => updateAbTestName()}
+                  size={abTestName.length}
+                  defaultValue={testData.name}
+                />
+              )}
+              <div className="flex flex-col md:flex-row text-xs gap-2 md:gap-4 text-slate-500 mt-2">
+                <p className="font-light">
+                  Created at:{" "}
+                  <span className="font-normal">
+                    {new Date(testData.created_at).toLocaleDateString()}
+                  </span>
+                </p>
+                <p className="font-light">
+                  Updated at:{" "}
+                  <span className="font-normal">
+                    {new Date(testData.updated_at).toLocaleDateString()}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              {/* STATUS */}
+              <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
+                <div className="flex gap-2 items-center">
+                  {testData.active ? (
+                    <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
+                  ) : (
+                    <StatusOfflineIcon className="w-3 h-3 text-slate-400" />
+                  )}
+                  <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                    Status
+                  </div>
+                </div>
+                <button
+                  onClick={() => toggleTestActive(!testData.active)}
+                  className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer mt-2"
+                >
+                  {testData.active ? <ActivePill /> : <DisabledPill />}
+                </button>
+              </div>
+              {/* TYPE */}
+              <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
+                <div className="flex gap-2 items-center">
+                  <LockClosedIcon className="w-3 h-3 text-slate-400" />
+                  <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                    Type
+                  </div>
+                </div>
+                <div className="text-sm font-mono text-slate-700 whitespace-nowrap mt-2">
+                  {testData.type == "copy" && <CopyPill />}
+                  {testData.type == "visibility" && <VisibilityPill />}
+                  {testData.type == "src" && <SrcPill />}
+                </div>
+              </div>
+            </div>
           </div>
           <Spacer />
-          <div className="w-full flex flex-wrap gap-2">
+          <div className="w-full flex flex-col gap-2">
             {/* TEST PAGE URL */}
-            <div className="border p-4 rounded-md  h-auto min-w-max">
-              <div className="flex gap-2 items-center">
-                <LinkIcon className="w-3 h-3 text-slate-400" />
+            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
+              <div className="flex gap-2 items-center w-36">
+                <LinkIcon className="w-4 h-4 text-slate-400" />
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                   Test page URL
                 </div>
               </div>
               {testData.test_page && !editMode && (
                 <button
-                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
                   onClick={() => setEditMode(true)}
                 >
                   {testData.test_page}
@@ -314,7 +352,7 @@ const ABTest: NextPage = () => {
               )}
               {testData.test_page && editMode && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
                   type="text"
                   onChange={(e) =>
                     setTestPage(e.target.value ? e.target.value : " ")
@@ -325,18 +363,17 @@ const ABTest: NextPage = () => {
                 />
               )}
             </div>
-
             {/* CONVERSION URL */}
-            <div className="border p-4 rounded-md  h-auto min-w-max">
-              <div className="flex gap-2 items-center">
-                <LinkIcon className="w-3 h-3 text-slate-400" />
+            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
+              <div className="flex gap-2 items-center w-36">
+                <LinkIcon className="w-4 h-4 text-slate-400" />
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                   Conversion URL
                 </div>
               </div>
               {testData.conversion_url && !editMode && (
                 <button
-                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
                   onClick={() => setEditMode(true)}
                 >
                   {testData.conversion_url}
@@ -344,7 +381,7 @@ const ABTest: NextPage = () => {
               )}
               {testData.conversion_url && editMode && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
                   type="text"
                   onChange={(e) =>
                     setConversionUrl(e.target.value ? e.target.value : " ")
@@ -355,50 +392,20 @@ const ABTest: NextPage = () => {
                 />
               )}
             </div>
-            {/* STATUS */}
-            <div className="border p-4 rounded-md  h-auto min-w-max">
-              <div className="flex gap-2 items-center">
-                {testData.active ? (
-                  <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
-                ) : (
-                  <StatusOfflineIcon className="w-3 h-3 text-slate-400" />
-                )}
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
-                  Status
-                </div>
-              </div>
-              <button
-                onClick={() => toggleTestActive(!testData.active)}
-                className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer mt-2"
-              >
-                {testData.active ? <ActivePill /> : <DisabledPill />}
-              </button>
-            </div>
             {/* TARGET ELEMENT */}
-            <div className="border p-4 rounded-md  h-auto min-w-max">
+            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
               <div className="flex justify-between">
-                <div className="flex gap-2 items-center">
-                  <CursorClickIcon className="w-3 h-3 text-slate-400" />
+                <div className="flex gap-2 items-center w-36">
+                  <CursorClickIcon className="w-4 h-4 text-slate-400" />
                   <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                     Target element
                   </div>
                 </div>
-
-                {editMode && (
-                  <button
-                    className="text-xs text-slate-400 underline hover:text-slate-500 transition-all"
-                    onClick={() =>
-                      setShowSelectorInstructions(!showSelectorInstructions)
-                    }
-                  >
-                    {showSelectorInstructions ? "hide" : "show"} instructions
-                  </button>
-                )}
               </div>
 
               {testData.selector && !editMode && (
                 <button
-                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
                   onClick={() => setEditMode(true)}
                 >
                   {testData.selector}
@@ -406,7 +413,7 @@ const ABTest: NextPage = () => {
               )}
               {testData.selector && editMode && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
                   type="text"
                   onChange={(e) =>
                     setTestSelector(e.target.value ? e.target.value : " ")
@@ -416,20 +423,16 @@ const ABTest: NextPage = () => {
                   defaultValue={testData.selector}
                 />
               )}
-            </div>
-            {/* TYPE */}
-            <div className="border p-4 rounded-md  h-auto min-w-max">
-              <div className="flex gap-2 items-center">
-                <LockClosedIcon className="w-3 h-3 text-slate-400" />
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
-                  Type
-                </div>
-              </div>
-              <div className="text-sm font-mono text-slate-700 whitespace-nowrap mt-2">
-                {testData.type == "copy" && <CopyPill />}
-                {testData.type == "visibility" && <VisibilityPill />}
-                {testData.type == "src" && <SrcPill />}
-              </div>
+              {editMode && (
+                <button
+                  className="text-xs text-slate-400 underline hover:text-slate-500 transition-all flex-grow text-right"
+                  onClick={() =>
+                    setShowSelectorInstructions(!showSelectorInstructions)
+                  }
+                >
+                  {showSelectorInstructions ? "hide" : "show"} instructions
+                </button>
+              )}
             </div>
           </div>
 
