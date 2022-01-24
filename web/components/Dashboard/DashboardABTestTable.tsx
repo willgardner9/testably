@@ -26,6 +26,12 @@ const DashboardABTestTable: React.FC<{
                   scope="col"
                   className="py-3 pr-3 md:pr-0 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
                 >
+                  Test&#160;page&#160;URL
+                </th>
+                <th
+                  scope="col"
+                  className="py-3 pr-3 md:pr-0 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                >
                   Conversion&#160;URL
                 </th>
                 <th
@@ -53,7 +59,14 @@ const DashboardABTestTable: React.FC<{
                           {test.name}
                         </td>
                         <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
-                          {test.conversion_url}
+                          <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit border">
+                            {test.test_page}
+                          </span>
+                        </td>
+                        <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap">
+                          <span className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit border">
+                            {test.conversion_url}
+                          </span>
                         </td>
                         <td className="py-4 pr-4 text-sm text-slate-700 whitespace-nowrap">
                           {test.type == "copy" && <CopyPill />}

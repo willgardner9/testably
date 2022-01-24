@@ -32,6 +32,9 @@ const AddTestModal: React.FC<{
   const [conversion, setConversion] = useState("");
   const [conversionError, setConversionError] = useState(false);
 
+  const [testPage, setTestPage] = useState("");
+  const [testPageError, setTestPageError] = useState(false);
+
   const types = [
     {
       dbType: "copy",
@@ -94,6 +97,7 @@ const AddTestModal: React.FC<{
         type,
         active: true,
         conversionUrl: conversion,
+        testPage,
       }),
     });
     const responseJSON = await response.json();
@@ -186,6 +190,27 @@ const AddTestModal: React.FC<{
                     />
                   </label>
                   <label
+                    htmlFor="testPage"
+                    className={`${labelClasses} ${
+                      testPageError ? "text-red-500" : "text-slate-500"
+                    }`}
+                  >
+                    Test page URL{" "}
+                    {testPageError &&
+                      "- you need to provide a test page URL for your A/B test"}
+                    <input
+                      type="text"
+                      name="testPage"
+                      id="testPage"
+                      className={`${inputClasses} ${
+                        testPageError ? "border-red-500" : "border-slate-200"
+                      }`}
+                      onChange={(e) => setTestPage(e.currentTarget.value)}
+                      onFocus={() => setTestPageError(false)}
+                      placeholder="Eg 'https://www.testably.co'"
+                    />
+                  </label>
+                  <label
                     htmlFor="conversion"
                     className={`${labelClasses} ${
                       conversionError ? "text-red-500" : "text-slate-500"
@@ -196,14 +221,14 @@ const AddTestModal: React.FC<{
                       "- you need to provide a conversion URL for your A/B test"}
                     <input
                       type="text"
-                      name="name"
-                      id="name"
+                      name="conversion"
+                      id="conversion"
                       className={`${inputClasses} ${
                         conversionError ? "border-red-500" : "border-slate-200"
                       }`}
                       onChange={(e) => setConversion(e.currentTarget.value)}
                       onFocus={() => setConversionError(false)}
-                      placeholder="Eg '/signup?success=true'"
+                      placeholder="Eg 'https://www.testably.co/auth/signup?success=true'"
                     />
                   </label>
                   <RadioGroup value={type} onChange={setType}>

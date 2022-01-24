@@ -45,6 +45,7 @@ const ABTest: NextPage = () => {
   const [variationsData, setVariationsData] = useState<any>();
   const [conversionUrl, setConversionUrl] = useState<string>("");
   const [testSelector, setTestSelector] = useState<string>("");
+  const [testPage, setTestPage] = useState<string>("");
   const [abTestName, setAbTestName] = useState<string>("");
   const [showDeleteButtons, setShowDeleteButtons] = useState(true);
   const [variationsLoading, setVariationsLoading] = useState(true);
@@ -91,6 +92,7 @@ const ABTest: NextPage = () => {
     setConversionUrl(responseJSON.conversion_url);
     setAbTestName(responseJSON.name);
     setTestSelector(responseJSON.selector);
+    setTestPage(responseJSON.test_page);
     setTestData(responseJSON);
     setAbTestLoading(false);
   };
@@ -139,6 +141,7 @@ const ABTest: NextPage = () => {
       toast.success(`Set A/B test selector to ${testSelector}`);
     setTestData(await response.json());
   };
+
   const updateTestConversionUrl = async () => {
     setEditMode(false);
     if (testData.conversion_url == conversionUrl) return;
@@ -159,6 +162,29 @@ const ABTest: NextPage = () => {
     );
     response.status == 200 &&
       toast.success(`Set A/B test conversion URL to ${conversionUrl}`);
+    setTestData(await response.json());
+  };
+
+  const updateTestPage = async () => {
+    setEditMode(false);
+    if (testData.test_page == testPage) return;
+    const token = cookieCutter.get("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
+      {
+        method: "put",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          testPage,
+        }),
+      }
+    );
+    response.status == 200 &&
+      toast.success(`Set A/B test test page URL to ${testPage}`);
     setTestData(await response.json());
   };
 
@@ -270,8 +296,38 @@ const ABTest: NextPage = () => {
           </div>
           <Spacer />
           <div className="w-full flex flex-wrap gap-2">
+            {/* TEST PAGE URL */}
+            <div className="border p-4 rounded-md  h-auto min-w-max">
+              <div className="flex gap-2 items-center">
+                <LinkIcon className="w-3 h-3 text-slate-400" />
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                  Test page URL
+                </div>
+              </div>
+              {testData.test_page && !editMode && (
+                <button
+                  className="flex items-center text-sm font-mono p-1 bg-slate-200 text-slate-700 rounded-md w-fit mt-2 cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
+                  onClick={() => setEditMode(true)}
+                >
+                  {testData.test_page}
+                </button>
+              )}
+              {testData.test_page && editMode && (
+                <input
+                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md p-1 mt-2 border border-slate-200 hover:border-slate-300 transition-all"
+                  type="text"
+                  onChange={(e) =>
+                    setTestPage(e.target.value ? e.target.value : " ")
+                  }
+                  onBlur={() => updateTestPage()}
+                  size={testPage.length}
+                  defaultValue={testData.test_page}
+                />
+              )}
+            </div>
+
             {/* CONVERSION URL */}
-            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+            <div className="border p-4 rounded-md  h-auto min-w-max">
               <div className="flex gap-2 items-center">
                 <LinkIcon className="w-3 h-3 text-slate-400" />
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
@@ -300,7 +356,7 @@ const ABTest: NextPage = () => {
               )}
             </div>
             {/* STATUS */}
-            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+            <div className="border p-4 rounded-md  h-auto min-w-max">
               <div className="flex gap-2 items-center">
                 {testData.active ? (
                   <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
@@ -319,7 +375,7 @@ const ABTest: NextPage = () => {
               </button>
             </div>
             {/* TARGET ELEMENT */}
-            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+            <div className="border p-4 rounded-md  h-auto min-w-max">
               <div className="flex justify-between">
                 <div className="flex gap-2 items-center">
                   <CursorClickIcon className="w-3 h-3 text-slate-400" />
@@ -362,7 +418,7 @@ const ABTest: NextPage = () => {
               )}
             </div>
             {/* TYPE */}
-            <div className="border p-4 rounded-md flex-grow h-auto min-w-max">
+            <div className="border p-4 rounded-md  h-auto min-w-max">
               <div className="flex gap-2 items-center">
                 <LockClosedIcon className="w-3 h-3 text-slate-400" />
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
@@ -451,7 +507,7 @@ const ABTest: NextPage = () => {
           )}
 
           {/* EMBED CODE */}
-          <H1 text="2) Copy and paste the embed code" styles="mt-8" />
+          <H1 text="Embed code" styles="mt-8" />
           <Spacer />
           {variationsData?.length >= 1 && testData.selector ? (
             <>show embed code</>

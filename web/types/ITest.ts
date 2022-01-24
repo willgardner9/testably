@@ -9,4 +9,5 @@ export interface ITest {
   active: boolean;
   conversion_url: string;
   selector: string;
+  test_page: string;
 }
