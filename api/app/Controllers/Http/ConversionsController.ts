@@ -41,9 +41,9 @@ export default class ConversionsController {
   //  create conversions
   async store({ request }) {
     const payload = await request.validate({ schema: newConversionSchema })
-    const { userId, testId, variationId, device, country } = payload
+    const { userId, testId, variationId } = payload
 
     const conversions = new Conversion()
-    return await conversions.fill({ userId, testId, variationId, device, country }).save()
+    return await conversions.fill({ userId, testId, variationId }).save()
   }
 }

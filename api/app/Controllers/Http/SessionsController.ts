@@ -41,9 +41,9 @@ export default class SessionsController {
   //  create sessions
   async store({ request }) {
     const payload = await request.validate({ schema: newSessionSchema })
-    const { userId, testId, variationId, device, country } = payload
+    const { userId, testId, variationId } = payload
 
     const sessions = new Session()
-    return await sessions.fill({ userId, testId, variationId, device, country }).save()
+    return await sessions.fill({ userId, testId, variationId }).save()
   }
 }
