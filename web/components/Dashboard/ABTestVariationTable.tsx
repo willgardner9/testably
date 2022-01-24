@@ -44,21 +44,21 @@ const ABTestVariationTable: React.FC<{
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-slate-200">
-          <tr className="hover:bg-slate-50 cursor-pointer h-12 bg-slate-100 animate-pulse">
+          <tr className="hover:bg-slate-50 h-12 bg-slate-100 animate-pulse">
             <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end"></td>
           </tr>
-          <tr className="hover:bg-slate-50 cursor-pointer h-12 bg-slate-200 animate-pulse">
+          <tr className="hover:bg-slate-50 h-12 bg-slate-200 animate-pulse">
             <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end"></td>
           </tr>
-          <tr className="hover:bg-slate-50 cursor-pointer h-12 bg-slate-100 animate-pulse">
+          <tr className="hover:bg-slate-50 h-12 bg-slate-100 animate-pulse">
             <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
             <td className="py-4 pr-4 text-sm font-mono text-slate-700 whitespace-nowrap"></td>
@@ -109,10 +109,7 @@ const ABTestVariationTable: React.FC<{
           {data?.length &&
             data.map((variation: any) => {
               return (
-                <tr
-                  className="hover:bg-slate-50 cursor-pointer"
-                  key={variation.id}
-                >
+                <tr className="hover:bg-slate-50" key={variation.id}>
                   <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap">
                     {variation.value}
                   </td>
