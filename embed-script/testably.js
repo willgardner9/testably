@@ -24,7 +24,8 @@
           Math.floor(Math.random() * Object.keys(_variations).length)
         ].toString();
 
-      document.cookie = `testably_variation=${activeVariationId};max-age=2592000`;
+      document.cookie =
+        "testably_variation=" + activeVariationId + ";max-age=2592000";
     }
     return activeVariationId;
   }
