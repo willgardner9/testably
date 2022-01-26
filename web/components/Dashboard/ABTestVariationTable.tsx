@@ -7,7 +7,7 @@ const ABTestVariationTable: React.FC<{
   handleToggleVariationActive: Function;
 }> = ({data, loading, handleToggleVariationActive}) => {
   return loading ? (
-    <div className="overflow-x-scroll">
+    <div className="overflow-x-auto">
       <table className="w-full divide-y divide-slate-100 rounded">
         <thead>
           <tr>
@@ -69,8 +69,8 @@ const ABTestVariationTable: React.FC<{
       </table>
     </div>
   ) : (
-    <div className="overflow-x-scroll">
-      <table className="w-full divide-y divide-slate-100 rounded">
+    <div className="overflow-x-scroll shadow-sm py-2 px-4 border border-slate-200 rounded-md">
+      <table className="w-full">
         <thead>
           <tr>
             <th
@@ -99,17 +99,20 @@ const ABTestVariationTable: React.FC<{
             </th>
             <th
               scope="col"
-              className="py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
+              className="py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
             >
               Active
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-slate-200">
+        <tbody className="bg-white">
           {data?.length &&
             data.map((variation: any) => {
               return (
-                <tr className="hover:bg-slate-50" key={variation.id}>
+                <tr
+                  className="border-y border-slate-100 last:border-b-0"
+                  key={variation.id}
+                >
                   <td className="py-4 pr-4 text-base text-slate-700 whitespace-nowrap">
                     {variation.value}
                   </td>
@@ -129,7 +132,7 @@ const ABTestVariationTable: React.FC<{
                           100
                         ).toFixed(2) + `%`}
                   </td>
-                  <td className="py-4 pl-4 text-sm text-slate-700 whitespace-nowrap flex justify-end">
+                  <td className="py-4 text-sm text-slate-700 whitespace-nowrap">
                     {variation.active ? (
                       <button
                         onClick={() =>
