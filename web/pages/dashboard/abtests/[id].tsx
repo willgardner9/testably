@@ -35,6 +35,7 @@ import FreeTrialBadge from "../../../components/Dashboard/FreeTrialBadge";
 import Placeholder from "../../../components/Dashboard/Placeholder";
 import SelectorStepByStep from "../../../components/Dashboard/SelectorStepByStep";
 import SelectorModal from "../../../components/Dashboard/SelectorModal";
+import CodeSnippet from "../../../components/Dashboard/CodeSnippet";
 
 const cookieCutter = require("cookie-cutter");
 
@@ -55,7 +56,7 @@ const ABTest: NextPage = () => {
   const [showSelectorInstructions, setShowSelectorInstructions] =
     useState(false);
   const {id} = router.query;
-  const [editMode, setEditMode] = useState(false);
+  const [generateNewSnippet, setGenerateNewSnippet] = useState(false);
 
   const fetchVariationsData = async () => {
     const token = cookieCutter.get("token");
@@ -99,6 +100,7 @@ const ABTest: NextPage = () => {
 
   const toggleTestActive = async (state: boolean) => {
     if (state == testData.active) return;
+    setGenerateNewSnippet(true);
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -120,8 +122,9 @@ const ABTest: NextPage = () => {
   };
 
   const updateTestSelector = async () => {
-    setEditMode(false);
     if (testData.selector == testSelector) return;
+    setGenerateNewSnippet(true);
+
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -143,8 +146,9 @@ const ABTest: NextPage = () => {
   };
 
   const updateTestConversionUrl = async () => {
-    setEditMode(false);
     if (testData.conversion_url == conversionUrl) return;
+    setGenerateNewSnippet(true);
+
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -166,8 +170,9 @@ const ABTest: NextPage = () => {
   };
 
   const updateTestPage = async () => {
-    setEditMode(false);
     if (testData.test_page == testPage) return;
+    setGenerateNewSnippet(true);
+
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/tests/${id}`,
@@ -229,6 +234,8 @@ const ABTest: NextPage = () => {
   };
 
   const toggleVariationActive = async (id: string, state: boolean) => {
+    setGenerateNewSnippet(true);
+
     const token = cookieCutter.get("token");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URI}/variations/${id}`,
@@ -257,7 +264,7 @@ const ABTest: NextPage = () => {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <Head>
         <title>TESTA/BLY. | Dashboard</title>
         <meta property="og:title" content="TESTA/BLY. | Sign in" key="title" />
@@ -266,7 +273,7 @@ const ABTest: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 mb-4">
             <div className="flex flex-col">
               {abTestName && (
                 <input
@@ -332,7 +339,6 @@ const ABTest: NextPage = () => {
               </div>
             </div>
           </div>
-          <Spacer />
           <div className="w-full flex flex-col gap-2">
             {/* TEST PAGE URL */}
             <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
@@ -342,17 +348,9 @@ const ABTest: NextPage = () => {
                   Test page URL
                 </div>
               </div>
-              {testData.test_page && !editMode && (
-                <button
-                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
-                  onClick={() => setEditMode(true)}
-                >
-                  {testData.test_page}
-                </button>
-              )}
-              {testData.test_page && editMode && (
+              {testData.test_page && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="whitespace-nowrap overflow-x-scroll flex items-center text-sm font-mono px-2 p-1 text-slate-500 w-fit cursor-text hover:text-slate-600 border-slate-200 transition-all border-b hover:border-slate-300"
                   type="text"
                   onChange={(e) =>
                     setTestPage(e.target.value ? e.target.value : " ")
@@ -371,17 +369,9 @@ const ABTest: NextPage = () => {
                   Conversion URL
                 </div>
               </div>
-              {testData.conversion_url && !editMode && (
-                <button
-                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
-                  onClick={() => setEditMode(true)}
-                >
-                  {testData.conversion_url}
-                </button>
-              )}
-              {testData.conversion_url && editMode && (
+              {testData.conversion_url && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="whitespace-nowrap overflow-x-scroll flex items-center text-sm font-mono px-2 p-1 text-slate-500 w-fit cursor-text hover:text-slate-600 border-slate-200 transition-all border-b hover:border-slate-300"
                   type="text"
                   onChange={(e) =>
                     setConversionUrl(e.target.value ? e.target.value : " ")
@@ -402,18 +392,9 @@ const ABTest: NextPage = () => {
                   </div>
                 </div>
               </div>
-
-              {testData.selector && !editMode && (
-                <button
-                  className="flex items-center text-sm font-mono px-2 p-1 bg-slate-200 text-slate-700 rounded-md w-fit cursor-pointer hover:bg-slate-300 hover:text-slate-800 transition-all border hover:border-slate-300"
-                  onClick={() => setEditMode(true)}
-                >
-                  {testData.selector}
-                </button>
-              )}
-              {testData.selector && editMode && (
+              {testData.selector && (
                 <input
-                  className="text-sm font-mono text-slate-500 whitespace-nowrap overflow-x-scroll rounded-md px-2 p-1 border border-slate-200 hover:border-slate-300 transition-all"
+                  className="whitespace-nowrap overflow-x-scroll flex items-center text-sm font-mono px-2 p-1 text-slate-500 w-fit cursor-text hover:text-slate-600 border-slate-200 transition-all border-b hover:border-slate-300"
                   type="text"
                   onChange={(e) =>
                     setTestSelector(e.target.value ? e.target.value : " ")
@@ -423,16 +404,16 @@ const ABTest: NextPage = () => {
                   defaultValue={testData.selector}
                 />
               )}
-              {editMode && (
+              <div className="flex flex-grow justify-end">
                 <button
-                  className="text-xs text-slate-400 underline hover:text-slate-500 transition-all flex-grow text-right"
+                  className="text-xs text-slate-400 underline hover:text-slate-500 transition-all"
                   onClick={() =>
                     setShowSelectorInstructions(!showSelectorInstructions)
                   }
                 >
                   {showSelectorInstructions ? "hide" : "show"} instructions
                 </button>
-              )}
+              </div>
             </div>
           </div>
 
@@ -466,7 +447,7 @@ const ABTest: NextPage = () => {
           {showSelectorInstructions && <SelectorStepByStep />}
 
           {/* VARIATIONS */}
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end mb-4">
             <H1 text="Variations" styles="mt-8" />
             {testData.type !== "visibility" && (
               <SecondaryButton
@@ -477,7 +458,6 @@ const ABTest: NextPage = () => {
               />
             )}
           </div>
-          <Spacer />
           <AddVariationModal
             isOpen={variationsModalOpen}
             setIsOpen={setVariationsModalOpen}
@@ -510,24 +490,44 @@ const ABTest: NextPage = () => {
           )}
 
           {/* EMBED CODE */}
-          <H1 text="Embed code" styles="mt-8" />
-          <Spacer />
           {variationsData?.length >= 1 && testData.selector ? (
-            <>show embed code</>
+            <CodeSnippet
+              userData={user}
+              testData={testData}
+              variationsData={variationsData}
+              generateNewSnippet={generateNewSnippet}
+              setGenerateNewSnippet={setGenerateNewSnippet}
+            />
           ) : (
-            <Placeholder>
-              The embed code for your A/B test will appear here once you have
-              added some variations and an element to test.
-            </Placeholder>
+            <>
+              <H1 text="Embed code" styles="mt-8" />
+              <Spacer />
+              <Placeholder>
+                The embed code for your A/B test will appear here once you have
+                added some variations and an element to test.
+              </Placeholder>
+            </>
           )}
 
           {/* DANGER ZONE */}
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
-          <p className="text-sm text-slate-500">
-            Deleting your A/B test deletes all A/B test data, variations data,
-            and conversions data. This action cannot be reversed or recovered.
-          </p>
+          <div className="flex gap-4">
+            <div
+              className={`w-8 h-8 p-2 bg-red-100 flex items-center justify-center rounded-full`}
+            >
+              <div
+                className={`w-4 h-4 text-red-500 flex items-center justify-center font-bold `}
+              >
+                !
+              </div>
+            </div>
+            <p className="text-slate-500 text-sm font-light leading-7">
+              Deleting your A/B test deletes all A/B test data, variations data,
+              and conversions data. This action cannot be reversed or recovered.
+            </p>
+          </div>
+
           <DangerButton
             text="Delete A/B test"
             loading={false}
