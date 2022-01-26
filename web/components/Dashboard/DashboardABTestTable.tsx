@@ -12,7 +12,7 @@ const DashboardABTestTable: React.FC<{
   return (
     <>
       {data.length ? (
-        <div className="overflow-x-scroll">
+        <div className="overflow-x-auto">
           <table className="w-full divide-y divide-slate-100 rounded table-auto">
             <thead>
               <tr>
