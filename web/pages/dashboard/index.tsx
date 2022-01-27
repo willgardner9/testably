@@ -15,14 +15,14 @@ import SecondaryButton from "../../components/SecondaryButton";
 import Spacer from "../../components/Spacer";
 import {useUser} from "../../context/auth";
 import {ITest} from "../../types/ITest";
+import DashboardABTestCard from "../../components/Dashboard/DashboardABTestCard";
 const cookieCutter = require("cookie-cutter");
 
 const Home: NextPage = () => {
   const {user} = useUser();
   const [abTests, setAbTests] = useState<ITest[]>([]);
   const [testModalOpen, setTestModalOpen] = useState(false);
-  const [uniqueSessions, setUniqueSessions] = useState();
-  const [conversions, setConversions] = useState();
+  const [sessions, setSessions] = useState();
 
   useEffect(() => {
     const fetchAbTests = async () => {
@@ -54,27 +54,10 @@ const Home: NextPage = () => {
         }
       );
       const responseJSON = await response.json();
-      return setUniqueSessions(responseJSON.length);
-    };
-    const fetchConversions = async () => {
-      if (!user.id) return;
-      const token = cookieCutter.get("token");
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URI}/conversions/?user_id=${user.id}`,
-        {
-          method: "get",
-          mode: "cors",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const responseJSON = await response.json();
-      return setConversions(responseJSON.length);
+      return setSessions(responseJSON.length);
     };
     fetchAbTests();
     fetchSessions();
-    fetchConversions();
   }, [user, testModalOpen]);
 
   return (
@@ -87,25 +70,7 @@ const Home: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <H1 text="Monthly performance" />
-          <Spacer />
-          <div className="flex flex-col md:flex-row gap-4 mt-4">
-            <DashboardDataBox
-              label="Unique sessions"
-              value={uniqueSessions || 0}
-              outOfValue="/ 10,000"
-            />
-            <DashboardDataBox label="Conversions" value={conversions || 0} />
-            <DashboardDataBox
-              label="CVR"
-              value={`${
-                conversions && uniqueSessions
-                  ? ((conversions / uniqueSessions) * 100).toFixed(2)
-                  : 0
-              }%`}
-            />
-          </div>
-          <div className="flex justify-between items-end mt-8">
+          <div className="flex justify-between items-end mb-4">
             <H1 text="Your A/B tests" />
             <SecondaryButton
               text="New A/B test"
@@ -114,9 +79,10 @@ const Home: NextPage = () => {
               handleOnClick={() => setTestModalOpen(true)}
             />
           </div>
-          <Spacer />
           {abTests?.length >= 1 ? (
-            <DashboardABTestTable data={abTests} />
+            <div className="flex flex-col gap-4">
+              <DashboardABTestCard data={abTests} />
+            </div>
           ) : (
             <Placeholder>
               Start A/B testing in 5 minutes. Click{" "}
@@ -135,7 +101,15 @@ const Home: NextPage = () => {
               to begin.
             </Placeholder>
           )}
-
+          <H1 text="Usage" styles="mt-8" />
+          <Spacer />
+          <div className="flex flex-col md:flex-row gap-4 mt-4">
+            <DashboardDataBox
+              label="Sessions"
+              value={sessions || 0}
+              outOfValue="/ 10,000"
+            />
+          </div>
           <AddTestModal
             isOpen={testModalOpen}
             setIsOpen={setTestModalOpen}
