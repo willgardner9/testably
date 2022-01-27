@@ -24,7 +24,7 @@ const Settings: NextPage = () => {
   const upgradeBenefits = [
     "Unlimited A/B tests",
     "Unlimited variations",
-    "Up to 100,000 unique sessions a month",
+    "Up to 100,000 sessions a month",
     "Unlimited conversions",
   ];
 
