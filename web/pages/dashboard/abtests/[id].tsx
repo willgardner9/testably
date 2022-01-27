@@ -36,7 +36,7 @@ import Placeholder from "../../../components/Dashboard/Placeholder";
 import SelectorStepByStep from "../../../components/Dashboard/SelectorStepByStep";
 import SelectorModal from "../../../components/Dashboard/SelectorModal";
 import CodeSnippet from "../../../components/Dashboard/CodeSnippet";
-
+import VariationsStats from "../../../components/Dashboard/VariationsStats";
 const cookieCutter = require("cookie-cutter");
 
 const ABTest: NextPage = () => {
@@ -339,7 +339,10 @@ const ABTest: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex flex-col gap-4">
+            {variationsData?.length === 2 && (
+              <VariationsStats data={variationsData} />
+            )}
             {/* TEST PAGE URL */}
             <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
               <div className="flex gap-2 items-center w-36">
@@ -447,29 +450,46 @@ const ABTest: NextPage = () => {
           {showSelectorInstructions && <SelectorStepByStep />}
 
           {/* VARIATIONS */}
-          <div className="flex justify-between items-end mb-4">
-            <H1 text="Variations" styles="mt-8" />
-            {testData.type !== "visibility" && (
-              <SecondaryButton
-                text="New variation"
-                loading={false}
-                icon={<PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />}
-                handleOnClick={() => setVariationsModalOpen(true)}
-              />
-            )}
-          </div>
+          <H1 text="Variations" styles="mt-8 mb-4" />
           <AddVariationModal
             isOpen={variationsModalOpen}
             setIsOpen={setVariationsModalOpen}
             userId={user.id}
             testId={testData.id}
           />
-          {variationsData?.length >= 1 ? (
-            <ABTestVariationTable
-              data={variationsData}
-              loading={variationsLoading}
-              handleToggleVariationActive={toggleVariationActive}
-            />
+          {variationsData?.length === 2 ? (
+            <>
+              <ABTestVariationTable
+                data={variationsData}
+                loading={variationsLoading}
+                handleToggleVariationActive={toggleVariationActive}
+              />
+            </>
+          ) : variationsData?.length === 1 ? (
+            <>
+              <ABTestVariationTable
+                data={variationsData}
+                loading={variationsLoading}
+                handleToggleVariationActive={toggleVariationActive}
+              />
+              <div className="mt-4"></div>
+              <Placeholder>
+                Add a second variation to start A/B testing. Click{" "}
+                <span className="inline-flex m-2">
+                  {" "}
+                  <SecondaryButton
+                    text="New variation"
+                    loading={false}
+                    icon={
+                      <PlusIcon className="w-4 h-4 mr-1" fill="currentColor" />
+                    }
+                    handleOnClick={() => setVariationsModalOpen(true)}
+                    ping
+                  />
+                </span>{" "}
+                to add another.
+              </Placeholder>
+            </>
           ) : (
             <Placeholder>
               Start A/B testing by adding some variations. Click{" "}
@@ -512,7 +532,7 @@ const ABTest: NextPage = () => {
           {/* DANGER ZONE */}
           <H1 text="Danger zone" styles="mt-8" />
           <Spacer />
-          <div className="flex gap-4">
+          <div className="flex gap-4 mt-4">
             <div
               className={`w-8 h-8 p-2 bg-red-100 flex items-center justify-center rounded-full`}
             >
