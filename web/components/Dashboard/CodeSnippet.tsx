@@ -56,7 +56,7 @@ const CodeSnippet: React.FC<{
         />
       </div>
       <Spacer />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mt-4">
         <div className="flex gap-4">
           <div
             className={`w-8 h-8 p-2 bg-green-100 flex items-center justify-center rounded-full`}
@@ -168,17 +168,6 @@ const CodeSnippet: React.FC<{
             </p>
           </div>
         </div>
-        <pre className="whitespace-pre-wrap p-3 text-slate-600 bg-slate-50 rounded-md border-2">
-          {generateSnippet(
-            userData.id,
-            testData.id,
-            testData.test_page,
-            testData.conversion_url,
-            testData.selector,
-            testData.type,
-            variations
-          )}
-        </pre>
       </div>
     </>
   );
