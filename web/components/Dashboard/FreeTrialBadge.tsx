@@ -15,7 +15,7 @@ const FreeTrialBadge: React.FC<{user: IUser}> = ({user}) => {
       return result;
     }
 
-    const dayTrialEnds = addDays(user.created_at, 7);
+    const dayTrialEnds = addDays(user.created_at, 14);
     const dateNow = new Date();
 
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -31,7 +31,7 @@ const FreeTrialBadge: React.FC<{user: IUser}> = ({user}) => {
 
     const diffDate = dateDiffInDays(dateNow, dayTrialEnds);
 
-    if (diffDate <= 1) {
+    if (diffDate <= 1 && user?.current_plan === "trial") {
       router.push("/dashboard/upgrade");
     }
 
