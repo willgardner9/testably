@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-  var _cookies$find2, _cookies$find3;
+  var _cookies$find2;
 
   const _cookies = (document.cookie && document.cookie.split("; ")) || false;
 
@@ -36,7 +36,8 @@
         Object.keys(_variations)[
           Math.floor(Math.random() * Object.keys(_variations).length)
         ].toString();
-      document.cookie = `testably_variation=${activeVariationId};max-age=2592000`;
+      document.cookie =
+        "testably_variation=" + activeVariationId + ";max-age=2592000";
     }
 
     return activeVariationId;
@@ -46,41 +47,16 @@
 
   const _url = window.location.href;
 
-  const _returningSession =
+  const _converted =
     (_cookies &&
       ((_cookies$find2 = _cookies.find((row) =>
-        row.startsWith("testably_visited=")
+        row.startsWith("testably_converted=")
       )) === null || _cookies$find2 === void 0
         ? void 0
         : _cookies$find2.split("=")[1])) ||
     false;
 
-  const _converted =
-    (_cookies &&
-      ((_cookies$find3 = _cookies.find((row) =>
-        row.startsWith("testably_converted=")
-      )) === null || _cookies$find3 === void 0
-        ? void 0
-        : _cookies$find3.split("=")[1])) ||
-    false;
-
   if (_url !== _testPageURL && _url !== _conversionURL) return;
-
-  if (_url === _testPageURL && !_returningSession) {
-    document.cookie = "testably_visited=true;max-age=2592000";
-    fetch("http://127.0.0.1:3333/api/v1/sessions", {
-      method: "post",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: _userId,
-        testId: _testId,
-        variationId: _activeVariationId,
-      }),
-    });
-  }
 
   if (_url === _testPageURL) {
     switch (_type) {
@@ -107,6 +83,19 @@
       default:
         break;
     }
+
+    fetch("http://127.0.0.1:3333/api/v1/sessions", {
+      method: "post",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: _userId,
+        testId: _testId,
+        variationId: _activeVariationId,
+      }),
+    });
   }
 
   function _testablyConversion() {
@@ -126,14 +115,14 @@
     });
   }
 
-  if (_url === _conversionURL && _returningSession) {
+  if (_url === _conversionURL && _activeVariationId) {
     _testablyConversion();
   }
 
-  window.addEventListener("popstate", function (event) {
+  window.addEventListener("popstate", function (e) {
     console.log("detected url change to:", window.location.href);
 
-    if (_url === _conversionURL && _returningSession) {
+    if (_url === _conversionURL && _activeVariationId) {
       _testablyConversion;
     }
   });

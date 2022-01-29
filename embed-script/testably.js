@@ -31,12 +31,6 @@
   }
   const _activeVariationId = _getActiveVariationId();
   const _url = window.location.href;
-  const _returningSession =
-    (_cookies &&
-      _cookies
-        .find((row) => row.startsWith("testably_visited="))
-        ?.split("=")[1]) ||
-    false;
   const _converted =
     (_cookies &&
       _cookies
@@ -44,21 +38,6 @@
         ?.split("=")[1]) ||
     false;
   if (_url !== _testPageURL && _url !== _conversionURL) return;
-  if (_url === _testPageURL && !_returningSession) {
-    document.cookie = "testably_visited=true;max-age=2592000";
-    fetch("http://127.0.0.1:3333/api/v1/sessions", {
-      method: "post",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: _userId,
-        testId: _testId,
-        variationId: _activeVariationId,
-      }),
-    });
-  }
 
   if (_url === _testPageURL) {
     switch (_type) {
@@ -82,6 +61,18 @@
       default:
         break;
     }
+    fetch("http://127.0.0.1:3333/api/v1/sessions", {
+      method: "post",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: _userId,
+        testId: _testId,
+        variationId: _activeVariationId,
+      }),
+    });
   }
 
   function _testablyConversion() {
@@ -101,13 +92,13 @@
     });
   }
 
-  if (_url === _conversionURL && _returningSession) {
+  if (_url === _conversionURL && _activeVariationId) {
     _testablyConversion();
   }
 
-  window.addEventListener("popstate", function (event) {
+  window.addEventListener("popstate", function (e) {
     console.log("detected url change to:", window.location.href);
-    if (_url === _conversionURL && _returningSession) {
+    if (_url === _conversionURL && _activeVariationId) {
       _testablyConversion;
     }
   });
