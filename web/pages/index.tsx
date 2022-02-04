@@ -15,8 +15,83 @@ import Unicorn from "../components/WorksWith/Unicorn";
 import Vue from "../components/WorksWith/Vue";
 import Webflow from "../components/WorksWith/Webflow";
 import Wordpress from "../components/WorksWith/Wordpress";
+import {IoIosInfinite} from "react-icons/io";
+import {CgBatteryFull} from "react-icons/cg";
+import {RiLock2Line} from "react-icons/ri";
+import {BsLightningCharge} from "react-icons/bs";
+import {AiOutlineFieldTime} from "react-icons/ai";
+import {HiOutlineCog} from "react-icons/hi";
+import {RiDashboard3Line} from "react-icons/ri";
 
 const Home: NextPage = () => {
+  const features = [
+    {
+      name: "Unlimited tests & domains",
+      description:
+        "Set up as many A/B tests as you like on as many domains as you own. Perfect for indiehackers with multiple projects, freelancers, and agencies.",
+      icon: (
+        <IoIosInfinite className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Powerful tests",
+      description:
+        "A/B test copy, images, videos, and element visibility. Perfect for tring out different hero copy, CTAs, and element orders.",
+      icon: (
+        <CgBatteryFull className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Secure & privacy friendly",
+      description:
+        "All data is secured safely in EU servers. We don't track your users or store their personal data—and you own all your data.",
+      icon: (
+        <RiLock2Line className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Simple dashboard",
+      description: (
+        <>
+          Ever felt lost on your Google Optimize dashboard? No more. The{" "}
+          <span className="font-oswald">TESTA/BLY</span> dashboard tells you
+          what you need to know at a glance.
+        </>
+      ),
+      icon: (
+        <RiDashboard3Line className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Realtime data",
+      description:
+        "View all your A/B test data in realtime. No waiting until the end of the day/week for reports and rollups.",
+      icon: (
+        <AiOutlineFieldTime className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Blazing fast",
+      description:
+        "Our JavaScript snippet runs in the browser, so say goodbye to content flickering.",
+      icon: (
+        <BsLightningCharge className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+    {
+      name: "Easy integration",
+      description: (
+        <>
+          <span className="font-oswald">TESTA/BLY</span> integrates easily with
+          all website builders, CMS and developer frameworks.
+        </>
+      ),
+      icon: (
+        <HiOutlineCog className="w-10 h-10 p-2 rounded-lg bg-green-500 text-white" />
+      ),
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -66,9 +141,9 @@ const Home: NextPage = () => {
       <section className="w-screen p-4 lg:px-0">
         <div className="w-full mx-auto max-w-3xl flex items-center justify-center flex-col">
           <small className="text-slate-400 mt-4 text-base z-10">
-            Integrates with
+            Integrates easily with
           </small>
-          <div className="flex flex-wrap justify-evenly mt-6 gap-10">
+          <div className="flex flex-wrap justify-evenly mt-6 gap-8">
             <Webflow />
             <Wordpress />
             <Unicorn />
@@ -215,6 +290,28 @@ const Home: NextPage = () => {
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="w-screen p-4 lg:px-0 mt-16 bg-slate-50">
+        <div className="w-full mx-auto max-w-8xl flex flex-col">
+          <h2 className="text-slate-900 font-semibold text-5xl text-center leading-tight my-16">
+            Powerful features available on all plans
+          </h2>
+          <div className="w-full flex flex-wrap justify-evenly">
+            {features.map((feature) => {
+              return (
+                <article className="flex flex-col basis-1/4 px-6 mb-8">
+                  {feature.icon}
+                  <h4 className="text-slate-900 font-medium text-xl mt-2 leading-10">
+                    {feature.name}
+                  </h4>
+                  <p className="text-slate-500 leading-8">
+                    {feature.description}
+                  </p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

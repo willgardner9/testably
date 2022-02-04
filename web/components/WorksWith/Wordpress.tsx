@@ -6,7 +6,7 @@ const Wordpress: React.FC<{}> = ({}) => {
       src="/logos/wordpress.svg"
       width={131}
       height={30}
-      className="z-20"
+      className="z-20 scale-75"
     />
   );
 };

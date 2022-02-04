@@ -6,7 +6,7 @@ const Squarespace: React.FC<{}> = ({}) => {
       src="/logos/squarespace.svg"
       width={38}
       height={30}
-      className="z-20"
+      className="z-20 scale-75"
     />
   );
 };
