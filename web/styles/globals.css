@@ -41,5 +41,18 @@
     rgba(0, 0, 0, 0) 100%
   );
   opacity: 0.2;
-  height: 38rem;
+  height: 100%;
+}
+
+.footer-gradient {
+  background: #0f172a;
+  background: radial-gradient(
+    circle,
+    rgba(22, 163, 74, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0.2;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
