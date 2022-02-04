@@ -47,6 +47,9 @@ export default class User extends BaseModel {
   @column()
   public stripeId: string
 
+  @column()
+  public admin: boolean
+
   @beforeSave()
   public static async hashPassword(user: User) {
     if (user.$dirty.password) {

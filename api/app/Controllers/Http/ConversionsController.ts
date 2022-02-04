@@ -3,7 +3,7 @@ import { newConversionSchema } from 'App/Schema/newConversionSchema'
 
 export default class ConversionsController {
   //  conversions by test id or variation id or user id
-  async index({ request, response }) {
+  async index({ request, response, bouncer }) {
     const { test_id, variation_id, user_id } = request.qs()
     let conversions
 
@@ -16,6 +16,7 @@ export default class ConversionsController {
     if (user_id) {
       conversions = await Conversion.query().where('user_id', user_id)
     }
+    await bouncer.authorize('bounceConversion', conversions)
 
     if (!conversions || conversions.length === 0) {
       return response.status(404).send({

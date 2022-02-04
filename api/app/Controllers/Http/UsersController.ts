@@ -7,20 +7,23 @@ const stripe = Stripe(process.env.STRIPE_SK)
 
 export default class UsersController {
   //  all users
-  // async index({ response }) {
-  //   const users = await User.all()
-  //   if (!users) {
-  //     return response.status(404).send({
-  //       error: true,
-  //       message: `Users not found`,
-  //     })
-  //   }
-  //   return users
-  // }
+  async index({ response, bouncer }) {
+    await bouncer.authorize('bounceUser')
+
+    const users = await User.all()
+    if (!users) {
+      return response.status(404).send({
+        error: true,
+        message: `Users not found`,
+      })
+    }
+    return users
+  }
 
   //  user by id
-  async show({ params, response }) {
+  async show({ params, response, bouncer }) {
     const user = await User.find(params.id)
+    await bouncer.authorize('bounceUser', user)
     if (!user) {
       return response.status(404).send({
         error: true,
@@ -59,11 +62,13 @@ export default class UsersController {
   }
 
   //  update user
-  async update({ request, response, params }) {
+  async update({ request, response, params, bouncer }) {
     const payload = await request.validate({ schema: updateUserSchema })
     const { email, password, currentPlan } = payload
 
     const user = await User.find(params.id)
+
+    await bouncer.authorize('bounceUser', user)
 
     if (!user) {
       return response.status(404).send({
@@ -80,8 +85,10 @@ export default class UsersController {
   }
 
   //  delete user
-  async destroy({ params, response }) {
+  async destroy({ params, response, bouncer }) {
     const user = await User.find(params.id)
+    await bouncer.authorize('bounceUser', user)
+
     if (!user) {
       return response.status(404).send({
         error: true,
