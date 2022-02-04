@@ -272,7 +272,7 @@ const AddTestModal: React.FC<{
                                     </RadioGroup.Label>
                                     <RadioGroup.Description
                                       as="p"
-                                      className={`text-slate-500 text-sm mt-1 ${
+                                      className={`text-sm mt-1 ${
                                         checked ? "text-slate-300" : ""
                                       }`}
                                     >

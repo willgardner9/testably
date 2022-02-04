@@ -38,13 +38,20 @@ export function AuthWrapper({children}: any) {
         ) {
           Router.push("/dashboard");
         }
+      } else if (user.id && token && userId) {
+        if (
+          Router.route === "/auth/sign-in" ||
+          Router.route === "/auth/sign-up"
+        ) {
+          Router.push("/dashboard");
+        }
       } else {
         Router.route.indexOf("dashboard") !== -1 &&
           Router.push("/auth/sign-in");
       }
     };
     attemptAuth();
-  }, []);
+  });
 
   return (
     <AuthContext.Provider value={{user, setUser}}>

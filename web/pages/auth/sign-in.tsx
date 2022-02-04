@@ -26,7 +26,6 @@ const SignIn: NextPage = () => {
 
   const {user, setUser} = useUser();
   const [loginError, setLoginError] = useState(false);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);

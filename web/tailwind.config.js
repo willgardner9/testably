@@ -12,7 +12,9 @@ module.exports = {
       100: "100%",
       min: "min-content",
       sm: "24rem",
+      "3xl": "48rem",
       "7xl": "60rem",
+      "8xl": "70rem",
     },
     fontFamily: {
       oswald: ["Oswald"],

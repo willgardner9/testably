@@ -41,7 +41,7 @@ const FreeTrialBadge: React.FC<{user: IUser}> = ({user}) => {
   return user?.current_plan === "trial" ? (
     <div className="fixed bottom-4 right-4 flex z-50 shadow">
       <div className="rounded-l-md bg-white border-b border-t border-l border-slate-200 flex items-center gap-2 py-1 px-2">
-        <Logo fontSize="text-xs" logoSize={25} />
+        <Logo fontSize="text-xs" logoSize={25} light={false} />
         <div className="h-full flex items-center text-xs text-slate-700">
           Free trial days remaining: {trialEndsIn} days
         </div>
