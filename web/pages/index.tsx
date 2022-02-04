@@ -301,7 +301,7 @@ const Home: NextPage = () => {
           <div className="w-full flex flex-wrap justify-evenly">
             {features.map((feature) => {
               return (
-                <article className="flex flex-col basis-1/4 px-6 mb-8">
+                <article className="flex flex-col md:basis-1/3 lg:basis-1/4 px-6 mb-12">
                   {feature.icon}
                   <h4 className="text-slate-900 font-medium text-xl mt-2 leading-10">
                     {feature.name}
