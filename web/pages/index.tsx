@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../components/Logo";
+import Carrd from "../components/WorksWith/Carrd";
 import Nextjs from "../components/WorksWith/Nextjs";
 import Nuxtjs from "../components/WorksWith/Nuxtjs";
 import Reactjs from "../components/WorksWith/Reactjs";
@@ -65,7 +66,7 @@ const Home: NextPage = () => {
       <section className="w-screen p-4 lg:px-0">
         <div className="w-full mx-auto max-w-3xl flex items-center justify-center flex-col">
           <small className="text-slate-400 mt-4 text-base z-10">
-            Works with
+            Integrates with
           </small>
           <div className="flex flex-wrap justify-evenly mt-6 gap-10">
             <Webflow />
@@ -78,6 +79,7 @@ const Home: NextPage = () => {
             <Reactjs />
             <Nuxtjs />
             <Vue />
+            <Carrd />
           </div>
         </div>
       </section>
@@ -108,6 +110,7 @@ const Home: NextPage = () => {
                   src="/5-min-setup.png"
                   width={1268}
                   height={914}
+                  quality={100}
                   layout="responsive"
                   className="rounded-xl"
                 />
@@ -118,7 +121,7 @@ const Home: NextPage = () => {
             <div className="w-full md:w-1/2 flex flex-col">
               <h4 className="text-green-600 font-medium text-md">Powerful</h4>
               <h3 className="text-slate-700 font-base text-3xl">
-                Optimise text, images, videos, and element visibility
+                Optimize text, images, videos, and element visibility
               </h3>
               <p className="text-slate-500 leading-8 mt-4">
                 The most effective landing pages are usually a combination of
@@ -135,6 +138,7 @@ const Home: NextPage = () => {
                   src="/powerful-tests.png"
                   width={1268}
                   height={914}
+                  quality={100}
                   layout="responsive"
                   className="rounded-xl"
                 />
@@ -165,6 +169,7 @@ const Home: NextPage = () => {
                   src="/statistical-significance.png"
                   width={1268}
                   height={914}
+                  quality={100}
                   layout="responsive"
                   className="rounded-xl"
                 />
@@ -204,6 +209,7 @@ const Home: NextPage = () => {
                   src="/lightweight-script.png"
                   width={1268}
                   height={914}
+                  quality={100}
                   layout="responsive"
                   className="rounded-xl"
                 />
