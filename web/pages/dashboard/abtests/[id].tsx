@@ -37,6 +37,7 @@ import SelectorStepByStep from "../../../components/Dashboard/SelectorStepByStep
 import SelectorModal from "../../../components/Dashboard/SelectorModal";
 import CodeSnippet from "../../../components/Dashboard/CodeSnippet";
 import VariationsStats from "../../../components/Dashboard/VariationsStats";
+import SelectorTutorialModal from "../../../components/Dashboard/SelectorTutorialModal";
 const cookieCutter = require("cookie-cutter");
 
 const ABTest: NextPage = () => {
@@ -305,7 +306,7 @@ const ABTest: NextPage = () => {
 
             <div className="flex gap-4">
               {/* STATUS */}
-              <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
+              {/* <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
                 <div className="flex gap-2 items-center">
                   {testData.active ? (
                     <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
@@ -322,7 +323,7 @@ const ABTest: NextPage = () => {
                 >
                   {testData.active ? <ActivePill /> : <DisabledPill />}
                 </button>
-              </div>
+              </div> */}
               {/* TYPE */}
               <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
                 <div className="flex gap-2 items-center">
@@ -345,9 +346,9 @@ const ABTest: NextPage = () => {
             )}
             {/* TEST PAGE URL */}
             <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
-              <div className="flex gap-2 items-center w-36">
-                <LinkIcon className="w-4 h-4 text-slate-400" />
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+              <div className="flex gap-2 items-center w-36 p-1 bg-lime-100 rounded-md">
+                <LinkIcon className="w-4 h-4 text-lime-600" />
+                <div className="text-xs font-medium text-lime-700 uppercase tracking-wider min-w-max">
                   Test page URL
                 </div>
               </div>
@@ -366,9 +367,9 @@ const ABTest: NextPage = () => {
             </div>
             {/* CONVERSION URL */}
             <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
-              <div className="flex gap-2 items-center w-36">
-                <LinkIcon className="w-4 h-4 text-slate-400" />
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+              <div className="flex gap-2 items-center w-36 p-1 bg-green-100 rounded-md">
+                <LinkIcon className="w-4 h-4 text-green-600" />
+                <div className="text-xs font-medium text-green-700 uppercase tracking-wider min-w-max">
                   Conversion URL
                 </div>
               </div>
@@ -388,9 +389,9 @@ const ABTest: NextPage = () => {
             {/* TARGET ELEMENT */}
             <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
               <div className="flex justify-between">
-                <div className="flex gap-2 items-center w-36">
-                  <CursorClickIcon className="w-4 h-4 text-slate-400" />
-                  <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                <div className="flex gap-2 items-center w-36  p-1 bg-teal-100 rounded-md">
+                  <CursorClickIcon className="w-4 h-4 text-teal-600" />
+                  <div className="text-xs font-medium text-teal-700 uppercase tracking-wider min-w-max">
                     Target element
                   </div>
                 </div>
@@ -422,10 +423,11 @@ const ABTest: NextPage = () => {
 
           {/* SELECTOR */}
           {!testData.selector && (
-            <div className="mt-8">
+            <div>
+              <H1 text="Test element" styles="mt-8 mb-4" />
+              <Spacer />
               <Placeholder>
-                Select which element on your wesbite to A/B test by following
-                the instructions below, then click
+                First, select which element on your wesbite to A/B test. Click
                 <span className="inline-flex m-2">
                   <SecondaryButton
                     text="Add A/B test target element"
@@ -439,7 +441,6 @@ const ABTest: NextPage = () => {
                 </span>{" "}
                 to get started.
               </Placeholder>
-              <SelectorStepByStep />
             </div>
           )}
           <SelectorModal
@@ -447,15 +448,21 @@ const ABTest: NextPage = () => {
             setIsOpen={setSelectorModalOpen}
             testId={testData.id}
           />
-          {showSelectorInstructions && <SelectorStepByStep />}
+          <SelectorTutorialModal
+            isOpen={showSelectorInstructions}
+            setIsOpen={setShowSelectorInstructions}
+          />
 
           {/* VARIATIONS */}
           <H1 text="Variations" styles="mt-8 mb-4" />
+          <Spacer />
           <AddVariationModal
             isOpen={variationsModalOpen}
             setIsOpen={setVariationsModalOpen}
             userId={user.id}
             testId={testData.id}
+            variationsData={variationsData}
+            setGenerateNewSnippet={setGenerateNewSnippet}
           />
           {variationsData?.length === 2 ? (
             <>

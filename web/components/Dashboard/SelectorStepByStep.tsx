@@ -62,8 +62,6 @@ const SelectorStepByStep: any = ({}) => {
             <div className="w-2/3 ">
               <video
                 className="rounded-lg cursor-pointer transition-all"
-                autoPlay
-                loop
                 muted
                 controls
               >

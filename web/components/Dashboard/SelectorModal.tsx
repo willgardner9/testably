@@ -10,6 +10,7 @@ import {useState} from "react";
 import {XIcon} from "@heroicons/react/solid";
 const cookieCutter = require("cookie-cutter");
 import toast, {Toaster} from "react-hot-toast";
+import SelectorStepByStep from "./SelectorStepByStep";
 
 const SelectorModal: React.FC<{
   isOpen: boolean;
@@ -90,15 +91,18 @@ const SelectorModal: React.FC<{
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-sm p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-sm border rounded-lg border-slate-200 relative">
+              <div className="inline-block w-full max-w-7xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-sm border rounded-lg border-slate-200 relative">
                 <XIcon
                   className="h-5 w-5 min-w-max text-slate-400 hover:text-slate-500 transition-all cursor-pointer absolute right-4 top-4"
                   onClick={() => setIsOpen(false)}
                 />
                 <H1 text="Add new element" />
                 <Spacer />
-
-                <form onSubmit={(e) => handleSubmit(e)}>
+                <SelectorStepByStep />
+                <form
+                  className="max-w-sm mx-auto"
+                  onSubmit={(e) => handleSubmit(e)}
+                >
                   <label
                     htmlFor="selector"
                     className={`${labelClasses} ${

@@ -30,15 +30,16 @@ const CodeSnippet: React.FC<{
     setGenerateNewSnippet(false);
     navigator.clipboard
       .writeText(
-        generateSnippet(
-          userData.id,
-          testData.id,
-          testData.test_page,
-          testData.conversion_url,
-          testData.selector,
-          testData.type,
-          variations
-        )
+        generateSnippet([
+          {varName: "{{api}}", varValue: "http://127.0.0.1:3333/api/v1/"},
+          {varName: "{{userId}}", varValue: userData.id},
+          {varName: "{{testId}}", varValue: testData.id},
+          {varName: "{{testPageURL}}", varValue: testData.test_page},
+          {varName: "{{conversionURL}}", varValue: testData.conversion_url},
+          {varName: "{{selector}}", varValue: testData.selector},
+          {varName: "{{type}}", varValue: testData.type},
+          {varName: "{{variations}}", varValue: variations},
+        ])
       )
       .then(() => toast.success("Copied to clipboard!"));
   };

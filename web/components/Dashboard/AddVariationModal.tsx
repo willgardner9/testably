@@ -16,7 +16,16 @@ const AddVariationModal: React.FC<{
   setIsOpen: Function;
   userId: string;
   testId: string;
-}> = ({isOpen, setIsOpen, userId, testId}) => {
+  variationsData: any;
+  setGenerateNewSnippet: Function;
+}> = ({
+  isOpen,
+  setIsOpen,
+  userId,
+  testId,
+  variationsData,
+  setGenerateNewSnippet,
+}) => {
   const [loading, setLoading] = useState(false);
   const [variation, setVariation] = useState("");
   const [variationError, setVariationError] = useState(false);
@@ -51,6 +60,9 @@ const AddVariationModal: React.FC<{
     if (response.status == 200) {
       setLoading(false);
       toast.success(`Created a new variation ${variation}!`);
+      if (variationsData.length === 1) {
+        setGenerateNewSnippet(true);
+      }
       setIsOpen(false);
     }
   };

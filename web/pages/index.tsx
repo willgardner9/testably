@@ -424,7 +424,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
-      <section className="w-screen p-4 lg:px-0 py-12 bg-slate-900 relative">
+      <section className="w-screen p-4 lg:px-0 py-12 bg-slate-900 relative mt-12">
         <div className="footer-gradient absolute w-full"></div>
         <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
           <h2 className="text-slate-100 font-semibold text-4xl text-center leading-tight z-10">

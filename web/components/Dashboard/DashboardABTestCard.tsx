@@ -30,9 +30,9 @@ const DashboardABTestCard: React.FC<{
                       <H2 text={test.name} styles="mb-2" />
                       {/* TEST PAGE URL */}
                       <div className="min-w-max mb-2 flex gap-4 items-center">
-                        <div className="flex gap-2 items-center w-36">
-                          <LinkIcon className="w-4 h-4 text-slate-400" />
-                          <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                        <div className="flex gap-2 items-center w-36 p-1 bg-lime-100 rounded-md">
+                          <LinkIcon className="w-4 h-4 text-lime-600" />
+                          <div className="text-xs font-medium text-lime-700 uppercase tracking-wider min-w-max">
                             Test page URL
                           </div>
                         </div>
@@ -42,9 +42,9 @@ const DashboardABTestCard: React.FC<{
                       </div>
                       {/* CONVERSION URL */}
                       <div className="min-w-max mb-2 flex gap-4 items-center">
-                        <div className="flex gap-2 items-center w-36">
-                          <LinkIcon className="w-4 h-4 text-slate-400" />
-                          <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                        <div className="flex gap-2 items-center w-36 p-1 bg-green-100 rounded-md">
+                          <LinkIcon className="w-4 h-4 text-green-600" />
+                          <div className="text-xs font-medium text-green-700 uppercase tracking-wider min-w-max">
                             Conversion URL
                           </div>
                         </div>
@@ -55,9 +55,9 @@ const DashboardABTestCard: React.FC<{
                       {/* TARGET ELEMENT */}
                       <div className="min-w-max flex gap-4 items-center">
                         <div className="flex justify-between">
-                          <div className="flex gap-2 items-center w-36">
-                            <CursorClickIcon className="w-4 h-4 text-slate-400" />
-                            <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
+                          <div className="flex gap-2 items-center w-36 p-1 bg-teal-100 rounded-md">
+                            <CursorClickIcon className="w-4 h-4 text-teal-500" />
+                            <div className="text-xs font-medium text-teal-700 uppercase tracking-wider min-w-max">
                               Target element
                             </div>
                           </div>
@@ -71,7 +71,7 @@ const DashboardABTestCard: React.FC<{
                       <div className="flex justify-end">
                         {" "}
                         {/* STATUS */}
-                        <div className="p-4 rounded-md min-w-max">
+                        {/* <div className="p-4 rounded-md min-w-max">
                           <div className="flex gap-2 items-center mb-2">
                             {test.active ? (
                               <StatusOnlineIcon className="w-3 h-3 text-slate-400" />
@@ -85,10 +85,10 @@ const DashboardABTestCard: React.FC<{
                           <span className="text-sm font-mono text-slate-700 whitespace-nowrap select-none cursor-pointer">
                             {test.active ? <ActivePill /> : <DisabledPill />}
                           </span>
-                        </div>
+                        </div> */}
                         {/* TYPE */}
                         <div className="pt-4 pl-2 rounded-md min-w-max">
-                          <div className="flex gap-2 items-center">
+                          <div className="flex gap-2 items-center items-center justify-end">
                             <LockClosedIcon className="w-3 h-3 text-slate-400" />
                             <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
                               Type
