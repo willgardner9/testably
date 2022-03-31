@@ -12,13 +12,14 @@
     <a href="./index.html">Home</a>
     <a href="./pricing.html">Pricing</a>
     <a href="./other.html">Other</a>
+
     <script defer>
-      "use strict";
       (function () {
         const _cookies =
           (document.cookie && document.cookie.split("; ")) || false;
+        const _api = "http://127.0.0.1:3333/api/v1/";
         const _userId = "bcff9d7b-886a-43fd-92a4-41b2db0ede63";
-        const _testId = "b97001dd-89c8-41e4-b575-cdebdd05e318";
+        const _testId = "3a51278d-211a-4f08-9690-a2e69152a276";
         const _testPageURL =
           "http://127.0.0.1:5500/embed-script/demo/index.html";
         const _conversionURL =
@@ -27,9 +28,9 @@
         const _dom = document.querySelector(_selector);
         const _type = "copy";
         const _variations = {
-          "f1ff73ae-149f-43a3-8bf8-c5dc73ae5df4":
+          "250a45f4-d306-4aa9-96c4-fce8ce3b4de5":
             "Privacy-friendly A/B testing",
-          "86a92a88-4d61-42e9-a460-89c22daecf54": "No-code A/B testing",
+          "76bba259-f3fb-416e-85ca-c58736b70498": "Simple A/B testing",
         };
         function _getActiveVariationId() {
           let activeVariationId =
@@ -43,6 +44,7 @@
               Object.keys(_variations)[
                 Math.floor(Math.random() * Object.keys(_variations).length)
               ].toString();
+
             document.cookie =
               "testably_variation=" + activeVariationId + ";max-age=2592000";
           }
@@ -50,32 +52,9 @@
         }
         const _activeVariationId = _getActiveVariationId();
         const _url = window.location.href;
-        const _returningSession =
-          (_cookies &&
-            _cookies
-              .find((row) => row.startsWith("testably_visited="))
-              ?.split("=")[1]) ||
-          false;
-        const _converted =
-          (_cookies &&
-            _cookies
-              .find((row) => row.startsWith("testably_converted="))
-              ?.split("=")[1]) ||
-          false;
+
         if (_url !== _testPageURL && _url !== _conversionURL) return;
-        if (_url === _testPageURL && !_returningSession) {
-          document.cookie = "testably_visited=true;max-age=2592000";
-          fetch("http://127.0.0.1:3333/api/v1/sessions", {
-            method: "post",
-            mode: "cors",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-              userId: _userId,
-              testId: _testId,
-              variationId: _activeVariationId,
-            }),
-          });
-        }
+
         if (_url === _testPageURL) {
           switch (_type) {
             case "copy":
@@ -98,14 +77,12 @@
             default:
               break;
           }
-        }
-        function _testablyConversion() {
-          if (_converted) return;
-          document.cookie = "testably_converted=true;max-age=2592000";
-          fetch("http://127.0.0.1:3333/api/v1/conversions", {
+          fetch(_api + "sessions", {
             method: "post",
             mode: "cors",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({
               userId: _userId,
               testId: _testId,
@@ -113,12 +90,29 @@
             }),
           });
         }
-        if (_url === _conversionURL && _returningSession) {
+
+        function _testablyConversion() {
+          fetch(_api + "conversions", {
+            method: "post",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: _userId,
+              testId: _testId,
+              variationId: _activeVariationId,
+            }),
+          });
+        }
+
+        if (_url === _conversionURL && _activeVariationId) {
           _testablyConversion();
         }
-        window.addEventListener("popstate", function (event) {
+
+        window.addEventListener("popstate", function (e) {
           console.log("detected url change to:", window.location.href);
-          if (_url === _conversionURL && _returningSession) {
+          if (_url === _conversionURL && _activeVariationId) {
             _testablyConversion;
           }
         });
