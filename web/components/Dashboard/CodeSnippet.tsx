@@ -4,7 +4,6 @@ import {IUser} from "../../types/IUser";
 import generateSnippet from "../../utils/generateSnippet";
 import SecondaryButton from "../SecondaryButton";
 import toast, {Toaster} from "react-hot-toast";
-import Spacer from "../Spacer";
 import H1 from "../H1";
 
 const CodeSnippet: React.FC<{
@@ -56,7 +55,7 @@ const CodeSnippet: React.FC<{
           ping={generateNewSnippet}
         />
       </div>
-      <Spacer />
+
       <div className="flex flex-col gap-4 mt-4">
         <div className="flex gap-4">
           <div

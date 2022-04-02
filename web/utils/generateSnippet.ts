@@ -228,7 +228,5 @@ export default function generateSnippet(
     );
   });
 
-  console.log(snippetString);
-
   return snippetString;
 }

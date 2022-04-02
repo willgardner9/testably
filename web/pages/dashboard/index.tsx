@@ -23,6 +23,7 @@ const Home: NextPage = () => {
   const [abTests, setAbTests] = useState<ITest[]>([]);
   const [testModalOpen, setTestModalOpen] = useState(false);
   const [sessions, setSessions] = useState();
+  const [conversions, setConversions] = useState();
 
   useEffect(() => {
     const fetchAbTests = async () => {
@@ -56,8 +57,25 @@ const Home: NextPage = () => {
       const responseJSON = await response.json();
       return setSessions(responseJSON.length);
     };
+    const fetchConversions = async () => {
+      if (!user.id) return;
+      const token = cookieCutter.get("token");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URI}/conversions/?user_id=${user.id}`,
+        {
+          method: "get",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseJSON = await response.json();
+      return setConversions(responseJSON.length);
+    };
     fetchAbTests();
     fetchSessions();
+    fetchConversions();
   }, [user, testModalOpen]);
 
   return (
@@ -70,8 +88,16 @@ const Home: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <div className="flex justify-between items-end mb-4">
-            <H1 text="Your A/B tests" />
+          <div className="flex flex-row items-start justify-between">
+            <DashboardDataBox
+              label="Sessions"
+              value={sessions || 0}
+              outOfValue={
+                user.current_plan === "trial" || user.current_plan === "starter"
+                  ? "/ 50,000"
+                  : "/ 100,000"
+              }
+            />
             <SecondaryButton
               text="New A/B test"
               loading={false}
@@ -79,8 +105,14 @@ const Home: NextPage = () => {
               handleOnClick={() => setTestModalOpen(true)}
             />
           </div>
+          <Spacer />
+          <div className="flex justify-between items-end mb-2 mt-4">
+            <h3 className="uppercase text-xs text-slate-500 font-medium">
+              Your A/B tests
+            </h3>
+          </div>
           {abTests?.length >= 1 ? (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
               <DashboardABTestCard data={abTests} />
             </div>
           ) : (
@@ -101,15 +133,6 @@ const Home: NextPage = () => {
               to begin.
             </Placeholder>
           )}
-          <H1 text="Usage" styles="mt-8" />
-          <Spacer />
-          <div className="flex flex-col md:flex-row gap-4 mt-4">
-            <DashboardDataBox
-              label="Sessions"
-              value={sessions || 0}
-              outOfValue="/ 10,000"
-            />
-          </div>
           <AddTestModal
             isOpen={testModalOpen}
             setIsOpen={setTestModalOpen}

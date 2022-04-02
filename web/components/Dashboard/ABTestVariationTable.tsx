@@ -60,7 +60,7 @@ const ABTestVariationTable: React.FC<{
       </table>
     </div>
   ) : (
-    <div className="overflow-x-scroll shadow-sm py-2 px-4 border border-slate-200 rounded-md font-light leading-7">
+    <div className="overflow-x-scroll py-2 font-light leading-7">
       <table className="w-full">
         <thead>
           <tr>

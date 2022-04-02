@@ -6,7 +6,7 @@ import SecondaryButton from "../SecondaryButton";
 import Spacer from "../Spacer";
 import inputClasses from "../Styles/inputClasses";
 import labelClasses from "../Styles/labelClasses";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {XIcon} from "@heroicons/react/solid";
 const cookieCutter = require("cookie-cutter");
 import toast, {Toaster} from "react-hot-toast";

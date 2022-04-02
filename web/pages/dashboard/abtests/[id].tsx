@@ -1,4 +1,5 @@
 import {
+  BeakerIcon,
   CursorClickIcon,
   LinkIcon,
   LockClosedIcon,
@@ -23,7 +24,6 @@ import H1 from "../../../components/H1";
 import Container from "../../../components/Layout/Container";
 import Content from "../../../components/Layout/Content";
 import Menu from "../../../components/Layout/Menu";
-import Spacer from "../../../components/Spacer";
 import {useUser} from "../../../context/auth";
 import {ITest} from "../../../types/ITest";
 import toast, {Toaster} from "react-hot-toast";
@@ -274,7 +274,7 @@ const ABTest: NextPage = () => {
         <FreeTrialBadge user={user} />
         <Menu user={user} />
         <Content>
-          <div className="flex items-center justify-between gap-4 mb-4">
+          <div className="flex items-start justify-between gap-4 mb-4">
             <div className="flex flex-col">
               {abTestName && (
                 <input
@@ -288,20 +288,6 @@ const ABTest: NextPage = () => {
                   defaultValue={testData.name}
                 />
               )}
-              <div className="flex flex-col md:flex-row text-xs gap-2 md:gap-4 text-slate-500 mt-2">
-                <p className="font-light">
-                  Created at:{" "}
-                  <span className="font-normal">
-                    {new Date(testData.created_at).toLocaleDateString()}
-                  </span>
-                </p>
-                <p className="font-light">
-                  Updated at:{" "}
-                  <span className="font-normal">
-                    {new Date(testData.updated_at).toLocaleDateString()}
-                  </span>
-                </p>
-              </div>
             </div>
 
             <div className="flex gap-4">
@@ -325,13 +311,7 @@ const ABTest: NextPage = () => {
                 </button>
               </div> */}
               {/* TYPE */}
-              <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm">
-                <div className="flex gap-2 items-center">
-                  <LockClosedIcon className="w-3 h-3 text-slate-400" />
-                  <div className="text-xs font-medium text-slate-500 uppercase tracking-wider min-w-max">
-                    Type
-                  </div>
-                </div>
+              <div className=" rounded-md  h-auto min-w-max">
                 <div className="text-sm font-mono text-slate-700 whitespace-nowrap mt-2">
                   {testData.type == "copy" && <CopyPill />}
                   {testData.type == "visibility" && <VisibilityPill />}
@@ -341,14 +321,11 @@ const ABTest: NextPage = () => {
             </div>
           </div>
           <div className="w-full flex flex-col gap-4">
-            {variationsData?.length === 2 && (
-              <VariationsStats data={variationsData} />
-            )}
             {/* TEST PAGE URL */}
-            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
-              <div className="flex gap-2 items-center w-36 p-1 bg-lime-100 rounded-md">
-                <LinkIcon className="w-4 h-4 text-lime-600" />
-                <div className="text-xs font-medium text-lime-700 uppercase tracking-wider min-w-max">
+            <div className="h-auto min-w-max flex gap-4 items-center">
+              <div className="flex gap-2 items-center w-36">
+                <BeakerIcon className="w-4 h-4 text-emerald-500" />
+                <div className="text-xs font-medium text-slate-700 uppercase tracking-wider min-w-max">
                   Test page URL
                 </div>
               </div>
@@ -366,10 +343,10 @@ const ABTest: NextPage = () => {
               )}
             </div>
             {/* CONVERSION URL */}
-            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
-              <div className="flex gap-2 items-center w-36 p-1 bg-green-100 rounded-md">
-                <LinkIcon className="w-4 h-4 text-green-600" />
-                <div className="text-xs font-medium text-green-700 uppercase tracking-wider min-w-max">
+            <div className="h-auto min-w-max flex gap-4 items-center">
+              <div className="flex gap-2 items-center w-36">
+                <LinkIcon className="w-4 h-4 text-emerald-500" />
+                <div className="text-xs font-medium text-slate-700 uppercase tracking-wider min-w-max">
                   Conversion URL
                 </div>
               </div>
@@ -387,11 +364,11 @@ const ABTest: NextPage = () => {
               )}
             </div>
             {/* TARGET ELEMENT */}
-            <div className="p-4 rounded-md  h-auto min-w-max border border-slate-200 shadow-sm flex gap-4 items-center">
+            <div className="h-auto min-w-max flex gap-4 items-center">
               <div className="flex justify-between">
-                <div className="flex gap-2 items-center w-36  p-1 bg-teal-100 rounded-md">
-                  <CursorClickIcon className="w-4 h-4 text-teal-600" />
-                  <div className="text-xs font-medium text-teal-700 uppercase tracking-wider min-w-max">
+                <div className="flex gap-2 items-center w-36">
+                  <CursorClickIcon className="w-4 h-4 text-emerald-500" />
+                  <div className="text-xs font-medium text-slate-700 uppercase tracking-wider min-w-max">
                     Target element
                   </div>
                 </div>
@@ -419,13 +396,31 @@ const ABTest: NextPage = () => {
                 </button>
               </div>
             </div>
+            {/* STATISTICAL SIGNIFICANCE STATS */}
+            {variationsData?.length === 2 && (
+              <VariationsStats data={variationsData} />
+            )}
+            {/* CREATED AT / UPDATED AT */}
+            <div className="flex flex-col md:flex-row text-xs gap-2 md:gap-4 text-slate-500">
+              <p className="font-light">
+                Created at:{" "}
+                <span className="font-normal">
+                  {new Date(testData.created_at).toLocaleDateString()}
+                </span>
+              </p>
+              <p className="font-light">
+                Updated at:{" "}
+                <span className="font-normal">
+                  {new Date(testData.updated_at).toLocaleDateString()}
+                </span>
+              </p>
+            </div>
           </div>
 
           {/* SELECTOR */}
           {!testData.selector && (
             <div>
               <H1 text="Test element" styles="mt-8 mb-4" />
-              <Spacer />
               <Placeholder>
                 First, select which element on your wesbite to A/B test. Click
                 <span className="inline-flex m-2">
@@ -452,10 +447,9 @@ const ABTest: NextPage = () => {
             isOpen={showSelectorInstructions}
             setIsOpen={setShowSelectorInstructions}
           />
-
           {/* VARIATIONS */}
-          <H1 text="Variations" styles="mt-8 mb-4" />
-          <Spacer />
+          <H1 text="Variations" styles="mt-8" />
+
           <AddVariationModal
             isOpen={variationsModalOpen}
             setIsOpen={setVariationsModalOpen}
@@ -527,8 +521,7 @@ const ABTest: NextPage = () => {
             />
           ) : (
             <>
-              <H1 text="Embed code" styles="mt-8" />
-              <Spacer />
+              <H1 text="Embed code" styles="mt-8 mb-2" />
               <Placeholder>
                 The embed code for your A/B test will appear here once you have
                 added some variations and an element to test.
@@ -538,7 +531,6 @@ const ABTest: NextPage = () => {
 
           {/* DANGER ZONE */}
           <H1 text="Danger zone" styles="mt-8" />
-          <Spacer />
           <div className="flex gap-4 mt-4">
             <div
               className={`w-8 h-8 p-2 bg-red-100 flex items-center justify-center rounded-full`}
